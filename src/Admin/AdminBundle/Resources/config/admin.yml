@@ -1,0 +1,22 @@
+services:
+    sonata.admin.post:
+        class: Admin\AdminBundle\Admin\PostAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Post" }
+        arguments:
+            - ~
+            - Admin\AdminBundle\Entity\Post
+            - ~
+        calls:
+            - [ setTranslationDomain, [AdminAdminBundle]]
+
+    sonata.admin.persona:
+        class: Admin\AdminBundle\Admin\PersonaAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Persona" }
+        arguments:
+            - ~
+            - Admin\AdminBundle\Entity\Persona
+            - ~
+        calls:
+            - [ setTranslationDomain, [AdminAdminBundle]]
