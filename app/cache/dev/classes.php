@@ -2206,7 +2206,7 @@ $a = array();
 foreach ($var as $k => $v) {
 $a[] = sprintf('%s => %s', $k, $this->varToString($v));
 }
-return sprintf("Array(%s)", implode(', ', $a));
+return sprintf('Array(%s)', implode(', ', $a));
 }
 if (is_resource($var)) {
 return sprintf('Resource(%s)', get_resource_type($var));
@@ -2471,6 +2471,36 @@ if ($controller instanceof ContainerAwareInterface) {
 $controller->setContainer($this->container);
 }
 return array($controller, $method);
+}
+}
+}
+namespace Symfony\Component\Security\Http
+{
+use Symfony\Component\HttpFoundation\Request;
+interface AccessMapInterface
+{
+public function getPatterns(Request $request);
+}
+}
+namespace Symfony\Component\Security\Http
+{
+use Symfony\Component\HttpFoundation\RequestMatcherInterface;
+use Symfony\Component\HttpFoundation\Request;
+class AccessMap implements AccessMapInterface
+{
+private $map = array();
+public function add(RequestMatcherInterface $requestMatcher, array $attributes = array(), $channel = null)
+{
+$this->map[] = array($requestMatcher, $attributes, $channel);
+}
+public function getPatterns(Request $request)
+{
+foreach ($this->map as $elements) {
+if (null === $elements[0] || $elements[0]->matches($request)) {
+return array($elements[1], $elements[2]);
+}
+}
+return array(null, null);
 }
 }
 }
@@ -6660,7 +6690,6 @@ public function getEntityManagerForClass($class);
 }
 namespace Doctrine\Common\Persistence
 {
-use Doctrine\Common\Persistence\ManagerRegistry;
 abstract class AbstractManagerRegistry implements ManagerRegistry
 {
 private $name;
@@ -6727,7 +6756,7 @@ return $this->getService($this->managers[$name]);
 public function getManagerForClass($class)
 {
 if (strpos($class,':') !== false) {
-list($namespaceAlias, $simpleClassName) = explode(':', $class);
+list($namespaceAlias, $simpleClassName) = explode(':', $class, 2);
 $class = $this->getAliasNamespace($namespaceAlias) .'\\'. $simpleClassName;
 }
 $proxyClass = new \ReflectionClass($class);
@@ -7135,8 +7164,13 @@ return false;
 $criteria = array();
 $em = $this->getManager($options['entity_manager'], $class);
 $metadata = $em->getClassMetadata($class);
+$mapMethodSignature = isset($options['repository_method'])
+&& isset($options['map_method_signature'])
+&& $options['map_method_signature'] === true;
 foreach ($options['mapping'] as $attribute => $field) {
-if ($metadata->hasField($field) || ($metadata->hasAssociation($field) && $metadata->isSingleValuedAssociation($field))) {
+if ($metadata->hasField($field)
+|| ($metadata->hasAssociation($field) && $metadata->isSingleValuedAssociation($field))
+|| $mapMethodSignature) {
 $criteria[$field] = $request->attributes->get($attribute);
 }
 }
@@ -7147,15 +7181,34 @@ if (!$criteria) {
 return false;
 }
 if (isset($options['repository_method'])) {
-$method = $options['repository_method'];
+$repositoryMethod = $options['repository_method'];
 } else {
-$method ='findOneBy';
+$repositoryMethod ='findOneBy';
 }
 try {
-return $em->getRepository($class)->$method($criteria);
+if ($mapMethodSignature) {
+return $this->findDataByMapMethodSignature($em, $class, $repositoryMethod, $criteria);
+}
+return $em->getRepository($class)->$repositoryMethod($criteria);
 } catch (NoResultException $e) {
 return;
 }
+}
+private function findDataByMapMethodSignature($em, $class, $repositoryMethod, $criteria)
+{
+$arguments = array();
+$repository = $em->getRepository($class);
+$ref = new \ReflectionMethod($repository, $repositoryMethod);
+foreach ($ref->getParameters() as $parameter) {
+if (array_key_exists($parameter->name, $criteria)) {
+$arguments[] = $criteria[$parameter->name];
+} elseif ($parameter->isDefaultValueAvailable()) {
+$arguments[] = $parameter->getDefaultValue();
+} else {
+throw new \InvalidArgumentException(sprintf('Repository method "%s::%s" requires that you provide a value for the "$%s" argument.', get_class($repository), $repositoryMethod, $parameter->name));
+}
+}
+return $ref->invokeArgs($repository, $arguments);
 }
 public function supports(ParamConverter $configuration)
 {
@@ -7419,7 +7472,8 @@ $response->setVary($configuration->getVary());
 }
 if ($configuration->isPublic()) {
 $response->setPublic();
-} else {
+}
+if ($configuration->isPrivate()) {
 $response->setPrivate();
 }
 if (isset($this->lastModifiedDates[$request])) {
@@ -7827,15 +7881,12 @@ namespace Sonata\BlockBundle\Block
 {
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\BlockBundle\Model\BlockInterface;
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 interface BlockServiceInterface
 {
-public function buildEditForm(FormMapper $form, BlockInterface $block);
-public function buildCreateForm(FormMapper $form, BlockInterface $block);
 public function execute(BlockContextInterface $blockContext, Response $response = null);
-public function validateBlock(ErrorElement $errorElement, BlockInterface $block);
 public function getName();
 public function setDefaultSettings(OptionsResolverInterface $resolver);
 public function load(BlockInterface $block);
@@ -7846,13 +7897,27 @@ public function getCacheKeys(BlockInterface $block);
 }
 namespace Sonata\BlockBundle\Block
 {
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\BlockBundle\Model\BlockInterface;
+use Sonata\CoreBundle\Validator\ErrorElement;
+interface BlockAdminServiceInterface
+{
+public function buildEditForm(FormMapper $form, BlockInterface $block);
+public function buildCreateForm(FormMapper $form, BlockInterface $block);
+public function validateBlock(ErrorElement $errorElement, BlockInterface $block);
+public function getBlockMetadata($code = null);
+}
+}
+namespace Sonata\BlockBundle\Block
+{
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\CoreBundle\Model\Metadata;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-abstract class BaseBlockService implements BlockServiceInterface
+abstract class BaseBlockService implements BlockServiceInterface, BlockAdminServiceInterface
 {
 protected $name;
 protected $templating;
@@ -7931,6 +7996,10 @@ public function buildEditForm(FormMapper $form, BlockInterface $block)
 }
 public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
 {
+}
+public function getBlockMetadata($code = null)
+{
+return new Metadata($this->getName(), (!is_null($code) ? $code : $this->getName()), false,"SonataBlockBundle", array('class'=>'fa fa-file'));
 }
 }
 }
@@ -8048,7 +8117,7 @@ return $response;
 }}
 namespace Sonata\BlockBundle\Block
 {
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\BlockBundle\Model\BlockInterface;
 interface BlockServiceManagerInterface
 {
@@ -8066,7 +8135,7 @@ public function validate(ErrorElement $errorElement, BlockInterface $block);
 namespace Sonata\BlockBundle\Block
 {
 use Sonata\BlockBundle\Model\BlockInterface;
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 class BlockServiceManager implements BlockServiceManagerInterface
@@ -8130,7 +8199,7 @@ if (is_string($id)) {
 $this->load($id);
 }
 }
-return $this->services;
+return $this->sortServices($this->services);
 }
 public function getServicesByContext($context, $includeContainers = true)
 {
@@ -8145,7 +8214,7 @@ continue;
 }
 $services[$name] = $this->getService($name);
 }
-return $services;
+return $this->sortServices($services);
 }
 public function getLoadedServices()
 {
@@ -8173,6 +8242,16 @@ $this->inValidate = false;
 } catch (\Exception $e) {
 $this->inValidate = false;
 }
+}
+private function sortServices($services)
+{
+uasort($services, function($a, $b) {
+if ($a->getName() == $b->getName()) {
+return 0;
+}
+return ($a->getName() < $b->getName()) ? -1 : 1;
+});
+return $services;
 }
 }
 }
@@ -8221,7 +8300,7 @@ use Sonata\BlockBundle\Block\BlockContextInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\BlockBundle\Model\BlockInterface;
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\BlockBundle\Block\BaseBlockService;
 class EmptyBlockService extends BaseBlockService
 {
@@ -8244,7 +8323,7 @@ namespace Sonata\BlockBundle\Block\Service
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\BaseBlockService;
@@ -8307,7 +8386,7 @@ namespace Sonata\BlockBundle\Block\Service
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Provider\MenuProviderInterface;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\BlockBundle\Block\BaseBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Model\BlockInterface;
@@ -8393,7 +8472,7 @@ namespace Sonata\BlockBundle\Block\Service
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\BlockBundle\Block\BaseBlockService;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -9029,8 +9108,6 @@ return $this->templates;
 }
 namespace Sonata\AdminBundle\Admin
 {
-use Sonata\AdminBundle\Admin\Pool;
-use Sonata\AdminBundle\Admin\FieldDescriptionInterface;
 use Sonata\AdminBundle\Builder\FormContractorInterface;
 use Sonata\AdminBundle\Builder\ListBuilderInterface;
 use Sonata\AdminBundle\Builder\DatagridBuilderInterface;
@@ -9038,10 +9115,9 @@ use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Security\Handler\SecurityHandlerInterface;
 use Sonata\AdminBundle\Builder\RouteBuilderInterface;
 use Sonata\AdminBundle\Translator\LabelTranslatorStrategyInterface;
-use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Route\RouteGeneratorInterface;
 use Knp\Menu\FactoryInterface as MenuFactoryInterface;
-use Knp\Menu\ItemInterface as MenuItemInterface;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\CoreBundle\Model\Metadata;
 use Symfony\Component\Validator\ValidatorInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -9085,6 +9161,7 @@ public function trans($id, array $parameters = array(), $domain = null, $locale 
 public function getRoutes();
 public function getRouterIdParameter();
 public function getIdParameter();
+public function hasRoute($name);
 public function hasShowFieldDescription($name);
 public function addShowFieldDescription($name, FieldDescriptionInterface $fieldDescription);
 public function removeShowFieldDescription($name);
@@ -9094,6 +9171,7 @@ public function hasFilterFieldDescription($name);
 public function addFilterFieldDescription($name, FieldDescriptionInterface $fieldDescription);
 public function removeFilterFieldDescription($name);
 public function getFilterFieldDescriptions();
+public function getFilterFieldDescription($name);
 public function getList();
 public function setSecurityHandler(SecurityHandlerInterface $securityHandler);
 public function getSecurityHandler();
@@ -9183,6 +9261,9 @@ public function getTranslationLabel($label, $context ='', $type ='');
 public function buildSideMenu($action, AdminInterface $childAdmin = null);
 public function buildTabMenu($action, AdminInterface $childAdmin = null);
 public function getObjectMetadata($object);
+public function getListModes();
+public function setListMode($mode);
+public function getListMode();
 }
 }
 namespace Symfony\Component\Security\Acl\Model
@@ -9195,10 +9276,9 @@ public function getObjectIdentifier();
 namespace Sonata\AdminBundle\Admin
 {
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
-use Sonata\AdminBundle\Route\RoutesCache;
 use Sonata\CoreBundle\Model\Metadata;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\PropertyAccess\PropertyPath;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Validator\ValidatorInterface;
@@ -9209,9 +9289,8 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Sonata\AdminBundle\Admin\Pool;
-use Sonata\AdminBundle\Validator\ErrorElement;
-use Sonata\AdminBundle\Validator\Constraints\InlineConstraint;
+use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\Constraints\InlineConstraint;
 use Sonata\AdminBundle\Translator\LabelTranslatorStrategyInterface;
 use Sonata\AdminBundle\Builder\FormContractorInterface;
 use Sonata\AdminBundle\Builder\ListBuilderInterface;
@@ -9226,11 +9305,12 @@ use Sonata\AdminBundle\Model\ModelManagerInterface;
 use Knp\Menu\FactoryInterface as MenuFactoryInterface;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Doctrine\Common\Util\ClassUtils;
+use Sonata\AdminBundle\Datagrid\Pager;
 abstract class Admin implements AdminInterface, DomainObjectInterface
 {
 const CONTEXT_MENU ='menu';
 const CONTEXT_DASHBOARD ='dashboard';
-const CLASS_REGEX ='@([A-Za-z0-9]*)\\\(Bundle\\\)?([A-Za-z0-9]+)Bundle\\\(Entity|Document|Model|PHPCR|CouchDocument|Phpcr|Doctrine\\\Orm|Doctrine\\\Phpcr|Doctrine\\\MongoDB|Doctrine\\\CouchDB)\\\(.*)@';
+const CLASS_REGEX ='@(?:([A-Za-z0-9]*)\\\)?(Bundle\\\)?([A-Za-z0-9]+)Bundle\\\(Entity|Document|Model|PHPCR|CouchDocument|Phpcr|Doctrine\\\Orm|Doctrine\\\Phpcr|Doctrine\\\MongoDB|Doctrine\\\CouchDB)\\\(.*)@';
 private $class;
 private $subClasses = array();
 private $list;
@@ -9241,7 +9321,7 @@ private $form;
 protected $formFieldDescriptions = array();
 private $filter;
 protected $filterFieldDescriptions = array();
-protected $maxPerPage = 25;
+protected $maxPerPage = 32;
 protected $maxPageLinks = 25;
 protected $baseRouteName;
 protected $baseRoutePattern;
@@ -9253,9 +9333,10 @@ private $showTabs = false;
 protected $classnameLabel;
 protected $translationDomain ='messages';
 protected $formOptions = array();
-protected $datagridValues = array('_page'=> 1,'_per_page'=> 25,
+protected $datagridValues = array('_page'=> 1,'_per_page'=> 32,
 );
-protected $perPageOptions = array(15, 25, 50, 100, 150, 200);
+protected $perPageOptions = array(16, 32, 64, 128, 192);
+protected $pagerType = Pager::TYPE_DEFAULT;
 protected $code;
 protected $label;
 protected $persistFilters = false;
@@ -9295,6 +9376,10 @@ protected $labelTranslatorStrategy;
 protected $supportsPreviewMode = false;
 protected $securityInformation = array();
 protected $cacheIsGranted = array();
+protected $listModes = array('list'=> array('class'=>'fa fa-list fa-fw',
+),'mosaic'=> array('class'=>'fa fa-th-large fa-fw',
+),
+);
 protected function configureFormFields(FormMapper $form)
 {
 }
@@ -9304,7 +9389,7 @@ protected function configureListFields(ListMapper $list)
 protected function configureDatagridFilters(DatagridMapper $filter)
 {
 }
-protected function configureShowFields(ShowMapper $filter)
+protected function configureShowFields(ShowMapper $show)
 {
 }
 protected function configureRoutes(RouteCollection $collection)
@@ -9319,7 +9404,8 @@ $this->configureSideMenu($menu, $action, $childAdmin);
 }
 public function getExportFormats()
 {
-return array('json','xml','csv','xls');
+return array('json','xml','csv','xls',
+);
 }
 public function getExportFields()
 {
@@ -9400,17 +9486,23 @@ $extension->postRemove($this, $object);
 }
 }
 public function preUpdate($object)
-{}
+{
+}
 public function postUpdate($object)
-{}
+{
+}
 public function prePersist($object)
-{}
+{
+}
 public function postPersist($object)
-{}
+{
+}
 public function preRemove($object)
-{}
+{
+}
 public function postRemove($object)
-{}
+{
+}
 public function preBatchAction($actionName, ProxyQueryInterface $query, array & $idx, $allElements)
 {
 }
@@ -9434,7 +9526,7 @@ return;
 $this->list = $this->getListBuilder()->getBaseList();
 $mapper = new ListMapper($this->getListBuilder(), $this->list, $this);
 if (count($this->getBatchActions()) > 0) {
-$fieldDescription = $this->getModelManager()->getNewFieldDescriptionInstance($this->getClass(),'batch', array('label'=>'batch','code'=>'_batch','sortable'=> false
+$fieldDescription = $this->getModelManager()->getNewFieldDescriptionInstance($this->getClass(),'batch', array('label'=>'batch','code'=>'_batch','sortable'=> false,
 ));
 $fieldDescription->setAdmin($this);
 $fieldDescription->setTemplate($this->getTemplate('batch'));
@@ -9502,8 +9594,10 @@ $this->datagrid->getPager()->setMaxPageLinks($this->maxPageLinks);
 $mapper = new DatagridMapper($this->getDatagridBuilder(), $this->datagrid, $this);
 $this->configureDatagridFilters($mapper);
 if ($this->isChild() && $this->getParentAssociationMapping() && !$mapper->has($this->getParentAssociationMapping())) {
-$mapper->add($this->getParentAssociationMapping(), null, array('label'=> false,'field_type'=>'sonata_type_model_hidden','field_options'=> array('model_manager'=> $this->getModelManager()
-),'operator_type'=>'hidden'));
+$mapper->add($this->getParentAssociationMapping(), null, array('show_filter'=> false,'label'=> false,'field_type'=>'sonata_type_model_hidden','field_options'=> array('model_manager'=> $this->getModelManager(),
+),'operator_type'=>'hidden',
+), null, null, array('admin_code'=> $this->getParent()->getCode()
+));
 }
 foreach ($this->getExtensions() as $extension) {
 $extension->configureDatagridFilters($mapper);
@@ -9545,8 +9639,8 @@ $this->getParent()->getBaseRoutePattern(),
 $this->urlize($matches[5],'-')
 );
 } else {
-$this->baseRoutePattern = sprintf('/%s/%s/%s',
-$this->urlize($matches[1],'-'),
+$this->baseRoutePattern = sprintf('/%s%s/%s',
+empty($matches[1]) ?'': $this->urlize($matches[1],'-').'/',
 $this->urlize($matches[3],'-'),
 $this->urlize($matches[5],'-')
 );
@@ -9566,8 +9660,8 @@ $this->getParent()->getBaseRouteName(),
 $this->urlize($matches[5])
 );
 } else {
-$this->baseRouteName = sprintf('admin_%s_%s_%s',
-$this->urlize($matches[1]),
+$this->baseRouteName = sprintf('admin_%s%s_%s',
+empty($matches[1]) ?'': $this->urlize($matches[1]).'_',
 $this->urlize($matches[3]),
 $this->urlize($matches[5])
 );
@@ -9628,18 +9722,18 @@ return false;
 public function getActiveSubClass()
 {
 if (!$this->hasActiveSubClass()) {
-return null;
+return;
 }
 return $this->getClass();
 }
 public function getActiveSubclassCode()
 {
 if (!$this->hasActiveSubClass()) {
-return null;
+return;
 }
 $subClass = $this->getRequest()->query->get('subclass');
 if (!$this->hasSubClass($subClass)) {
-return null;
+return;
 }
 return $subClass;
 }
@@ -9700,7 +9794,7 @@ return $this->routeGenerator->generateUrl($this, $name, $parameters, $absolute);
 }
 public function generateMenuUrl($name, array $parameters = array(), $absolute = false)
 {
-return $this->routeGenerator->generateMenuUrl($this, $name,$parameters, $absolute);
+return $this->routeGenerator->generateMenuUrl($this, $name, $parameters, $absolute);
 }
 public function setTemplates(array $templates)
 {
@@ -9719,7 +9813,7 @@ public function getTemplate($name)
 if (isset($this->templates[$name])) {
 return $this->templates[$name];
 }
-return null;
+return;
 }
 public function getNewInstance()
 {
@@ -9739,7 +9833,7 @@ $this->formOptions
 $this->defineFormBuilder($formBuilder);
 return $formBuilder;
 }
-public function defineFormBuilder(FormBuilder $formBuilder)
+public function defineFormBuilder(FormBuilderInterface $formBuilder)
 {
 $mapper = new FormMapper($this->getFormContractor(), $formBuilder, $this);
 $this->configureFormFields($mapper);
@@ -9752,7 +9846,7 @@ protected function attachInlineValidator()
 {
 $admin = $this;
 $metadata = $this->validator->getMetadataFactory()->getMetadataFor($this->getClass());
-$metadata->addConstraint(new InlineConstraint(array('service'=> $this,'method'=> function(ErrorElement $errorElement, $object) use ($admin) {
+$metadata->addConstraint(new InlineConstraint(array('service'=> $this,'method'=> function (ErrorElement $errorElement, $object) use ($admin) {
 if ($admin->hasSubject() && spl_object_hash($object) !== spl_object_hash($admin->getSubject())) {
 return;
 }
@@ -9760,7 +9854,7 @@ $admin->validate($errorElement, $object);
 foreach ($admin->getExtensions() as $extension) {
 $extension->validate($admin, $errorElement, $object);
 }
-}
+},
 )));
 }
 public function attachAdminClass(FieldDescriptionInterface $fieldDescription)
@@ -10196,7 +10290,7 @@ if ($children->getCurrentChild()) {
 return $children;
 }
 }
-return null;
+return;
 }
 public function trans($id, array $parameters = array(), $domain = null, $locale = null)
 {
@@ -10372,7 +10466,7 @@ return $this->securityHandler;
 }
 public function isGranted($name, $object = null)
 {
-$key = md5(json_encode($name) . ($object ?'/'.spl_object_hash($object) :''));
+$key = md5(json_encode($name).($object ?'/'.spl_object_hash($object) :''));
 if (!array_key_exists($key, $this->cacheIsGranted)) {
 $this->cacheIsGranted[$key] = $this->securityHandler->isGranted($this, $name, $object ?: $this);
 }
@@ -10473,6 +10567,14 @@ public function getPerPageOptions()
 {
 return $this->perPageOptions;
 }
+public function setPagerType($pagerType)
+{
+$this->pagerType = $pagerType;
+}
+public function getPagerType()
+{
+return $this->pagerType;
+}
 public function determinedPerPageValue($perPage)
 {
 return in_array($perPage, $this->perPageOptions);
@@ -10491,6 +10593,24 @@ public function getObjectMetadata($object)
 {
 return new Metadata($this->toString($object));
 }
+public function getListModes()
+{
+return $this->listModes;
+}
+public function setListMode($mode)
+{
+if (!$this->hasRequest()) {
+throw new \RuntimeException(sprintf('No request attached to the current admin: %s', $this->getCode()));
+}
+$this->getRequest()->getSession()->set(sprintf("%s.list_mode", $this->getCode()), $mode);
+}
+public function getListMode()
+{
+if (!$this->hasRequest()) {
+return'list';
+}
+return $this->getRequest()->getSession()->get(sprintf("%s.list_mode", $this->getCode()),'list');
+}
 }
 }
 namespace Sonata\AdminBundle\Admin
@@ -10500,8 +10620,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
-use Sonata\AdminBundle\Validator\ErrorElement;
-use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 interface AdminExtensionInterface
@@ -10509,7 +10628,7 @@ interface AdminExtensionInterface
 public function configureFormFields(FormMapper $form);
 public function configureListFields(ListMapper $list);
 public function configureDatagridFilters(DatagridMapper $filter);
-public function configureShowFields(ShowMapper $filter);
+public function configureShowFields(ShowMapper $show);
 public function configureRoutes(AdminInterface $admin, RouteCollection $collection);
 public function configureSideMenu(AdminInterface $admin, MenuItemInterface $menu, $action, AdminInterface $childAdmin = null);
 public function configureTabMenu(AdminInterface $admin, MenuItemInterface $menu, $action, AdminInterface $childAdmin = null);
@@ -10533,8 +10652,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
-use Sonata\AdminBundle\Validator\ErrorElement;
-use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 abstract class AdminExtension implements AdminExtensionInterface
@@ -10545,7 +10663,7 @@ public function configureListFields(ListMapper $list)
 {}
 public function configureDatagridFilters(DatagridMapper $filter)
 {}
-public function configureShowFields(ShowMapper $filter)
+public function configureShowFields(ShowMapper $show)
 {}
 public function configureRoutes(AdminInterface $admin, RouteCollection $collection)
 {}
@@ -10585,12 +10703,11 @@ namespace Sonata\AdminBundle\Admin
 {
 use Doctrine\Common\Inflector\Inflector;
 use Doctrine\Common\Util\ClassUtils;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Sonata\AdminBundle\Exception\NoValueException;
 use Sonata\AdminBundle\Util\FormViewIterator;
 use Sonata\AdminBundle\Util\FormBuilderIterator;
-use Sonata\AdminBundle\Admin\BaseFieldDescription;
 class AdminHelper
 {
 protected $pool;
@@ -10598,7 +10715,7 @@ public function __construct(Pool $pool)
 {
 $this->pool = $pool;
 }
-public function getChildFormBuilder(FormBuilder $formBuilder, $elementId)
+public function getChildFormBuilder(FormBuilderInterface $formBuilder, $elementId)
 {
 foreach (new FormBuilderIterator($formBuilder) as $name => $formBuilder) {
 if ($name == $elementId) {
@@ -10679,7 +10796,6 @@ return BaseFieldDescription::camelize($property);
 }
 namespace Sonata\AdminBundle\Admin
 {
-use Sonata\AdminBundle\Admin\AdminInterface;
 interface FieldDescriptionInterface
 {
 public function setFieldName($fieldName);
@@ -10723,7 +10839,6 @@ public function getFieldValue($object, $fieldName);
 }
 namespace Sonata\AdminBundle\Admin
 {
-use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Exception\NoValueException;
 use Symfony\Component\DependencyInjection\Container;
 abstract class BaseFieldDescription implements FieldDescriptionInterface
@@ -10861,6 +10976,9 @@ if (method_exists($object, $getter)) {
 return call_user_func_array(array($object, $getter), $parameters);
 }
 }
+if (method_exists($object,'__call')) {
+return call_user_func_array(array($object,'__call'), array($fieldName, $parameters));
+}
 if (isset($object->{$fieldName})) {
 return $object->{$fieldName};
 }
@@ -10898,9 +11016,7 @@ return $this->mappingType;
 }
 public static function camelize($property)
 {
-return preg_replace_callback('/(^|[_. ])+(.)/', function ($match) {
-return ('.'=== $match[1] ?'_':'') . strtoupper($match[2]);
-}, $property);
+return Container::camelize($property);
 }
 public function setHelp($help)
 {
@@ -10928,13 +11044,12 @@ return $this->getOption('sort_parent_association_mappings');
 }
 public function getTranslationDomain()
 {
-return $this->getOption('translation_domain') ? : $this->getAdmin()->getTranslationDomain();
+return $this->getOption('translation_domain') ?: $this->getAdmin()->getTranslationDomain();
 }
 }
 }
 namespace Sonata\AdminBundle\Admin
 {
-use Sonata\AdminBundle\Admin\FieldDescriptionInterface;
 class FieldDescriptionCollection implements \ArrayAccess, \Countable
 {
 protected $elements = array();
@@ -11032,10 +11147,14 @@ public function getDashboardGroups()
 $groups = $this->adminGroups;
 foreach ($this->adminGroups as $name => $adminGroup) {
 if (isset($adminGroup['items'])) {
-foreach ($adminGroup['items'] as $key => $id) {
-$admin = $this->getInstance($id);
+foreach ($adminGroup['items'] as $key => $item) {
+if (''!= $item['admin']) {
+$admin = $this->getInstance($item['admin']);
 if ($admin->showIn(Admin::CONTEXT_DASHBOARD)) {
 $groups[$name]['items'][$key] = $admin;
+} else {
+unset($groups[$name]['items'][$key]);
+}
 } else {
 unset($groups[$name]['items'][$key]);
 }
@@ -11070,7 +11189,7 @@ if (!is_array($this->adminClasses[$class])) {
 throw new \RuntimeException("Invalid format for the Pool::adminClass property");
 }
 if (count($this->adminClasses[$class]) > 1) {
-throw new \RuntimeException(sprintf('Unable to found a valid admin for the class: %s, get too many admin registered: %s', $class, implode(",", $this->adminClasses[$class])));
+throw new \RuntimeException(sprintf('Unable to find a valid admin for the class: %s, there are too many registered: %s', $class, implode(",", $this->adminClasses[$class])));
 }
 return $this->getInstance($this->adminClasses[$class][0]);
 }
@@ -11164,11 +11283,10 @@ use Sonata\BlockBundle\Block\BlockContextInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Admin\Pool;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\BlockBundle\Block\BaseBlockService;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class AdminListBlockService extends BaseBlockService
 {
@@ -11190,12 +11308,6 @@ $visibleGroups[] = $dashboardGroup;
 }
 return $this->renderPrivateResponse($this->pool->getTemplate('list_block'), array('block'=> $blockContext->getBlock(),'settings'=> $settings,'admin_pool'=> $this->pool,'groups'=> $visibleGroups
 ), $response);
-}
-public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
-{
-}
-public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
-{
 }
 public function getName()
 {
@@ -11226,14 +11338,13 @@ use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 interface DatagridBuilderInterface extends BuilderInterface
 {
-public function addFilter(DatagridInterface $datagrid, $type = null, FieldDescriptionInterface $fieldDescription, AdminInterface $admin);
+public function addFilter(DatagridInterface $datagrid, $type, FieldDescriptionInterface $fieldDescription, AdminInterface $admin);
 public function getBaseDatagrid(AdminInterface $admin, array $values = array());
 }
 }
 namespace Sonata\AdminBundle\Builder
 {
 use Sonata\AdminBundle\Admin\FieldDescriptionInterface;
-use Sonata\AdminBundle\Admin\AdminInterface;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormFactoryInterface;
 interface FormContractorInterface extends BuilderInterface
@@ -11295,6 +11406,7 @@ public function getFilter($name);
 public function hasFilter($name);
 public function removeFilter($name);
 public function hasActiveFilters();
+public function hasDisplayableFilters();
 }
 }
 namespace Sonata\AdminBundle\Datagrid
@@ -11302,9 +11414,9 @@ namespace Sonata\AdminBundle\Datagrid
 use Sonata\AdminBundle\Filter\FilterInterface;
 use Sonata\AdminBundle\Admin\FieldDescriptionCollection;
 use Sonata\AdminBundle\Admin\FieldDescriptionInterface;
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\FormBuilderInterface;
 class Datagrid implements DatagridInterface
 {
 protected $filters = array();
@@ -11316,7 +11428,7 @@ protected $query;
 protected $formBuilder;
 protected $form;
 protected $results;
-public function __construct(ProxyQueryInterface $query, FieldDescriptionCollection $columns, PagerInterface $pager, FormBuilder $formBuilder, array $values = array())
+public function __construct(ProxyQueryInterface $query, FieldDescriptionCollection $columns, PagerInterface $pager, FormBuilderInterface $formBuilder, array $values = array())
 {
 $this->pager = $pager;
 $this->query = $query;
@@ -11425,13 +11537,23 @@ return $this->values;
 }
 public function setValue($name, $operator, $value)
 {
-$this->values[$name] = array('type'=> $operator,'value'=> $value
+$this->values[$name] = array('type'=> $operator,'value'=> $value,
 );
 }
 public function hasActiveFilters()
 {
 foreach ($this->filters as $name => $filter) {
 if ($filter->isActive()) {
+return true;
+}
+}
+return false;
+}
+public function hasDisplayableFilters()
+{
+foreach ($this->filters as $name => $filter) {
+$showFilter = $filter->getOption('show_filter', null);
+if (($filter->isActive() && $showFilter === null) || ($showFilter === true)) {
 return true;
 }
 }
@@ -11479,7 +11601,6 @@ namespace Sonata\AdminBundle\Datagrid
 {
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Admin\FieldDescriptionInterface;
-use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Builder\DatagridBuilderInterface;
 use Sonata\AdminBundle\Mapper\BaseMapper;
 class DatagridMapper extends BaseMapper
@@ -11490,7 +11611,7 @@ public function __construct(DatagridBuilderInterface $datagridBuilder, DatagridI
 parent::__construct($datagridBuilder, $admin);
 $this->datagrid = $datagrid;
 }
-public function add($name, $type = null, array $filterOptions = array(), $fieldType = null, $fieldOptions = null)
+public function add($name, $type = null, array $filterOptions = array(), $fieldType = null, $fieldOptions = null, array $fieldDescriptionOptions = array())
 {
 if (is_array($fieldOptions)) {
 $filterOptions['field_options'] = $fieldOptions;
@@ -11498,20 +11619,23 @@ $filterOptions['field_options'] = $fieldOptions;
 if ($fieldType) {
 $filterOptions['field_type'] = $fieldType;
 }
-$filterOptions['field_name'] = isset($filterOptions['field_name']) ? $filterOptions['field_name'] : substr(strrchr('.'.$name,'.'), 1);
 if ($name instanceof FieldDescriptionInterface) {
 $fieldDescription = $name;
 $fieldDescription->mergeOptions($filterOptions);
-} elseif (is_string($name) && !$this->admin->hasFilterFieldDescription($name)) {
+} elseif (is_string($name)) {
+if ($this->admin->hasFilterFieldDescription($name)) {
+throw new \RuntimeException(sprintf('Duplicate field name "%s" in datagrid mapper. Names should be unique.', $name));
+}
+if (!isset($filterOptions['field_name'])) {
+$filterOptions['field_name'] = substr(strrchr('.'.$name,'.'), 1);
+}
 $fieldDescription = $this->admin->getModelManager()->getNewFieldDescriptionInstance(
 $this->admin->getClass(),
 $name,
-$filterOptions
+array_merge($filterOptions, $fieldDescriptionOptions)
 );
-} elseif (is_string($name) && $this->admin->hasFilterFieldDescription($name)) {
-throw new \RuntimeException(sprintf('The field "%s" is already defined', $name));
 } else {
-throw new \RuntimeException('invalid state');
+throw new \RuntimeException('Unknown field name in datagrid mapper. Field name should be either of FieldDescriptionInterface interface or string.');
 }
 $this->builder->addFilter($this->datagrid, $type, $fieldDescription, $this->admin);
 return $this;
@@ -11625,12 +11749,16 @@ public function setMaxPerPage($max);
 public function setPage($page);
 public function setQuery($query);
 public function getResults();
+public function setMaxPageLinks($maxPageLinks);
+public function getMaxPageLinks();
 }
 }
 namespace Sonata\AdminBundle\Datagrid
 {
 abstract class Pager implements \Iterator, \Countable, \Serializable, PagerInterface
 {
+const TYPE_DEFAULT ='default';
+const TYPE_SIMPLE ='simple';
 protected $page = 1;
 protected $maxPerPage = 0;
 protected $lastPage = 1;
@@ -12008,7 +12136,6 @@ return new StreamedResponse($callback, 200, array('Content-Type'=> $contentType,
 }
 namespace Sonata\AdminBundle\Export
 {
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Sonata\CoreBundle\Exporter\Exporter as BaseExporter;
 class Exporter extends BaseExporter
 {
@@ -12036,6 +12163,8 @@ public function getParentAssociationMappings();
 public function getFieldMapping();
 public function getAssociationMapping();
 public function getFieldOptions();
+public function getFieldOption($name, $default = null);
+public function setFieldOption($name, $value);
 public function getFieldType();
 public function getRenderSettings();
 public function isActive();
@@ -12046,7 +12175,6 @@ public function getTranslationDomain();
 }
 namespace Sonata\AdminBundle\Filter
 {
-use Sonata\AdminBundle\Filter\FilterInterface;
 abstract class Filter implements FilterInterface
 {
 protected $name = null;
@@ -12084,6 +12212,17 @@ return $this->getOption('field_type','text');
 public function getFieldOptions()
 {
 return $this->getOption('field_options', array('required'=> false));
+}
+public function getFieldOption($name, $default = null)
+{
+if (isset($this->options['field_options'][$name]) && is_array($this->options['field_options'])) {
+return $this->options['field_options'][$name];
+}
+return $default;
+}
+public function setFieldOption($name, $value)
+{
+$this->options['field_options'][$name] = $value;
 }
 public function getLabel()
 {
@@ -12123,7 +12262,11 @@ return $associationMapping;
 }
 public function setOptions(array $options)
 {
-$this->options = array_merge($this->getDefaultOptions(), $options);
+$this->options = array_merge(
+array('show_filter'=> null),
+$this->getDefaultOptions(),
+$options
+);
 }
 public function getOptions()
 {
@@ -12822,13 +12965,15 @@ use Sonata\AdminBundle\Exception\NoValueException;
 class FormTypeFieldExtension extends AbstractTypeExtension
 {
 protected $defaultClasses = array();
-public function __construct(array $defaultClasses = array())
+protected $options;
+public function __construct(array $defaultClasses, array $options)
 {
 $this->defaultClasses = $defaultClasses;
+$this->options = $options;
 }
 public function buildForm(FormBuilderInterface $builder, array $options)
 {
-$sonataAdmin = array('name'=> null,'admin'=> null,'value'=> null,'edit'=>'standard','inline'=>'natural','field_description'=> null,'block_name'=> false
+$sonataAdmin = array('name'=> null,'admin'=> null,'value'=> null,'edit'=>'standard','inline'=>'natural','field_description'=> null,'block_name'=> false,'options'=> $this->options,
 );
 $builder->setAttribute('sonata_admin_enabled', false);
 $builder->setAttribute('sonata_help', false);
@@ -12865,22 +13010,38 @@ return $types;
 public function buildView(FormView $view, FormInterface $form, array $options)
 {
 $sonataAdmin = $form->getConfig()->getAttribute('sonata_admin');
+if ($view->parent && $view->parent->vars['sonata_admin_enabled'] && !$sonataAdmin['admin']) {
+$blockPrefixes = $view->vars['block_prefixes'];
+$baseName = str_replace('.','_', $view->parent->vars['sonata_admin_code']);
+$baseType = $blockPrefixes[count($blockPrefixes) - 2];
+$blockSuffix = preg_replace("#^_([a-z0-9]{14})_(.++)$#","\$2", array_pop($blockPrefixes));
+$blockPrefixes[] = sprintf('%s_%s', $baseName, $baseType);
+$blockPrefixes[] = sprintf('%s_%s_%s_%s', $baseName, $baseType, $view->parent->vars['name'], $view->vars['name']);
+$blockPrefixes[] = sprintf('%s_%s_%s_%s', $baseName, $baseType, $view->parent->vars['name'], $blockSuffix);
+$view->vars['block_prefixes'] = $blockPrefixes;
+$view->vars['sonata_admin_enabled'] = true;
+$view->vars['sonata_admin'] = array('admin'=> false,'field_description'=> false,'name'=> false,'edit'=>'standard','inline'=>'natural','block_name'=> false,'class'=> false,'options'=> $this->options,
+);
+$view->vars['sonata_admin_code'] = $view->parent->vars['sonata_admin_code'];
+return;
+}
 $sonataAdminHelp = isset($options['sonata_help']) ? $options['sonata_help'] : null;
 if ($sonataAdmin && $form->getConfig()->getAttribute('sonata_admin_enabled', true)) {
 $sonataAdmin['value'] = $form->getData();
-$block_prefixes = $view->vars['block_prefixes'];
+$blockPrefixes = $view->vars['block_prefixes'];
 $baseName = str_replace('.','_', $sonataAdmin['admin']->getCode());
-$baseType = $block_prefixes[count($block_prefixes) - 2];
-$blockSuffix = preg_replace("#^_([a-z0-9]{14})_(.++)$#","\$2", array_pop($block_prefixes));
-$block_prefixes[] = sprintf('%s_%s', $baseName, $baseType);
-$block_prefixes[] = sprintf('%s_%s_%s', $baseName, $sonataAdmin['name'], $baseType);
-$block_prefixes[] = sprintf('%s_%s_%s_%s', $baseName, $sonataAdmin['name'], $baseType, $blockSuffix);
+$baseType = $blockPrefixes[count($blockPrefixes) - 2];
+$blockSuffix = preg_replace("#^_([a-z0-9]{14})_(.++)$#","\$2", array_pop($blockPrefixes));
+$blockPrefixes[] = sprintf('%s_%s', $baseName, $baseType);
+$blockPrefixes[] = sprintf('%s_%s_%s', $baseName, $sonataAdmin['name'], $baseType);
+$blockPrefixes[] = sprintf('%s_%s_%s_%s', $baseName, $sonataAdmin['name'], $baseType, $blockSuffix);
 if (isset($sonataAdmin['block_name']) && $sonataAdmin['block_name'] !== false) {
-$block_prefixes[] = $sonataAdmin['block_name'];
+$blockPrefixes[] = $sonataAdmin['block_name'];
 }
-$view->vars['block_prefixes'] = $block_prefixes;
+$view->vars['block_prefixes'] = $blockPrefixes;
 $view->vars['sonata_admin_enabled'] = true;
 $view->vars['sonata_admin'] = $sonataAdmin;
+$view->vars['sonata_admin_code'] = $sonataAdmin['admin']->getCode();
 $attr = $view->vars['attr'];
 if (!isset($attr['class']) && isset($sonataAdmin['class'])) {
 $attr['class'] = $sonataAdmin['class'];
@@ -12924,13 +13085,14 @@ abstract class BaseGroupedMapper extends BaseMapper
 {
 protected $currentGroup;
 protected $currentTab;
+protected $apply;
 abstract protected function getGroups();
 abstract protected function getTabs();
 abstract protected function setGroups(array $groups);
 abstract protected function setTabs(array $tabs);
 public function with($name, array $options = array())
 {
-$defaultOptions = array('collapsed'=> false,'class'=> false,'description'=> false,'translation_domain'=> null,'name'=> $name,
+$defaultOptions = array('collapsed'=> false,'class'=> false,'description'=> false,'translation_domain'=> null,'name'=> $name,'box_class'=>'box box-primary',
 );
 $code = $name;
 if (array_key_exists('tab', $options) && $options['tab']) {
@@ -12975,6 +13137,27 @@ $tabs[$this->currentTab]['groups'][] = $this->currentGroup;
 $this->setTabs($tabs);
 return $this;
 }
+public function ifTrue($bool)
+{
+if ($this->apply !== null) {
+throw new \RuntimeException('Cannot nest ifTrue or ifFalse call');
+}
+$this->apply = ($bool === true);
+return $this;
+}
+public function ifFalse($bool)
+{
+if ($this->apply !== null) {
+throw new \RuntimeException('Cannot nest ifTrue or ifFalse call');
+}
+$this->apply = ($bool === false);
+return $this;
+}
+public function ifEnd()
+{
+$this->apply = null;
+return $this;
+}
 public function tab($name, array $options = array())
 {
 return $this->with($name, array_merge($options, array('tab'=> true)));
@@ -12989,6 +13172,10 @@ $this->currentTab = null;
 throw new \RuntimeException('No open tabs or groups, you cannot use end()');
 }
 return $this;
+}
+public function hasOpenTab()
+{
+return null !== $this->currentTab;
 }
 protected function addFieldToCurrentGroup($fieldName)
 {
@@ -13011,12 +13198,12 @@ namespace Sonata\AdminBundle\Form
 {
 use Sonata\AdminBundle\Builder\FormContractorInterface;
 use Sonata\AdminBundle\Admin\AdminInterface;
-use Symfony\Component\Form\FormBuilder;
 use Sonata\AdminBundle\Mapper\BaseGroupedMapper;
+use Symfony\Component\Form\FormBuilderInterface;
 class FormMapper extends BaseGroupedMapper
 {
 protected $formBuilder;
-public function __construct(FormContractorInterface $formContractor, FormBuilder $formBuilder, AdminInterface $admin)
+public function __construct(FormContractorInterface $formContractor, FormBuilderInterface $formBuilder, AdminInterface $admin)
 {
 parent::__construct($formContractor, $admin);
 $this->formBuilder = $formBuilder;
@@ -13028,12 +13215,15 @@ return $this;
 }
 public function add($name, $type = null, array $options = array(), array $fieldDescriptionOptions = array())
 {
-if ($name instanceof FormBuilder) {
+if ($this->apply !== null && !$this->apply) {
+return $this;
+}
+if ($name instanceof FormBuilderInterface) {
 $fieldName = $name->getName();
 } else {
 $fieldName = $name;
 }
-if (!$name instanceof FormBuilder && strpos($fieldName,'.')!==false && !isset($options['property_path'])) {
+if (!$name instanceof FormBuilderInterface && strpos($fieldName,'.')!==false && !isset($options['property_path'])) {
 $options['property_path'] = $fieldName;
 $fieldName = str_replace('.','__', $fieldName);
 }
@@ -13050,7 +13240,7 @@ $fieldDescriptionOptions['translation_domain'] = $group['translation_domain'];
 }
 $fieldDescription = $this->admin->getModelManager()->getNewFieldDescriptionInstance(
 $this->admin->getClass(),
-$name instanceof FormBuilder ? $name->getName() : $name,
+$name instanceof FormBuilderInterface ? $name->getName() : $name,
 $fieldDescriptionOptions
 );
 $this->builder->fixFieldDescription($this->admin, $fieldDescription, $fieldDescriptionOptions);
@@ -13058,7 +13248,7 @@ if ($fieldName != $name) {
 $fieldDescription->setName($fieldName);
 }
 $this->admin->addFormFieldDescription($fieldName, $fieldDescription);
-if ($name instanceof FormBuilder) {
+if ($name instanceof FormBuilderInterface) {
 $this->formBuilder->add($name);
 } else {
 $options = array_replace_recursive($this->builder->getDefaultOptions($type, $fieldDescription), $options);
@@ -13136,7 +13326,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\ReversedTransformer;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Sonata\AdminBundle\Form\DataTransformer\ArrayToModelTransformer;
@@ -13256,7 +13445,7 @@ self::TYPE_NOT_BETWEEN => $this->translator->trans('label_date_type_not_between'
 );
 $builder
 ->add('type','choice', array('choices'=> $choices,'required'=> false))
-->add('value', $options['field_type'], array('field_options'=> $options['field_options']))
+->add('value', $options['field_type'], $options['field_options'])
 ;
 }
 public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -13293,7 +13482,7 @@ self::TYPE_NOT_BETWEEN => $this->translator->trans('label_date_type_not_between'
 );
 $builder
 ->add('type','choice', array('choices'=> $choices,'required'=> false))
-->add('value', $options['field_type'], array('field_options'=> $options['field_options']))
+->add('value', $options['field_type'], $options['field_options'])
 ;
 }
 public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -13614,7 +13803,6 @@ public function guessType($class, $property, ModelManagerInterface $modelManager
 }
 namespace Sonata\AdminBundle\Guesser
 {
-use Sonata\AdminBundle\Guesser\TypeGuesserInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Guess\Guess;
 use Sonata\AdminBundle\Model\ModelManagerInterface;
@@ -13821,7 +14009,7 @@ $resource = $locator->locate($resource, $this->currentDir, false);
 $resources = is_array($resource) ? $resource : array($resource);
 for ($i = 0; $i < $resourcesCount = count($resources); $i++) {
 if (isset(self::$loading[$resources[$i]])) {
-if ($i == $resourcesCount-1) {
+if ($i == $resourcesCount - 1) {
 throw new FileLoaderImportCircularReferenceException(array_keys(self::$loading));
 }
 } else {
@@ -13856,6 +14044,7 @@ use Sonata\AdminBundle\Admin\Pool;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 class AdminPoolLoader extends FileLoader
 {
+const ROUTE_TYPE_NAME ='sonata_admin';
 protected $pool;
 protected $adminServiceIds = array();
 protected $container;
@@ -13867,14 +14056,11 @@ $this->container = $container;
 }
 public function supports($resource, $type = null)
 {
-if ($type =='sonata_admin') {
-return true;
-}
-return false;
+return $type === self::ROUTE_TYPE_NAME;
 }
 public function load($resource, $type = null)
 {
-$collection = new SymfonyRouteCollection;
+$collection = new SymfonyRouteCollection();
 foreach ($this->adminServiceIds as $id) {
 $admin = $this->pool->getInstance($id);
 foreach ($admin->getRoutes()->getElements() as $code => $route) {
@@ -13974,13 +14160,14 @@ return $admin->getCode().'.'.$name;
 }
 private function loadCache(AdminInterface $admin)
 {
+if ($admin->isChild()) {
+$this->loadCache($admin->getParent());
+} else {
 if (in_array($admin->getCode(), $this->loaded)) {
 return;
 }
 $this->caches = array_merge($this->cache->load($admin), $this->caches);
 $this->loaded[] = $admin->getCode();
-if ($admin->isChild()) {
-$this->loadCache($admin->getParent());
 }
 }
 }
@@ -14090,7 +14277,7 @@ if (!isset($defaults['_sonata_admin'])) {
 $defaults['_sonata_admin'] = $this->baseCodeRoute;
 }
 $defaults['_sonata_name'] = $routeName;
-$this->elements[$this->getCode($name)] = function() use ($pattern, $defaults, $requirements, $options) {
+$this->elements[$this->getCode($name)] = function () use ($pattern, $defaults, $requirements, $options) {
 return new Route($pattern, $defaults, $requirements, $options);
 };
 return $this;
@@ -14186,7 +14373,8 @@ public function getBaseRoutePattern()
 {
 return $this->baseRoutePattern;
 }
-}}
+}
+}
 namespace Symfony\Component\Security\Acl\Permission
 {
 interface PermissionMapInterface
@@ -14319,7 +14507,7 @@ public function getPattern()
 $pattern = self::ALL_OFF;
 $length = strlen($pattern);
 $bitmask = str_pad(decbin($this->mask), $length,'0', STR_PAD_LEFT);
-for ($i = $length-1; $i >= 0; $i--) {
+for ($i = $length - 1; $i >= 0; $i--) {
 if ('1'=== $bitmask[$i]) {
 try {
 $pattern[$i] = self::getCode(1 << ($length - $i - 1));
@@ -14679,6 +14867,9 @@ $this->list = $list;
 }
 public function add($name, $type = null, array $fieldDescriptionOptions = array())
 {
+if ($this->apply !== null && !$this->apply) {
+return $this;
+}
 $fieldKey = ($name instanceof FieldDescriptionInterface) ? $name->getName() : $name;
 $this->addFieldToCurrentGroup($fieldKey);
 if ($name instanceof FieldDescriptionInterface) {
@@ -14803,20 +14994,30 @@ return sprintf('%s.%s_%s', $context, $type, strtolower(preg_replace('~(?<=\\w)([
 namespace Sonata\AdminBundle\Twig\Extension
 {
 use Doctrine\Common\Util\ClassUtils;
-use Sonata\AdminBundle\Admin\FieldDescriptionInterface;
-use Sonata\AdminBundle\Exception\NoValueException;
-use Sonata\AdminBundle\Admin\Pool;
-use Symfony\Component\PropertyAccess\PropertyAccess;
+use Knp\Menu\MenuFactory;
+use Knp\Menu\ItemInterface;
+use Knp\Menu\Twig\Helper;
 use Psr\Log\LoggerInterface;
+use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\AdminBundle\Admin\FieldDescriptionInterface;
+use Sonata\AdminBundle\Admin\Pool;
+use Sonata\AdminBundle\Exception\NoValueException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\Routing\RouterInterface;
 class SonataAdminExtension extends \Twig_Extension
 {
 protected $environment;
 protected $pool;
+protected $router;
+protected $knpHelper;
 protected $logger;
-public function __construct(Pool $pool, LoggerInterface $logger = null)
+public function __construct(Pool $pool, RouterInterface $router, Helper $knpHelper, LoggerInterface $logger = null)
 {
 $this->pool = $pool;
 $this->logger = $logger;
+$this->router = $router;
+$this->knpHelper = $knpHelper;
 }
 public function initRuntime(\Twig_Environment $environment)
 {
@@ -14825,6 +15026,11 @@ $this->environment = $environment;
 public function getFilters()
 {
 return array('render_list_element'=> new \Twig_Filter_Method($this,'renderListElement', array('is_safe'=> array('html'))),'render_view_element'=> new \Twig_Filter_Method($this,'renderViewElement', array('is_safe'=> array('html'))),'render_view_element_compare'=> new \Twig_Filter_Method($this,'renderViewElementCompare', array('is_safe'=> array('html'))),'render_relation_element'=> new \Twig_Filter_Method($this,'renderRelationElement'),'sonata_urlsafeid'=> new \Twig_Filter_Method($this,'getUrlsafeIdentifier'),'sonata_xeditable_type'=> new \Twig_Filter_Method($this,'getXEditableType'),
+);
+}
+public function getFunctions()
+{
+return array('sonata_knp_menu_build'=> new \Twig_Function_Method($this,'getKnpMenu'),
 );
 }
 public function getTokenParsers()
@@ -14851,7 +15057,7 @@ return $template;
 public function renderListElement($object, FieldDescriptionInterface $fieldDescription, $params = array())
 {
 $template = $this->getTemplate($fieldDescription, $fieldDescription->getAdmin()->getTemplate('base_list_field'));
-return $this->output($fieldDescription, $template, array_merge($params, array('admin'=> $fieldDescription->getAdmin(),'object'=> $object,'value'=> $this->getValueFromFieldDescription($object, $fieldDescription),'field_description'=> $fieldDescription
+return $this->output($fieldDescription, $template, array_merge($params, array('admin'=> $fieldDescription->getAdmin(),'object'=> $object,'value'=> $this->getValueFromFieldDescription($object, $fieldDescription),'field_description'=> $fieldDescription,
 )));
 }
 public function output(FieldDescriptionInterface $fieldDescription, \Twig_TemplateInterface $template, array $parameters = array())
@@ -14891,7 +15097,7 @@ $value = $fieldDescription->getValue($object);
 } catch (NoValueException $e) {
 $value = null;
 }
-return $this->output($fieldDescription, $template, array('field_description'=> $fieldDescription,'object'=> $object,'value'=> $value,'admin'=> $fieldDescription->getAdmin()
+return $this->output($fieldDescription, $template, array('field_description'=> $fieldDescription,'object'=> $object,'value'=> $value,'admin'=> $fieldDescription->getAdmin(),
 ));
 }
 public function renderViewElementCompare(FieldDescriptionInterface $fieldDescription, $baseObject, $compareObject)
@@ -14907,12 +15113,12 @@ $compareValue = $fieldDescription->getValue($compareObject);
 } catch (NoValueException $e) {
 $compareValue = null;
 }
-$baseValueOutput = $template->render(array('admin'=> $fieldDescription->getAdmin(),'field_description'=> $fieldDescription,'value'=> $baseValue
+$baseValueOutput = $template->render(array('admin'=> $fieldDescription->getAdmin(),'field_description'=> $fieldDescription,'value'=> $baseValue,
 ));
-$compareValueOutput = $template->render(array('field_description'=> $fieldDescription,'admin'=> $fieldDescription->getAdmin(),'value'=> $compareValue
+$compareValueOutput = $template->render(array('field_description'=> $fieldDescription,'admin'=> $fieldDescription->getAdmin(),'value'=> $compareValue,
 ));
 $isDiff = $baseValueOutput !== $compareValueOutput;
-return $this->output($fieldDescription, $template, array('field_description'=> $fieldDescription,'value'=> $baseValue,'value_compare'=> $compareValue,'is_diff'=> $isDiff,'admin'=> $fieldDescription->getAdmin()
+return $this->output($fieldDescription, $template, array('field_description'=> $fieldDescription,'value'=> $baseValue,'value_compare'=> $compareValue,'is_diff'=> $isDiff,'admin'=> $fieldDescription->getAdmin(),
 ));
 }
 public function renderRelationElement($element, FieldDescriptionInterface $fieldDescription)
@@ -14932,13 +15138,18 @@ $fieldDescription->getAdmin()->getCode()
 }
 return call_user_func(array($element, $method));
 }
+if (is_callable($propertyPath)) {
+return $propertyPath($element);
+}
 return PropertyAccess::createPropertyAccessor()->getValue($element, $propertyPath);
 }
-public function getUrlsafeIdentifier($model)
+public function getUrlsafeIdentifier($model, AdminInterface $admin = null)
 {
+if (is_null($admin)) {
 $admin = $this->pool->getAdminByClass(
 ClassUtils::getClass($model)
 );
+}
 return $admin->getUrlsafeIdentifier($model);
 }
 public function getXEditableType($type)
@@ -14946,6 +15157,57 @@ public function getXEditableType($type)
 $mapping = array('boolean'=>'select','text'=>'text','textarea'=>'textarea','email'=>'email','string'=>'text','smallint'=>'text','bigint'=>'text','integer'=>'number','decimal'=>'number','currency'=>'number','percent'=>'number','url'=>'url',
 );
 return isset($mapping[$type]) ? $mapping[$type] : false;
+}
+public function getKnpMenu(Request $request = null)
+{
+$menuFactory = new MenuFactory();
+$menu = $menuFactory
+->createItem('root')
+->setExtra('request', $request)
+;
+foreach ($this->pool->getAdminGroups() as $name => $group) {
+if (isset($group['provider'])) {
+$subMenu = $this->knpHelper->get($group['provider']);
+$menu->addChild($subMenu)
+->setAttributes(array('icon'=> $group['icon'],'label_catalogue'=> $group['label_catalogue']
+))
+->setExtra('roles', $group['roles']);
+continue;
+}
+$menu
+->addChild($name, array('label'=> $group['label']))
+->setAttributes(
+array('icon'=> $group['icon'],'label_catalogue'=> $group['label_catalogue'],
+)
+)
+->setExtra('roles', $group['roles'])
+;
+foreach ($group['items'] as $item) {
+if (array_key_exists('admin', $item) && $item['admin'] != null) {
+$admin = $this->pool->getInstance($item['admin']);
+if (!$admin->hasRoute('list') || !$admin->isGranted('LIST')) {
+continue;
+}
+$label = $admin->getLabel();
+$route = $admin->generateUrl('list');
+$translationDomain = $admin->getTranslationDomain();
+} else {
+$label = $item['label'];
+$route = $this->router->generate($item['route'], $item['route_params']);
+$translationDomain = $group['label_catalogue'];
+$admin = null;
+}
+$menu[$name]
+->addChild($label, array('uri'=> $route))
+->setExtra('translationdomain', $translationDomain)
+->setExtra('admin', $admin)
+;
+}
+if (0 === count($menu[$name]->getChildren())) {
+$menu->removeChild($name);
+}
+}
+return $menu;
 }
 }
 }
@@ -15039,20 +15301,21 @@ return false;
 }
 namespace Sonata\AdminBundle\Util
 {
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 class FormBuilderIterator extends \RecursiveArrayIterator
 {
 protected static $reflection;
 protected $formBuilder;
 protected $keys = array();
 protected $prefix;
-public function __construct(FormBuilder $formBuilder, $prefix = false)
+protected $iterator;
+public function __construct(FormBuilderInterface $formBuilder, $prefix = false)
 {
 $this->formBuilder = $formBuilder;
 $this->prefix = $prefix ? $prefix : $formBuilder->getName();
 $this->iterator = new \ArrayIterator(self::getKeys($formBuilder));
 }
-private static function getKeys(FormBuilder $formBuilder)
+private static function getKeys(FormBuilderInterface $formBuilder)
 {
 if (!self::$reflection) {
 self::$reflection = new \ReflectionProperty(get_class($formBuilder),'children');
@@ -15097,6 +15360,7 @@ use Symfony\Component\Form\FormView;
 class FormViewIterator implements \RecursiveIterator
 {
 protected $formView;
+protected $iterator;
 public function __construct(FormView $formView)
 {
 $this->iterator = $formView->getIterator();
@@ -15178,400 +15442,6 @@ $output->writeln(sprintf('Error saving ObjectIdentity (%s, %s) ACL : %s <info>ig
 }
 }
 return array($countAdded, $countUpdated);
-}
-}
-}
-namespace Symfony\Component\Validator
-{
-use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
-use Symfony\Component\Validator\Exception\InvalidArgumentException;
-use Symfony\Component\Validator\Exception\InvalidOptionsException;
-use Symfony\Component\Validator\Exception\MissingOptionsException;
-abstract class Constraint
-{
-const DEFAULT_GROUP ='Default';
-const CLASS_CONSTRAINT ='class';
-const PROPERTY_CONSTRAINT ='property';
-protected static $errorNames = array();
-public $payload;
-public static function getErrorName($errorCode)
-{
-if (!isset(static::$errorNames[$errorCode])) {
-throw new InvalidArgumentException(sprintf('The error code "%s" does not exist for constraint of type "%s".',
-$errorCode,
-get_called_class()
-));
-}
-return static::$errorNames[$errorCode];
-}
-public function __construct($options = null)
-{
-$invalidOptions = array();
-$missingOptions = array_flip((array) $this->getRequiredOptions());
-$knownOptions = get_object_vars($this);
-$knownOptions['groups'] = true;
-if (is_array($options) && count($options) >= 1 && isset($options['value']) && !property_exists($this,'value')) {
-$options[$this->getDefaultOption()] = $options['value'];
-unset($options['value']);
-}
-if (is_array($options) && count($options) > 0 && is_string(key($options))) {
-foreach ($options as $option => $value) {
-if (array_key_exists($option, $knownOptions)) {
-$this->$option = $value;
-unset($missingOptions[$option]);
-} else {
-$invalidOptions[] = $option;
-}
-}
-} elseif (null !== $options && !(is_array($options) && count($options) === 0)) {
-$option = $this->getDefaultOption();
-if (null === $option) {
-throw new ConstraintDefinitionException(
-sprintf('No default option is configured for constraint %s', get_class($this))
-);
-}
-if (array_key_exists($option, $knownOptions)) {
-$this->$option = $options;
-unset($missingOptions[$option]);
-} else {
-$invalidOptions[] = $option;
-}
-}
-if (count($invalidOptions) > 0) {
-throw new InvalidOptionsException(
-sprintf('The options "%s" do not exist in constraint %s', implode('", "', $invalidOptions), get_class($this)),
-$invalidOptions
-);
-}
-if (count($missingOptions) > 0) {
-throw new MissingOptionsException(
-sprintf('The options "%s" must be set for constraint %s', implode('", "', array_keys($missingOptions)), get_class($this)),
-array_keys($missingOptions)
-);
-}
-}
-public function __set($option, $value)
-{
-if ('groups'=== $option) {
-$this->groups = (array) $value;
-return;
-}
-throw new InvalidOptionsException(sprintf('The option "%s" does not exist in constraint %s', $option, get_class($this)), array($option));
-}
-public function __get($option)
-{
-if ('groups'=== $option) {
-$this->groups = array(self::DEFAULT_GROUP);
-return $this->groups;
-}
-throw new InvalidOptionsException(sprintf('The option "%s" does not exist in constraint %s', $option, get_class($this)), array($option));
-}
-public function addImplicitGroupName($group)
-{
-if (in_array(Constraint::DEFAULT_GROUP, $this->groups) && !in_array($group, $this->groups)) {
-$this->groups[] = $group;
-}
-}
-public function getDefaultOption()
-{
-}
-public function getRequiredOptions()
-{
-return array();
-}
-public function validatedBy()
-{
-return get_class($this).'Validator';
-}
-public function getTargets()
-{
-return self::PROPERTY_CONSTRAINT;
-}
-public function __sleep()
-{
-$this->groups;
-return array_keys(get_object_vars($this));
-}
-}
-}
-namespace Sonata\AdminBundle\Validator\Constraints
-{
-use Symfony\Component\Validator\Constraint;
-class InlineConstraint extends Constraint
-{
-protected $service;
-protected $method;
-public function validatedBy()
-{
-return'sonata.admin.validator.inline';
-}
-public function isClosure()
-{
-return $this->method instanceof \Closure;
-}
-public function getClosure()
-{
-return $this->method;
-}
-public function getTargets()
-{
-return self::CLASS_CONSTRAINT;
-}
-public function getRequiredOptions()
-{
-return array('service','method');
-}
-public function getMethod()
-{
-return $this->method;
-}
-public function getService()
-{
-return $this->service;
-}
-}
-}
-namespace Sonata\AdminBundle\Validator
-{
-use Symfony\Component\Validator\ConstraintValidatorFactoryInterface;
-use Symfony\Component\Validator\ExecutionContextInterface;
-use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\PropertyAccess\PropertyPath;
-use Symfony\Component\Validator\Constraint;
-class ErrorElement
-{
-protected $context;
-protected $group;
-protected $constraintValidatorFactory;
-protected $stack = array();
-protected $propertyPaths = array();
-protected $subject;
-protected $current;
-protected $basePropertyPath;
-protected $errors = array();
-public function __construct($subject, ConstraintValidatorFactoryInterface $constraintValidatorFactory, ExecutionContextInterface $context, $group)
-{
-$this->subject = $subject;
-$this->context = $context;
-$this->group = $group;
-$this->constraintValidatorFactory = $constraintValidatorFactory;
-$this->current ='';
-$this->basePropertyPath = $this->context->getPropertyPath();
-}
-public function __call($name, array $arguments = array())
-{
-if (substr($name, 0, 6) =='assert') {
-$this->validate($this->newConstraint(substr($name, 6), isset($arguments[0]) ? $arguments[0] : array()));
-} else {
-throw new \RunTimeException('Unable to recognize the command');
-}
-return $this;
-}
-public function addConstraint(Constraint $constraint)
-{
-$this->validate($constraint);
-return $this;
-}
-public function with($name, $key = false)
-{
-$key = $key ? $name .'.'. $key : $name;
-$this->stack[] = $key;
-$this->current = implode('.', $this->stack);
-if (!isset($this->propertyPaths[$this->current])) {
-$this->propertyPaths[$this->current] = new PropertyPath($this->current);
-}
-return $this;
-}
-public function end()
-{
-array_pop($this->stack);
-$this->current = implode('.', $this->stack);
-return $this;
-}
-protected function validate(Constraint $constraint)
-{
-$subPath = (string) $this->getCurrentPropertyPath();
-$this->context->validateValue($this->getValue(), $constraint, $subPath, $this->group);
-}
-public function getFullPropertyPath()
-{
-if ($this->getCurrentPropertyPath()) {
-return sprintf('%s.%s', $this->basePropertyPath, $this->getCurrentPropertyPath());
-} else {
-return $this->basePropertyPath;
-}
-}
-protected function getValue()
-{
-if ($this->current =='') {
-return $this->subject;
-}
-$propertyAccessor = PropertyAccess::createPropertyAccessor();
-return $propertyAccessor->getValue($this->subject, $this->getCurrentPropertyPath());
-}
-public function getSubject()
-{
-return $this->subject;
-}
-protected function newConstraint($name, array $options = array())
-{
-if (strpos($name,'\\') !== false && class_exists($name)) {
-$className = (string) $name;
-} else {
-$className ='Symfony\\Component\\Validator\\Constraints\\'. $name;
-}
-return new $className($options);
-}
-protected function getCurrentPropertyPath()
-{
-if (!isset($this->propertyPaths[$this->current])) {
-return null; }
-return $this->propertyPaths[$this->current];
-}
-public function addViolation($message, $parameters = array(), $value = null)
-{
-if (is_array($message)) {
-$value = isset($message[2]) ? $message[2] : $value;
-$parameters = isset($message[1]) ? (array) $message[1] : array();
-$message = isset($message[0]) ? $message[0] :'error';
-}
-$subPath = (string) $this->getCurrentPropertyPath();
-$this->context->addViolationAt($subPath, $message, $parameters, $value);
-$this->errors[] = array($message, $parameters, $value);
-return $this;
-}
-public function getErrors()
-{
-return $this->errors;
-}
-}
-}
-namespace Symfony\Component\Validator
-{
-interface ConstraintValidatorInterface
-{
-public function initialize(ExecutionContextInterface $context);
-public function validate($value, Constraint $constraint);
-}
-}
-namespace Symfony\Component\Validator
-{
-use Symfony\Component\Validator\Context\ExecutionContextInterface as ExecutionContextInterface2Dot5;
-use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
-use Symfony\Component\Validator\Violation\LegacyConstraintViolationBuilder;
-abstract class ConstraintValidator implements ConstraintValidatorInterface
-{
-const PRETTY_DATE = 1;
-const OBJECT_TO_STRING = 2;
-protected $context;
-public function initialize(ExecutionContextInterface $context)
-{
-$this->context = $context;
-}
-protected function buildViolation($message, array $parameters = array())
-{
-if ($this->context instanceof ExecutionContextInterface2Dot5) {
-return $this->context->buildViolation($message, $parameters);
-}
-return new LegacyConstraintViolationBuilder($this->context, $message, $parameters);
-}
-protected function buildViolationInContext(ExecutionContextInterface $context, $message, array $parameters = array())
-{
-if ($context instanceof ExecutionContextInterface2Dot5) {
-return $context->buildViolation($message, $parameters);
-}
-return new LegacyConstraintViolationBuilder($context, $message, $parameters);
-}
-protected function formatTypeOf($value)
-{
-return is_object($value) ? get_class($value) : gettype($value);
-}
-protected function formatValue($value, $format = 0)
-{
-$isDateTime = $value instanceof \DateTime || $value instanceof \DateTimeInterface;
-if (($format & self::PRETTY_DATE) && $isDateTime) {
-if (class_exists('IntlDateFormatter')) {
-$locale = \Locale::getDefault();
-$formatter = new \IntlDateFormatter($locale, \IntlDateFormatter::MEDIUM, \IntlDateFormatter::SHORT);
-if (!$value instanceof \DateTime) {
-$value = new \DateTime(
-$value->format('Y-m-d H:i:s.u e'),
-$value->getTimezone()
-);
-}
-return $formatter->format($value);
-}
-return $value->format('Y-m-d H:i:s');
-}
-if (is_object($value)) {
-if ($format & self::OBJECT_TO_STRING && method_exists($value,'__toString')) {
-return $value->__toString();
-}
-return'object';
-}
-if (is_array($value)) {
-return'array';
-}
-if (is_string($value)) {
-return'"'.$value.'"';
-}
-if (is_resource($value)) {
-return'resource';
-}
-if (null === $value) {
-return'null';
-}
-if (false === $value) {
-return'false';
-}
-if (true === $value) {
-return'true';
-}
-return (string) $value;
-}
-protected function formatValues(array $values, $format = 0)
-{
-foreach ($values as $key => $value) {
-$values[$key] = $this->formatValue($value, $format);
-}
-return implode(', ', $values);
-}
-}
-}
-namespace Sonata\AdminBundle\Validator
-{
-use Symfony\Component\Validator\ConstraintValidator;
-use Symfony\Component\Validator\Constraint;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Sonata\AdminBundle\Validator\ErrorElement;
-use Symfony\Component\Validator\ConstraintValidatorFactoryInterface;
-class InlineValidator extends ConstraintValidator
-{
-protected $container;
-public function __construct(ContainerInterface $container, ConstraintValidatorFactoryInterface $constraintValidatorFactory)
-{
-$this->container = $container;
-$this->constraintValidatorFactory = $constraintValidatorFactory;
-}
-public function validate($value, Constraint $constraint)
-{
-$errorElement = new ErrorElement(
-$value,
-$this->constraintValidatorFactory,
-$this->context,
-$this->context->getGroup()
-);
-if ($constraint->isClosure()) {
-$function = $constraint->getClosure();
-} else {
-if (is_string($constraint->getService())) {
-$service = $this->container->get($constraint->getService());
-} else {
-$service = $constraint->getService();
-}
-$function = array($service, $constraint->getMethod());
-}
-call_user_func($function, $errorElement, $value);
 }
 }
 }
