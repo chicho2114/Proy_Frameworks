@@ -303,7 +303,38 @@
     <parameter key="security.access.always_authenticate_before_granting">false</parameter>
     <parameter key="security.authentication.hide_user_not_found">true</parameter>
     <parameter key="security.role_hierarchy.roles" type="collection">
-      <parameter key="ROLE_ADMIN" type="collection">
+      <parameter key="ROLE_SONATA_ADMIN_READER" type="collection">
+        <parameter>ROLE_SONATA_ADMIN_PACIENTE_LIST</parameter>
+        <parameter>ROLE_SONATA_ADMIN_PACIENTE_VIEW</parameter>
+        <parameter>ROLE_SONATA_ADMIN_CITA_LIST</parameter>
+      </parameter>
+      <parameter key="ROLE_SONATA_ADMIN_EDITOR" type="collection">
+        <parameter>ROLE_SONATA_ADMIN_PACIENTE_CREATE</parameter>
+        <parameter>ROLE_SONATA_ADMIN_PACIENTE_EDIT</parameter>
+      </parameter>
+      <parameter key="ROLE_SONATA_ADMIN_ADMIN" type="collection">
+        <parameter>ROLE_SONATA_ADMIN_PACIENTE_DELETE</parameter>
+        <parameter>ROLE_SONATA_ADMIN_PACIENTE_EXPORT</parameter>
+      </parameter>
+      <parameter key="ROLE_PERSONAL_ADMINISTRATIVO" type="collection">
+        <parameter>ROLE_SONATA_ADMIN_EDITOR</parameter>
+        <parameter>ROLE_USER</parameter>
+        <parameter>ROLE_SONATA_ADMIN</parameter>
+        <parameter>ROLE_SONATA_ADMIN_READER</parameter>
+      </parameter>
+      <parameter key="ROLE_PERSONAL_MEDICO" type="collection">
+        <parameter>ROLE_USER</parameter>
+        <parameter>ROLE_SONATA_ADMIN</parameter>
+        <parameter>ROLE_NORMAL</parameter>
+        <parameter>ROLE_SONATA_ADMIN_EDITOR</parameter>
+      </parameter>
+      <parameter key="ROLE_MEDICO" type="collection">
+        <parameter>ROLE_USER</parameter>
+        <parameter>ROLE_SONATA_ADMIN</parameter>
+        <parameter>ROLE_NORMAL</parameter>
+        <parameter>ROLE_SONATA_ADMIN_EDITOR</parameter>
+      </parameter>
+      <parameter key="ROLE_ADMIN_ADMIN" type="collection">
         <parameter>ROLE_USER</parameter>
         <parameter>ROLE_SONATA_ADMIN</parameter>
       </parameter>
@@ -660,6 +691,13 @@
         <parameter key="cache">sonata.cache.noop</parameter>
         <parameter key="settings" type="collection"/>
       </parameter>
+      <parameter key="sonata.admin.block.search_result" type="collection">
+        <parameter key="contexts" type="collection">
+          <parameter>cms</parameter>
+        </parameter>
+        <parameter key="cache">sonata.cache.noop</parameter>
+        <parameter key="settings" type="collection"/>
+      </parameter>
     </parameter>
     <parameter key="sonata_block.blocks_by_class" type="collection"/>
     <parameter key="sonata_block.cache_blocks" type="collection">
@@ -668,6 +706,7 @@
         <parameter key="sonata.user.block.menu">sonata.cache.noop</parameter>
         <parameter key="sonata.user.block.account">sonata.cache.noop</parameter>
         <parameter key="sonata.block.service.text">sonata.cache.noop</parameter>
+        <parameter key="sonata.admin.block.search_result">sonata.cache.noop</parameter>
       </parameter>
     </parameter>
     <parameter key="knp_menu.factory.class">Knp\Menu\MenuFactory</parameter>
@@ -785,7 +824,32 @@
       </parameter>
     </parameter>
     <parameter key="sonata.admin.security.acl_user_manager">fos_user.user_manager</parameter>
-    <parameter key="sonata.admin.configuration.security.information" type="collection"/>
+    <parameter key="sonata.admin.configuration.security.information" type="collection">
+      <parameter key="EDIT" type="collection">
+        <parameter>EDIT</parameter>
+      </parameter>
+      <parameter key="LIST" type="collection">
+        <parameter>LIST</parameter>
+      </parameter>
+      <parameter key="CREATE" type="collection">
+        <parameter>CREATE</parameter>
+      </parameter>
+      <parameter key="VIEW" type="collection">
+        <parameter>VIEW</parameter>
+      </parameter>
+      <parameter key="DELETE" type="collection">
+        <parameter>DELETE</parameter>
+      </parameter>
+      <parameter key="EXPORT" type="collection">
+        <parameter>EXPORT</parameter>
+      </parameter>
+      <parameter key="OPERATOR" type="collection">
+        <parameter>OPERATOR</parameter>
+      </parameter>
+      <parameter key="MASTER" type="collection">
+        <parameter>MASTER</parameter>
+      </parameter>
+    </parameter>
     <parameter key="sonata.admin.configuration.security.admin_permissions" type="collection">
       <parameter>CREATE</parameter>
       <parameter>LIST</parameter>
@@ -1023,10 +1087,10 @@
     </parameter>
   </parameters>
   <services>
-    <service id="sonata.admin.post" class="Admin\AdminBundle\Admin\PostAdmin" scope="prototype">
-      <tag name="sonata.admin" manager_type="orm" group="Content" label="Post"/>
-      <argument>sonata.admin.post</argument>
-      <argument>Admin\AdminBundle\Entity\Post</argument>
+    <service id="sonata.admin.paciente" class="Admin\AdminBundle\Admin\PacienteAdmin" scope="prototype">
+      <tag name="sonata.admin" manager_type="orm" group="Administracion Pacientes" label="Paciente"/>
+      <argument>sonata.admin.paciente</argument>
+      <argument>Admin\AdminBundle\Entity\Paciente</argument>
       <argument>SonataAdminBundle:CRUD</argument>
       <call method="setTranslationDomain">
         <argument>AdminAdminBundle</argument>
@@ -1087,7 +1151,7 @@
         <argument>default</argument>
       </call>
       <call method="setLabel">
-        <argument>Post</argument>
+        <argument>Paciente</argument>
       </call>
       <call method="setPersistFilters">
         <argument>false</argument>
@@ -1129,17 +1193,42 @@
         </argument>
       </call>
       <call method="setSecurityInformation">
-        <argument type="collection"/>
+        <argument type="collection">
+          <argument key="EDIT" type="collection">
+            <argument>EDIT</argument>
+          </argument>
+          <argument key="LIST" type="collection">
+            <argument>LIST</argument>
+          </argument>
+          <argument key="CREATE" type="collection">
+            <argument>CREATE</argument>
+          </argument>
+          <argument key="VIEW" type="collection">
+            <argument>VIEW</argument>
+          </argument>
+          <argument key="DELETE" type="collection">
+            <argument>DELETE</argument>
+          </argument>
+          <argument key="EXPORT" type="collection">
+            <argument>EXPORT</argument>
+          </argument>
+          <argument key="OPERATOR" type="collection">
+            <argument>OPERATOR</argument>
+          </argument>
+          <argument key="MASTER" type="collection">
+            <argument>MASTER</argument>
+          </argument>
+        </argument>
       </call>
       <call method="initialize"/>
       <call method="addExtension">
         <argument type="service" id="sonata.admin.event.extension"/>
       </call>
     </service>
-    <service id="sonata.admin.persona" class="Admin\AdminBundle\Admin\PersonaAdmin" scope="prototype">
-      <tag name="sonata.admin" manager_type="orm" group="Content" label="Persona"/>
-      <argument>sonata.admin.persona</argument>
-      <argument>Admin\AdminBundle\Entity\Persona</argument>
+    <service id="sonata.admin.cita" class="Admin\AdminBundle\Admin\CitaAdmin" scope="prototype">
+      <tag name="sonata.admin" manager_type="orm" group="Administracion Pacientes" label="Citas"/>
+      <argument>sonata.admin.cita</argument>
+      <argument>Admin\AdminBundle\Entity\Cita</argument>
       <argument>SonataAdminBundle:CRUD</argument>
       <call method="setTranslationDomain">
         <argument>AdminAdminBundle</argument>
@@ -1200,7 +1289,7 @@
         <argument>default</argument>
       </call>
       <call method="setLabel">
-        <argument>Persona</argument>
+        <argument>Citas</argument>
       </call>
       <call method="setPersistFilters">
         <argument>false</argument>
@@ -1242,7 +1331,170 @@
         </argument>
       </call>
       <call method="setSecurityInformation">
-        <argument type="collection"/>
+        <argument type="collection">
+          <argument key="EDIT" type="collection">
+            <argument>EDIT</argument>
+          </argument>
+          <argument key="LIST" type="collection">
+            <argument>LIST</argument>
+          </argument>
+          <argument key="CREATE" type="collection">
+            <argument>CREATE</argument>
+          </argument>
+          <argument key="VIEW" type="collection">
+            <argument>VIEW</argument>
+          </argument>
+          <argument key="DELETE" type="collection">
+            <argument>DELETE</argument>
+          </argument>
+          <argument key="EXPORT" type="collection">
+            <argument>EXPORT</argument>
+          </argument>
+          <argument key="OPERATOR" type="collection">
+            <argument>OPERATOR</argument>
+          </argument>
+          <argument key="MASTER" type="collection">
+            <argument>MASTER</argument>
+          </argument>
+        </argument>
+      </call>
+      <call method="initialize"/>
+      <call method="addExtension">
+        <argument type="service" id="sonata.admin.event.extension"/>
+      </call>
+    </service>
+    <service id="sonata.admin.historia" class="Admin\AdminBundle\Admin\HistoriaAdmin" scope="prototype">
+      <tag name="sonata.admin" manager_type="orm" group="Administracion Pacientes" label="Historia clinica"/>
+      <argument>sonata.admin.historia</argument>
+      <argument>Admin\AdminBundle\Entity\Historia</argument>
+      <argument>SonataAdminBundle:CRUD</argument>
+      <call method="setTranslationDomain">
+        <argument>AdminAdminBundle</argument>
+      </call>
+      <call method="setFormTheme">
+        <argument type="collection">
+          <argument>SonataDoctrineORMAdminBundle:Form:form_admin_fields.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setFilterTheme">
+        <argument type="collection">
+          <argument>SonataDoctrineORMAdminBundle:Form:filter_admin_fields.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setManagerType">
+        <argument>orm</argument>
+      </call>
+      <call method="setModelManager">
+        <argument type="service" id="sonata.admin.manager.orm"/>
+      </call>
+      <call method="setFormContractor">
+        <argument type="service" id="sonata.admin.builder.orm_form"/>
+      </call>
+      <call method="setShowBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_show"/>
+      </call>
+      <call method="setListBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_list"/>
+      </call>
+      <call method="setDatagridBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_datagrid"/>
+      </call>
+      <call method="setTranslator">
+        <argument type="service" id="translator"/>
+      </call>
+      <call method="setConfigurationPool">
+        <argument type="service" id="sonata.admin.pool"/>
+      </call>
+      <call method="setRouteGenerator">
+        <argument type="service" id="sonata.admin.route.default_generator"/>
+      </call>
+      <call method="setValidator">
+        <argument type="service" id="validator"/>
+      </call>
+      <call method="setSecurityHandler">
+        <argument type="service" id="sonata.admin.security.handler"/>
+      </call>
+      <call method="setMenuFactory">
+        <argument type="service" id="knp_menu.factory"/>
+      </call>
+      <call method="setRouteBuilder">
+        <argument type="service" id="sonata.admin.route.path_info"/>
+      </call>
+      <call method="setLabelTranslatorStrategy">
+        <argument type="service" id="sonata.admin.label.strategy.native"/>
+      </call>
+      <call method="setPagerType">
+        <argument>default</argument>
+      </call>
+      <call method="setLabel">
+        <argument>Historia clinica</argument>
+      </call>
+      <call method="setPersistFilters">
+        <argument>false</argument>
+      </call>
+      <call method="setTemplates">
+        <argument type="collection">
+          <argument key="user_block">SonataUserBundle:Admin/Core:user_block.html.twig</argument>
+          <argument key="add_block">SonataAdminBundle:Core:add_block.html.twig</argument>
+          <argument key="layout">SonataAdminBundle::standard_layout.html.twig</argument>
+          <argument key="ajax">SonataAdminBundle::ajax_layout.html.twig</argument>
+          <argument key="dashboard">SonataAdminBundle:Core:dashboard.html.twig</argument>
+          <argument key="list">SonataAdminBundle:CRUD:list.html.twig</argument>
+          <argument key="filter">SonataAdminBundle:Form:filter_admin_fields.html.twig</argument>
+          <argument key="show">SonataAdminBundle:CRUD:show.html.twig</argument>
+          <argument key="show_compare">SonataAdminBundle:CRUD:show_compare.html.twig</argument>
+          <argument key="edit">SonataAdminBundle:CRUD:edit.html.twig</argument>
+          <argument key="history">SonataAdminBundle:CRUD:history.html.twig</argument>
+          <argument key="history_revision_timestamp">SonataAdminBundle:CRUD:history_revision_timestamp.html.twig</argument>
+          <argument key="acl">SonataAdminBundle:CRUD:acl.html.twig</argument>
+          <argument key="action">SonataAdminBundle:CRUD:action.html.twig</argument>
+          <argument key="short_object_description">SonataAdminBundle:Helper:short-object-description.html.twig</argument>
+          <argument key="preview">SonataAdminBundle:CRUD:preview.html.twig</argument>
+          <argument key="list_block">SonataAdminBundle:Block:block_admin_list.html.twig</argument>
+          <argument key="delete">SonataAdminBundle:CRUD:delete.html.twig</argument>
+          <argument key="batch">SonataAdminBundle:CRUD:list__batch.html.twig</argument>
+          <argument key="select">SonataAdminBundle:CRUD:list__select.html.twig</argument>
+          <argument key="batch_confirmation">SonataAdminBundle:CRUD:batch_confirmation.html.twig</argument>
+          <argument key="inner_list_row">SonataAdminBundle:CRUD:list_inner_row.html.twig</argument>
+          <argument key="base_list_field">SonataAdminBundle:CRUD:base_list_field.html.twig</argument>
+          <argument key="pager_links">SonataAdminBundle:Pager:links.html.twig</argument>
+          <argument key="pager_results">SonataAdminBundle:Pager:results.html.twig</argument>
+          <argument key="tab_menu_template">SonataAdminBundle:Core:tab_menu_template.html.twig</argument>
+          <argument key="knp_menu_template">SonataAdminBundle:Menu:sonata_menu.html.twig</argument>
+          <argument key="outer_list_rows_mosaic">SonataAdminBundle:CRUD:list_outer_rows_mosaic.html.twig</argument>
+          <argument key="outer_list_rows_list">SonataAdminBundle:CRUD:list_outer_rows_list.html.twig</argument>
+          <argument key="outer_list_rows_tree">SonataAdminBundle:CRUD:list_outer_rows_tree.html.twig</argument>
+          <argument key="search">SonataAdminBundle:Core:search.html.twig</argument>
+          <argument key="search_result_block">SonataAdminBundle:Block:block_search_result.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setSecurityInformation">
+        <argument type="collection">
+          <argument key="EDIT" type="collection">
+            <argument>EDIT</argument>
+          </argument>
+          <argument key="LIST" type="collection">
+            <argument>LIST</argument>
+          </argument>
+          <argument key="CREATE" type="collection">
+            <argument>CREATE</argument>
+          </argument>
+          <argument key="VIEW" type="collection">
+            <argument>VIEW</argument>
+          </argument>
+          <argument key="DELETE" type="collection">
+            <argument>DELETE</argument>
+          </argument>
+          <argument key="EXPORT" type="collection">
+            <argument>EXPORT</argument>
+          </argument>
+          <argument key="OPERATOR" type="collection">
+            <argument>OPERATOR</argument>
+          </argument>
+          <argument key="MASTER" type="collection">
+            <argument>MASTER</argument>
+          </argument>
+        </argument>
       </call>
       <call method="initialize"/>
       <call method="addExtension">
@@ -4015,7 +4267,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>55206f8ae6fe0</argument>
+            <argument>552746b309437</argument>
           </service>
         </argument>
         <argument type="service">
@@ -4029,7 +4281,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>55206f8ae6fe0</argument>
+            <argument>552746b309437</argument>
           </service>
         </argument>
       </argument>
@@ -4121,7 +4373,38 @@
     </service>
     <service id="security.role_hierarchy" class="Symfony\Component\Security\Core\Role\RoleHierarchy" public="false">
       <argument type="collection">
-        <argument key="ROLE_ADMIN" type="collection">
+        <argument key="ROLE_SONATA_ADMIN_READER" type="collection">
+          <argument>ROLE_SONATA_ADMIN_PACIENTE_LIST</argument>
+          <argument>ROLE_SONATA_ADMIN_PACIENTE_VIEW</argument>
+          <argument>ROLE_SONATA_ADMIN_CITA_LIST</argument>
+        </argument>
+        <argument key="ROLE_SONATA_ADMIN_EDITOR" type="collection">
+          <argument>ROLE_SONATA_ADMIN_PACIENTE_CREATE</argument>
+          <argument>ROLE_SONATA_ADMIN_PACIENTE_EDIT</argument>
+        </argument>
+        <argument key="ROLE_SONATA_ADMIN_ADMIN" type="collection">
+          <argument>ROLE_SONATA_ADMIN_PACIENTE_DELETE</argument>
+          <argument>ROLE_SONATA_ADMIN_PACIENTE_EXPORT</argument>
+        </argument>
+        <argument key="ROLE_PERSONAL_ADMINISTRATIVO" type="collection">
+          <argument>ROLE_SONATA_ADMIN_EDITOR</argument>
+          <argument>ROLE_USER</argument>
+          <argument>ROLE_SONATA_ADMIN</argument>
+          <argument>ROLE_SONATA_ADMIN_READER</argument>
+        </argument>
+        <argument key="ROLE_PERSONAL_MEDICO" type="collection">
+          <argument>ROLE_USER</argument>
+          <argument>ROLE_SONATA_ADMIN</argument>
+          <argument>ROLE_NORMAL</argument>
+          <argument>ROLE_SONATA_ADMIN_EDITOR</argument>
+        </argument>
+        <argument key="ROLE_MEDICO" type="collection">
+          <argument>ROLE_USER</argument>
+          <argument>ROLE_SONATA_ADMIN</argument>
+          <argument>ROLE_NORMAL</argument>
+          <argument>ROLE_SONATA_ADMIN_EDITOR</argument>
+        </argument>
+        <argument key="ROLE_ADMIN_ADMIN" type="collection">
           <argument>ROLE_USER</argument>
           <argument>ROLE_SONATA_ADMIN</argument>
         </argument>
@@ -4402,7 +4685,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>55206f8ae6fe0</argument>
+            <argument>552746b309437</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -4513,7 +4796,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>55206f8ae6fe0</argument>
+            <argument>552746b309437</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -5406,7 +5689,9 @@
       <call method="add">
         <argument>sonata.admin.block.search_result</argument>
         <argument>sonata.admin.block.search_result</argument>
-        <argument type="collection"/>
+        <argument type="collection">
+          <argument>cms</argument>
+        </argument>
       </call>
       <call method="add">
         <argument>sonata.admin.block.stats</argument>
@@ -5437,6 +5722,7 @@
           <argument key="sonata.user.block.menu">sonata.cache.noop</argument>
           <argument key="sonata.user.block.account">sonata.cache.noop</argument>
           <argument key="sonata.block.service.text">sonata.cache.noop</argument>
+          <argument key="sonata.admin.block.search_result">sonata.cache.noop</argument>
         </argument>
       </argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
@@ -5456,6 +5742,7 @@
           <argument key="sonata.user.block.menu">sonata.cache.noop</argument>
           <argument key="sonata.user.block.account">sonata.cache.noop</argument>
           <argument key="sonata.block.service.text">sonata.cache.noop</argument>
+          <argument key="sonata.admin.block.search_result">sonata.cache.noop</argument>
         </argument>
       </argument>
       <argument type="service" id="sonata.block.renderer.default"/>
@@ -5477,6 +5764,7 @@
         <argument>sonata.user.block.menu</argument>
         <argument>sonata.user.block.account</argument>
         <argument>sonata.block.service.text</argument>
+        <argument>sonata.admin.block.search_result</argument>
       </argument>
     </service>
     <service id="sonata.block.twig.global" class="Sonata\BlockBundle\Twig\GlobalVariables">
@@ -5712,7 +6000,7 @@
     </service>
     <service id="sonata.admin.pool" class="Sonata\AdminBundle\Admin\Pool">
       <argument type="service" id="service_container"/>
-      <argument>Sonata Admin</argument>
+      <argument>BAD Clinica</argument>
       <argument>bundles/sonataadmin/logo_title.png</argument>
       <argument type="collection">
         <argument key="html5_validate">true</argument>
@@ -5797,28 +6085,35 @@
       </call>
       <call method="setAdminServiceIds">
         <argument type="collection">
-          <argument>sonata.admin.post</argument>
-          <argument>sonata.admin.persona</argument>
+          <argument>sonata.admin.paciente</argument>
+          <argument>sonata.admin.cita</argument>
+          <argument>sonata.admin.historia</argument>
           <argument>sonata.user.admin.user</argument>
           <argument>sonata.user.admin.group</argument>
         </argument>
       </call>
       <call method="setAdminGroups">
         <argument type="collection">
-          <argument key="Content" type="collection">
-            <argument key="label">Content</argument>
+          <argument key="Administracion Pacientes" type="collection">
+            <argument key="label">Administracion Pacientes</argument>
             <argument key="label_catalogue">SonataAdminBundle</argument>
             <argument key="icon">&lt;i class="fa fa-folder"&gt;&lt;/i&gt;</argument>
             <argument key="roles" type="collection"/>
             <argument key="items" type="collection">
               <argument type="collection">
-                <argument key="admin">sonata.admin.post</argument>
+                <argument key="admin">sonata.admin.paciente</argument>
                 <argument key="label"></argument>
                 <argument key="route"></argument>
                 <argument key="route_params" type="collection"/>
               </argument>
               <argument type="collection">
-                <argument key="admin">sonata.admin.persona</argument>
+                <argument key="admin">sonata.admin.cita</argument>
+                <argument key="label"></argument>
+                <argument key="route"></argument>
+                <argument key="route_params" type="collection"/>
+              </argument>
+              <argument type="collection">
+                <argument key="admin">sonata.admin.historia</argument>
                 <argument key="label"></argument>
                 <argument key="route"></argument>
                 <argument key="route_params" type="collection"/>
@@ -5849,11 +6144,14 @@
       </call>
       <call method="setAdminClasses">
         <argument type="collection">
-          <argument key="Admin\AdminBundle\Entity\Post" type="collection">
-            <argument>sonata.admin.post</argument>
+          <argument key="Admin\AdminBundle\Entity\Paciente" type="collection">
+            <argument>sonata.admin.paciente</argument>
           </argument>
-          <argument key="Admin\AdminBundle\Entity\Persona" type="collection">
-            <argument>sonata.admin.persona</argument>
+          <argument key="Admin\AdminBundle\Entity\Cita" type="collection">
+            <argument>sonata.admin.cita</argument>
+          </argument>
+          <argument key="Admin\AdminBundle\Entity\Historia" type="collection">
+            <argument>sonata.admin.historia</argument>
           </argument>
           <argument key="Application\Sonata\UserBundle\Entity\User" type="collection">
             <argument>sonata.user.admin.user</argument>
@@ -5868,8 +6166,9 @@
       <tag name="routing.loader"/>
       <argument type="service" id="sonata.admin.pool"/>
       <argument type="collection">
-        <argument>sonata.admin.post</argument>
-        <argument>sonata.admin.persona</argument>
+        <argument>sonata.admin.paciente</argument>
+        <argument>sonata.admin.cita</argument>
+        <argument>sonata.admin.historia</argument>
         <argument>sonata.user.admin.user</argument>
         <argument>sonata.user.admin.group</argument>
       </argument>
@@ -6618,7 +6917,38 @@
       <argument type="service" id="security.context"/>
       <argument type="service" id="sonata.admin.pool"/>
       <argument type="collection">
-        <argument key="ROLE_ADMIN" type="collection">
+        <argument key="ROLE_SONATA_ADMIN_READER" type="collection">
+          <argument>ROLE_SONATA_ADMIN_PACIENTE_LIST</argument>
+          <argument>ROLE_SONATA_ADMIN_PACIENTE_VIEW</argument>
+          <argument>ROLE_SONATA_ADMIN_CITA_LIST</argument>
+        </argument>
+        <argument key="ROLE_SONATA_ADMIN_EDITOR" type="collection">
+          <argument>ROLE_SONATA_ADMIN_PACIENTE_CREATE</argument>
+          <argument>ROLE_SONATA_ADMIN_PACIENTE_EDIT</argument>
+        </argument>
+        <argument key="ROLE_SONATA_ADMIN_ADMIN" type="collection">
+          <argument>ROLE_SONATA_ADMIN_PACIENTE_DELETE</argument>
+          <argument>ROLE_SONATA_ADMIN_PACIENTE_EXPORT</argument>
+        </argument>
+        <argument key="ROLE_PERSONAL_ADMINISTRATIVO" type="collection">
+          <argument>ROLE_SONATA_ADMIN_EDITOR</argument>
+          <argument>ROLE_USER</argument>
+          <argument>ROLE_SONATA_ADMIN</argument>
+          <argument>ROLE_SONATA_ADMIN_READER</argument>
+        </argument>
+        <argument key="ROLE_PERSONAL_MEDICO" type="collection">
+          <argument>ROLE_USER</argument>
+          <argument>ROLE_SONATA_ADMIN</argument>
+          <argument>ROLE_NORMAL</argument>
+          <argument>ROLE_SONATA_ADMIN_EDITOR</argument>
+        </argument>
+        <argument key="ROLE_MEDICO" type="collection">
+          <argument>ROLE_USER</argument>
+          <argument>ROLE_SONATA_ADMIN</argument>
+          <argument>ROLE_NORMAL</argument>
+          <argument>ROLE_SONATA_ADMIN_EDITOR</argument>
+        </argument>
+        <argument key="ROLE_ADMIN_ADMIN" type="collection">
           <argument>ROLE_USER</argument>
           <argument>ROLE_SONATA_ADMIN</argument>
         </argument>
@@ -6744,7 +7074,32 @@
         </argument>
       </call>
       <call method="setSecurityInformation">
-        <argument type="collection"/>
+        <argument type="collection">
+          <argument key="EDIT" type="collection">
+            <argument>EDIT</argument>
+          </argument>
+          <argument key="LIST" type="collection">
+            <argument>LIST</argument>
+          </argument>
+          <argument key="CREATE" type="collection">
+            <argument>CREATE</argument>
+          </argument>
+          <argument key="VIEW" type="collection">
+            <argument>VIEW</argument>
+          </argument>
+          <argument key="DELETE" type="collection">
+            <argument>DELETE</argument>
+          </argument>
+          <argument key="EXPORT" type="collection">
+            <argument>EXPORT</argument>
+          </argument>
+          <argument key="OPERATOR" type="collection">
+            <argument>OPERATOR</argument>
+          </argument>
+          <argument key="MASTER" type="collection">
+            <argument>MASTER</argument>
+          </argument>
+        </argument>
       </call>
       <call method="initialize"/>
       <call method="addExtension">
@@ -6857,7 +7212,32 @@
         </argument>
       </call>
       <call method="setSecurityInformation">
-        <argument type="collection"/>
+        <argument type="collection">
+          <argument key="EDIT" type="collection">
+            <argument>EDIT</argument>
+          </argument>
+          <argument key="LIST" type="collection">
+            <argument>LIST</argument>
+          </argument>
+          <argument key="CREATE" type="collection">
+            <argument>CREATE</argument>
+          </argument>
+          <argument key="VIEW" type="collection">
+            <argument>VIEW</argument>
+          </argument>
+          <argument key="DELETE" type="collection">
+            <argument>DELETE</argument>
+          </argument>
+          <argument key="EXPORT" type="collection">
+            <argument>EXPORT</argument>
+          </argument>
+          <argument key="OPERATOR" type="collection">
+            <argument>OPERATOR</argument>
+          </argument>
+          <argument key="MASTER" type="collection">
+            <argument>MASTER</argument>
+          </argument>
+        </argument>
       </call>
       <call method="initialize"/>
       <call method="addExtension">
@@ -7466,7 +7846,12 @@
         <argument>null</argument>
       </call>
     </service>
-    <service id="sonata.admin.security.handler" class="Sonata\AdminBundle\Security\Handler\NoopSecurityHandler"/>
+    <service id="sonata.admin.security.handler" class="Sonata\AdminBundle\Security\Handler\RoleSecurityHandler">
+      <argument type="service" id="security.context" on-invalid="null"/>
+      <argument type="collection">
+        <argument>ROLE_SUPER_ADMIN</argument>
+      </argument>
+    </service>
     <service id="jms_serializer.metadata_driver" class="JMS\Serializer\Metadata\Driver\DoctrineTypeDriver">
       <argument type="service">
         <service class="Metadata\Driver\DriverChain" public="false">
