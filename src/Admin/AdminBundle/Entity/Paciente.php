@@ -78,11 +78,9 @@ class Paciente
     private $medico_pref;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="telefono", type="string", nullable=false)
+     * @ORM\OneToMany(targetEntity="Telefono", mappedBy="telefono")
      */
-    private $telefono;
+    protected $telefono;
 
     /**
      * @var \stdClass
@@ -297,10 +295,10 @@ class Paciente
     /**
      * Set telefono
      *
-     * @param string $telefono
+     * @param \AdminAdminBundle\Entity\Telefono $telefono
      * @return Paciente
      */
-    public function setTelefono($telefono)
+    public function setTelefono(\AdminAdminBundle\Entity\Telefono $telefono)
     {
         $this->telefono = $telefono;
 
@@ -361,5 +359,35 @@ class Paciente
     public function getHistoriaMed()
     {
         return $this->historia_med;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->telefono = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add telefono
+     *
+     * @param \Admin\AdminBundle\Entity\Telefono $telefono
+     * @return Paciente
+     */
+    public function addTelefono(\Admin\AdminBundle\Entity\Telefono $telefono)
+    {
+        $this->telefono[] = $telefono;
+
+        return $this;
+    }
+
+    /**
+     * Remove telefono
+     *
+     * @param \Admin\AdminBundle\Entity\Telefono $telefono
+     */
+    public function removeTelefono(\Admin\AdminBundle\Entity\Telefono $telefono)
+    {
+        $this->telefono->removeElement($telefono);
     }
 }

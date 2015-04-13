@@ -14,6 +14,13 @@ class PacienteAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {         
             $formMapper
+            ->with('Paciente',
+                    array(
+                        'class'       => 'col-md-6',
+                        'box_class'   => 'box box-solid box-danger',
+                        'description' => 'Lorem ipsum',
+                        // ...
+                        ))
                 ->add('nombre')
                 ->add('apellido')
                 ->add('edad')
@@ -22,9 +29,9 @@ class PacienteAdmin extends Admin
                 ->add('seguro_social')
                 ->add('est_form_act',null, array('label' => 'Estatus de forma actual'))
                 ->add('medico_pref')
-                ->add('telefono')
+                ->add('telefono', null, array('help'=>'Introduzca el numero de telefono en el siguiente formato: 04XX-XXX.XX.XX'))
                 ->add('contact_emerg')
-                ->add('historia_med')
+                ->add('historia_med')->end()
             ;
     }
 
@@ -53,7 +60,7 @@ class PacienteAdmin extends Admin
             ->addIdentifier('nombre')
             ->add('apellido')
             ->add('edad')
-            ->add('fecha_nac')
+            ->add('fecha_nac', 'date', array('date' => 'format'))
             ->add('direccion')
             ->add('seguro_social')
             ->add('medico_pref')
