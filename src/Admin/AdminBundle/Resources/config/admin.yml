@@ -1,34 +1,12 @@
 services:
-    sonata.admin.paciente:
+    admin_admin.admin.paciente:
         class: Admin\AdminBundle\Admin\PacienteAdmin
+        arguments: [~, Admin\AdminBundle\Entity\Paciente, AdminAdminBundle:PacienteAdmin]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "Administracion Pacientes", label: "Paciente" }
-        arguments:
-            - ~
-            - Admin\AdminBundle\Entity\Paciente
-            - ~
-        calls:
-            - [ setTranslationDomain, [AdminAdminBundle]]
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Paciente}
 
-    sonata.admin.cita:
-        class: Admin\AdminBundle\Admin\CitaAdmin
+    admin_admin.admin.telefono:
+        class: Admin\AdminBundle\Admin\TelefonoAdmin
+        arguments: [~, Admin\AdminBundle\Entity\Telefono, AdminAdminBundle:TelefonoAdmin]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "Administracion Pacientes", label: "Citas" }
-        arguments:
-            - ~
-            - Admin\AdminBundle\Entity\Cita
-            - ~
-        calls:
-            - [ setTranslationDomain, [AdminAdminBundle]]
-
-
-    sonata.admin.historia:
-        class: Admin\AdminBundle\Admin\HistoriaAdmin
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: "Administracion Pacientes", label: "Historia clinica" }
-        arguments:
-            - ~
-            - Admin\AdminBundle\Entity\Historia
-            - ~
-        calls:
-            - [ setTranslationDomain, [AdminAdminBundle]]
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Telefono}

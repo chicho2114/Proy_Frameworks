@@ -3,100 +3,112 @@
 namespace Admin\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Paciente
  *
- * @ORM\Table(name="Paciente")
- * @ORM\Entity
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Admin\AdminBundle\Entity\PacienteRepository") 
+ * @ORM\HasLifecycleCallbacks()
  */
 class Paciente
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
+     * @ORM\Column(name="nombre", type="string", length=255)
      */
     private $nombre;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="apellido", type="string", length=255, nullable=false)
+     * @ORM\Column(name="apellido", type="string", length=255)
      */
     private $apellido;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="edad", type="integer", nullable=false)
+     * @ORM\Column(name="edad", type="integer")
      */
     private $edad;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_nac", type="date", nullable=false)
+     * @ORM\Column(name="fecha_nac", type="date")
      */
-    private $fecha_nac;
+    private $fechaNac;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="direccion", type="text", nullable=false)
+     * @ORM\Column(name="direccion", type="text")
      */
     private $direccion;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="seguro_social", type="string", length=255, nullable=false)
+     * @ORM\Column(name="seguro_social", type="string", length=255)
      */
-    private $seguro_social;
+    private $seguroSocial;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="est_form_act", type="text", nullable=false)
+     * @ORM\Column(name="forma_actual", type="text")
      */
-    private $est_form_act;
+    private $formaActual;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="medico_pref", type="string", length=255, nullable=false)
+     * @ORM\Column(name="medico_pref", type="string", length=255)
      */
-    private $medico_pref;
+    private $medicoPref;
 
     /**
-     * @ORM\OneToMany(targetEntity="Telefono", mappedBy="telefono")
+     * @ORM\OneToMany(targetEntity="Telefono", mappedBy="paciente", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
      */
-    protected $telefono;
+    protected $telefonos;
 
     /**
-     * @var \stdClass
+     * @var string
      *
-     * @ORM\Column(name="contact_emerg", type="object", nullable=false)
+     * @ORM\Column(name="contacto_emerg", type="string", length=255)
      */
-    private $contact_emerg;
+    private $contactoEmerg;
 
     /**
-     * @var \stdClass
-     *
-     * @ORM\Column(name="historia_med", type="object", nullable=false)
+     * Constructor
      */
-    private $historia_med;
+    public function __construct()
+    {
+        $this->telefonos = new ArrayCollection();
+    }
 
-
+    /**
+     * __toString
+     *
+     * @return string 
+     */
+    public function __toString()
+    {
+        return $this->getNombre();
+    }
 
     /**
      * Get id
@@ -178,26 +190,26 @@ class Paciente
     }
 
     /**
-     * Set fecha_nac
+     * Set fechaNac
      *
      * @param \DateTime $fechaNac
      * @return Paciente
      */
     public function setFechaNac($fechaNac)
     {
-        $this->fecha_nac = $fechaNac;
+        $this->fechaNac = $fechaNac;
 
         return $this;
     }
 
     /**
-     * Get fecha_nac
+     * Get fechaNac
      *
      * @return \DateTime 
      */
     public function getFechaNac()
     {
-        return $this->fecha_nac;
+        return $this->fechaNac;
     }
 
     /**
@@ -224,170 +236,137 @@ class Paciente
     }
 
     /**
-     * Set seguro_social
+     * Set seguroSocial
      *
      * @param string $seguroSocial
      * @return Paciente
      */
     public function setSeguroSocial($seguroSocial)
     {
-        $this->seguro_social = $seguroSocial;
+        $this->seguroSocial = $seguroSocial;
 
         return $this;
     }
 
     /**
-     * Get seguro_social
+     * Get seguroSocial
      *
      * @return string 
      */
     public function getSeguroSocial()
     {
-        return $this->seguro_social;
+        return $this->seguroSocial;
     }
 
     /**
-     * Set est_form_act
+     * Set formaActual
      *
-     * @param string $estFormAct
+     * @param string $formaActual
      * @return Paciente
      */
-    public function setEstFormAct($estFormAct)
+    public function setFormaActual($formaActual)
     {
-        $this->est_form_act = $estFormAct;
+        $this->formaActual = $formaActual;
 
         return $this;
     }
 
     /**
-     * Get est_form_act
+     * Get formaActual
      *
      * @return string 
      */
-    public function getEstFormAct()
+    public function getFormaActual()
     {
-        return $this->est_form_act;
+        return $this->formaActual;
     }
 
     /**
-     * Set medico_pref
+     * Set medicoPref
      *
      * @param string $medicoPref
      * @return Paciente
      */
     public function setMedicoPref($medicoPref)
     {
-        $this->medico_pref = $medicoPref;
+        $this->medicoPref = $medicoPref;
 
         return $this;
     }
 
     /**
-     * Get medico_pref
+     * Get medicoPref
      *
      * @return string 
      */
     public function getMedicoPref()
     {
-        return $this->medico_pref;
+        return $this->medicoPref;
     }
 
     /**
-     * Set telefono
+     * Set contactoEmerg
      *
-     * @param \AdminAdminBundle\Entity\Telefono $telefono
+     * @param string $contactoEmerg
      * @return Paciente
      */
-    public function setTelefono(\AdminAdminBundle\Entity\Telefono $telefono)
+    public function setContactoEmerg($contactoEmerg)
     {
-        $this->telefono = $telefono;
+        $this->contactoEmerg = $contactoEmerg;
 
         return $this;
     }
 
     /**
-     * Get telefono
+     * Get contactoEmerg
      *
      * @return string 
      */
-    public function getTelefono()
+    public function getContactoEmerg()
     {
-        return $this->telefono;
+        return $this->contactoEmerg;
     }
 
     /**
-     * Set contact_emerg
+     * Add telefonos
      *
-     * @param \stdClass $contactEmerg
+     * @param \Admin\AdminBundle\Entity\Telefono $telefonos
      * @return Paciente
      */
-    public function setContactEmerg($contactEmerg)
+    public function addTelefono(\Admin\AdminBundle\Entity\Telefono $telefonos)
     {
-        $this->contact_emerg = $contactEmerg;
+        $telefonos->setPaciente($this);
+        $this->telefonos->add($telefonos);
+    }
+
+    /**
+     * Remove telefonos
+     *
+     * @param \Admin\AdminBundle\Entity\Telefono $telefonos
+     */
+    public function removeTelefono(\Admin\AdminBundle\Entity\Telefono $telefonos)
+    {
+        $this->telefonos->removeElement($telefonos);
+    }
+
+    /**
+     * Get telefonos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTelefonos()
+    {
+        return $this->telefonos;
+    }
+
+    public function setTelefonos($telefonos)
+    {
+        if (count($telefonos) > 0) {
+            foreach ($telefonos as $telefono) {
+                $this->addTelefono($telefono);
+            }
+        }
 
         return $this;
-    }
-
-    /**
-     * Get contact_emerg
-     *
-     * @return \stdClass 
-     */
-    public function getContactEmerg()
-    {
-        return $this->contact_emerg;
-    }
-
-    /**
-     * Set historia_med
-     *
-     * @param \stdClass $historiaMed
-     * @return Paciente
-     */
-    public function setHistoriaMed($historiaMed)
-    {
-        $this->historia_med = $historiaMed;
-
-        return $this;
-    }
-
-    /**
-     * Get historia_med
-     *
-     * @return \stdClass 
-     */
-    public function getHistoriaMed()
-    {
-        return $this->historia_med;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->telefono = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add telefono
-     *
-     * @param \Admin\AdminBundle\Entity\Telefono $telefono
-     * @return Paciente
-     */
-    public function addTelefono(\Admin\AdminBundle\Entity\Telefono $telefono)
-    {
-        $this->telefono[] = $telefono;
-
-        return $this;
-    }
-
-    /**
-     * Remove telefono
-     *
-     * @param \Admin\AdminBundle\Entity\Telefono $telefono
-     */
-    public function removeTelefono(\Admin\AdminBundle\Entity\Telefono $telefono)
-    {
-        $this->telefono->removeElement($telefono);
     }
 }

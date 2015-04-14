@@ -3,12 +3,11 @@
 namespace Admin\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Telefono
  *
- * @ORM\Table()
+ * @ORM\Table(name="Telefono")
  * @ORM\Entity(repositoryClass="Admin\AdminBundle\Entity\TelefonoRepository")
  */
 class Telefono
@@ -23,15 +22,35 @@ class Telefono
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Paciente", inversedBy="telefono")
+     * @ORM\ManyToOne(targetEntity="Paciente", inversedBy="telefonos")
+     * @ORM\JoinColumn(name="paciente_id", referencedColumnName="id")
      */
-    protected $telefono;
+    protected $paciente;
 
-    public function __construct()
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telefono", type="string", length=255)
+     */
+    private $telefono;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo", type="string", length=255)
+     */
+    private $tipo;
+    
+
+    /**
+     * __toString
+     *
+     * @return string
+     */
+    public function __toString()
     {
-        $this->telefono = new ArrayCollection();
+        return $this->getTelefono();
     }
-
 
     /**
      * Get id
@@ -67,9 +86,48 @@ class Telefono
     }
 
     /**
-     * Set paciente
+     * Set tipo
      *
-     * @param integer $paciente
+     * @param string $tipo
      * @return Telefono
      */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return string 
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * Set paciente
+     *
+     * @param \Admin\AdminBundle\Entity\Paciente $paciente
+     * @return Telefono
+     */
+    public function setPaciente(\Admin\AdminBundle\Entity\Paciente $paciente = null)
+    {
+        $this->paciente = $paciente;
+
+        return $this;
+    }
+
+    /**
+     * Get paciente
+     *
+     * @return \Admin\AdminBundle\Entity\Paciente 
+     */
+    public function getPaciente()
+    {
+        return $this->paciente;
+    }
 }

@@ -1,48 +1,74 @@
 <?php
 
+// src/Tutorial/BlogBundle/Entity/Post.php
 namespace Admin\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Post
- *
- * @ORM\Table(name="Post")
  * @ORM\Entity
  */
 class Post
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
-     * @var string
+     * @ORM\Column(type="string", length=255)
      *
-     * @ORM\Column(name="Nombre", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
+     * @Assert\Length(min="10", max=255)
      */
-    private $nombre;
+    protected $title;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="Descripcion", type="text", nullable=false)
+     * @ORM\Column(type="text")
      */
-    private $descripcion;
+    protected $abstract;
 
     /**
-     * @var integer
+     * @ORM\Column(type="text")
      *
-     * @ORM\Column(name="Edad", type="integer", nullable=false)
+     * @Assert\NotBlank()
      */
-    private $edad;
+    protected $content;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $enabled;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $created_at;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
+     */
+    protected $comments;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Tag")
+     */
+    protected $tags;
+
+    public function __construct()
+    {
+        $this->tags     = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->created_at = new \DateTime("now");
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
 
     /**
      * Get id
@@ -55,73 +81,183 @@ class Post
     }
 
     /**
-     * Set nombre
+     * Set title
      *
-     * @param string $nombre
+     * @param string $title
      * @return Post
      */
-    public function setNombre($nombre)
+    public function setTitle($title)
     {
-        $this->nombre = $nombre;
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get nombre
+     * Get title
      *
      * @return string 
      */
-    public function getNombre()
+    public function getTitle()
     {
-        return $this->nombre;
+        return $this->title;
     }
 
     /**
-     * Set descripcion
+     * Set abstract
      *
-     * @param string $descripcion
+     * @param string $abstract
      * @return Post
      */
-    public function setDescripcion($descripcion)
+    public function setAbstract($abstract)
     {
-        $this->descripcion = $descripcion;
+        $this->abstract = $abstract;
 
         return $this;
     }
 
     /**
-     * Get descripcion
+     * Get abstract
      *
      * @return string 
      */
-    public function getDescripcion()
+    public function getAbstract()
     {
-        return $this->descripcion;
+        return $this->abstract;
     }
 
     /**
-     * Set edad
+     * Set content
      *
-     * @param integer $edad
+     * @param string $content
      * @return Post
      */
-    public function setEdad($edad)
+    public function setContent($content)
     {
-        $this->edad = $edad;
+        $this->content = $content;
 
         return $this;
     }
 
     /**
-     * Get edad
+     * Get content
      *
-     * @return integer 
+     * @return string 
      */
-    public function getEdad()
+    public function getContent()
     {
-        return $this->edad;
+        return $this->content;
     }
 
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     * @return Post
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
 
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Set created_at
+     *
+     * @param \DateTime $createdAt
+     * @return Post
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->created_at = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get created_at
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Admin\AdminBundle\Entity\Comment $comments
+     * @return Post
+     */
+    public function addComment(\Admin\AdminBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Admin\AdminBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Admin\AdminBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * Add tags
+     *
+     * @param \Admin\AdminBundle\Entity\Tag $tags
+     * @return Post
+     */
+    public function addTag(\Admin\AdminBundle\Entity\Tag $tags)
+    {
+        $this->tags[] = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Remove tags
+     *
+     * @param \Admin\AdminBundle\Entity\Tag $tags
+     */
+    public function removeTag(\Admin\AdminBundle\Entity\Tag $tags)
+    {
+        $this->tags->removeElement($tags);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
 }

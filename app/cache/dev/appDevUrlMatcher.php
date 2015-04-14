@@ -129,7 +129,7 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         // admin_admin_homepage
         if (0 === strpos($pathinfo, '/hello') && preg_match('#^/hello/(?P<name>[^/]++)$#s', $pathinfo, $matches)) {
-            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_homepage')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\DefaultController::indexAction',));
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_homepage')), array (  '_controller' => 'AdminAdminBundle:Default:index',));
         }
 
         if (0 === strpos($pathinfo, '/a')) {
@@ -190,113 +190,75 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                     if (0 === strpos($pathinfo, '/admin/admin/admin/paciente')) {
                         // admin_admin_admin_paciente_list
                         if ($pathinfo === '/admin/admin/admin/paciente/list') {
-                            return array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::listAction',  '_sonata_admin' => 'sonata.admin.paciente',  '_sonata_name' => 'admin_admin_admin_paciente_list',  '_route' => 'admin_admin_admin_paciente_list',);
+                            return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\PacienteAdminController::listAction',  '_sonata_admin' => 'admin_admin.admin.paciente',  '_sonata_name' => 'admin_admin_admin_paciente_list',  '_route' => 'admin_admin_admin_paciente_list',);
                         }
 
                         // admin_admin_admin_paciente_create
                         if ($pathinfo === '/admin/admin/admin/paciente/create') {
-                            return array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::createAction',  '_sonata_admin' => 'sonata.admin.paciente',  '_sonata_name' => 'admin_admin_admin_paciente_create',  '_route' => 'admin_admin_admin_paciente_create',);
+                            return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\PacienteAdminController::createAction',  '_sonata_admin' => 'admin_admin.admin.paciente',  '_sonata_name' => 'admin_admin_admin_paciente_create',  '_route' => 'admin_admin_admin_paciente_create',);
                         }
 
                         // admin_admin_admin_paciente_batch
                         if ($pathinfo === '/admin/admin/admin/paciente/batch') {
-                            return array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::batchAction',  '_sonata_admin' => 'sonata.admin.paciente',  '_sonata_name' => 'admin_admin_admin_paciente_batch',  '_route' => 'admin_admin_admin_paciente_batch',);
+                            return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\PacienteAdminController::batchAction',  '_sonata_admin' => 'admin_admin.admin.paciente',  '_sonata_name' => 'admin_admin_admin_paciente_batch',  '_route' => 'admin_admin_admin_paciente_batch',);
                         }
 
                         // admin_admin_admin_paciente_edit
                         if (preg_match('#^/admin/admin/admin/paciente/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
-                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_paciente_edit')), array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::editAction',  '_sonata_admin' => 'sonata.admin.paciente',  '_sonata_name' => 'admin_admin_admin_paciente_edit',));
+                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_paciente_edit')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\PacienteAdminController::editAction',  '_sonata_admin' => 'admin_admin.admin.paciente',  '_sonata_name' => 'admin_admin_admin_paciente_edit',));
                         }
 
                         // admin_admin_admin_paciente_delete
                         if (preg_match('#^/admin/admin/admin/paciente/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
-                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_paciente_delete')), array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::deleteAction',  '_sonata_admin' => 'sonata.admin.paciente',  '_sonata_name' => 'admin_admin_admin_paciente_delete',));
+                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_paciente_delete')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\PacienteAdminController::deleteAction',  '_sonata_admin' => 'admin_admin.admin.paciente',  '_sonata_name' => 'admin_admin_admin_paciente_delete',));
                         }
 
                         // admin_admin_admin_paciente_show
                         if (preg_match('#^/admin/admin/admin/paciente/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
-                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_paciente_show')), array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::showAction',  '_sonata_admin' => 'sonata.admin.paciente',  '_sonata_name' => 'admin_admin_admin_paciente_show',));
+                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_paciente_show')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\PacienteAdminController::showAction',  '_sonata_admin' => 'admin_admin.admin.paciente',  '_sonata_name' => 'admin_admin_admin_paciente_show',));
                         }
 
                         // admin_admin_admin_paciente_export
                         if ($pathinfo === '/admin/admin/admin/paciente/export') {
-                            return array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::exportAction',  '_sonata_admin' => 'sonata.admin.paciente',  '_sonata_name' => 'admin_admin_admin_paciente_export',  '_route' => 'admin_admin_admin_paciente_export',);
+                            return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\PacienteAdminController::exportAction',  '_sonata_admin' => 'admin_admin.admin.paciente',  '_sonata_name' => 'admin_admin_admin_paciente_export',  '_route' => 'admin_admin_admin_paciente_export',);
                         }
 
                     }
 
-                    if (0 === strpos($pathinfo, '/admin/admin/admin/cita')) {
-                        // admin_admin_admin_cita_list
-                        if ($pathinfo === '/admin/admin/admin/cita/list') {
-                            return array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::listAction',  '_sonata_admin' => 'sonata.admin.cita',  '_sonata_name' => 'admin_admin_admin_cita_list',  '_route' => 'admin_admin_admin_cita_list',);
+                    if (0 === strpos($pathinfo, '/admin/admin/admin/telefono')) {
+                        // admin_admin_admin_telefono_list
+                        if ($pathinfo === '/admin/admin/admin/telefono/list') {
+                            return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\TelefonoAdminController::listAction',  '_sonata_admin' => 'admin_admin.admin.telefono',  '_sonata_name' => 'admin_admin_admin_telefono_list',  '_route' => 'admin_admin_admin_telefono_list',);
                         }
 
-                        // admin_admin_admin_cita_create
-                        if ($pathinfo === '/admin/admin/admin/cita/create') {
-                            return array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::createAction',  '_sonata_admin' => 'sonata.admin.cita',  '_sonata_name' => 'admin_admin_admin_cita_create',  '_route' => 'admin_admin_admin_cita_create',);
+                        // admin_admin_admin_telefono_create
+                        if ($pathinfo === '/admin/admin/admin/telefono/create') {
+                            return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\TelefonoAdminController::createAction',  '_sonata_admin' => 'admin_admin.admin.telefono',  '_sonata_name' => 'admin_admin_admin_telefono_create',  '_route' => 'admin_admin_admin_telefono_create',);
                         }
 
-                        // admin_admin_admin_cita_batch
-                        if ($pathinfo === '/admin/admin/admin/cita/batch') {
-                            return array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::batchAction',  '_sonata_admin' => 'sonata.admin.cita',  '_sonata_name' => 'admin_admin_admin_cita_batch',  '_route' => 'admin_admin_admin_cita_batch',);
+                        // admin_admin_admin_telefono_batch
+                        if ($pathinfo === '/admin/admin/admin/telefono/batch') {
+                            return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\TelefonoAdminController::batchAction',  '_sonata_admin' => 'admin_admin.admin.telefono',  '_sonata_name' => 'admin_admin_admin_telefono_batch',  '_route' => 'admin_admin_admin_telefono_batch',);
                         }
 
-                        // admin_admin_admin_cita_edit
-                        if (preg_match('#^/admin/admin/admin/cita/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
-                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_cita_edit')), array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::editAction',  '_sonata_admin' => 'sonata.admin.cita',  '_sonata_name' => 'admin_admin_admin_cita_edit',));
+                        // admin_admin_admin_telefono_edit
+                        if (preg_match('#^/admin/admin/admin/telefono/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
+                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_telefono_edit')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\TelefonoAdminController::editAction',  '_sonata_admin' => 'admin_admin.admin.telefono',  '_sonata_name' => 'admin_admin_admin_telefono_edit',));
                         }
 
-                        // admin_admin_admin_cita_delete
-                        if (preg_match('#^/admin/admin/admin/cita/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
-                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_cita_delete')), array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::deleteAction',  '_sonata_admin' => 'sonata.admin.cita',  '_sonata_name' => 'admin_admin_admin_cita_delete',));
+                        // admin_admin_admin_telefono_delete
+                        if (preg_match('#^/admin/admin/admin/telefono/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
+                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_telefono_delete')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\TelefonoAdminController::deleteAction',  '_sonata_admin' => 'admin_admin.admin.telefono',  '_sonata_name' => 'admin_admin_admin_telefono_delete',));
                         }
 
-                        // admin_admin_admin_cita_show
-                        if (preg_match('#^/admin/admin/admin/cita/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
-                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_cita_show')), array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::showAction',  '_sonata_admin' => 'sonata.admin.cita',  '_sonata_name' => 'admin_admin_admin_cita_show',));
+                        // admin_admin_admin_telefono_show
+                        if (preg_match('#^/admin/admin/admin/telefono/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
+                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_telefono_show')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\TelefonoAdminController::showAction',  '_sonata_admin' => 'admin_admin.admin.telefono',  '_sonata_name' => 'admin_admin_admin_telefono_show',));
                         }
 
-                        // admin_admin_admin_cita_export
-                        if ($pathinfo === '/admin/admin/admin/cita/export') {
-                            return array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::exportAction',  '_sonata_admin' => 'sonata.admin.cita',  '_sonata_name' => 'admin_admin_admin_cita_export',  '_route' => 'admin_admin_admin_cita_export',);
-                        }
-
-                    }
-
-                    if (0 === strpos($pathinfo, '/admin/admin/admin/historia')) {
-                        // admin_admin_admin_historia_list
-                        if ($pathinfo === '/admin/admin/admin/historia/list') {
-                            return array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::listAction',  '_sonata_admin' => 'sonata.admin.historia',  '_sonata_name' => 'admin_admin_admin_historia_list',  '_route' => 'admin_admin_admin_historia_list',);
-                        }
-
-                        // admin_admin_admin_historia_create
-                        if ($pathinfo === '/admin/admin/admin/historia/create') {
-                            return array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::createAction',  '_sonata_admin' => 'sonata.admin.historia',  '_sonata_name' => 'admin_admin_admin_historia_create',  '_route' => 'admin_admin_admin_historia_create',);
-                        }
-
-                        // admin_admin_admin_historia_batch
-                        if ($pathinfo === '/admin/admin/admin/historia/batch') {
-                            return array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::batchAction',  '_sonata_admin' => 'sonata.admin.historia',  '_sonata_name' => 'admin_admin_admin_historia_batch',  '_route' => 'admin_admin_admin_historia_batch',);
-                        }
-
-                        // admin_admin_admin_historia_edit
-                        if (preg_match('#^/admin/admin/admin/historia/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
-                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_historia_edit')), array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::editAction',  '_sonata_admin' => 'sonata.admin.historia',  '_sonata_name' => 'admin_admin_admin_historia_edit',));
-                        }
-
-                        // admin_admin_admin_historia_delete
-                        if (preg_match('#^/admin/admin/admin/historia/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
-                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_historia_delete')), array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::deleteAction',  '_sonata_admin' => 'sonata.admin.historia',  '_sonata_name' => 'admin_admin_admin_historia_delete',));
-                        }
-
-                        // admin_admin_admin_historia_show
-                        if (preg_match('#^/admin/admin/admin/historia/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
-                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_historia_show')), array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::showAction',  '_sonata_admin' => 'sonata.admin.historia',  '_sonata_name' => 'admin_admin_admin_historia_show',));
-                        }
-
-                        // admin_admin_admin_historia_export
-                        if ($pathinfo === '/admin/admin/admin/historia/export') {
-                            return array (  '_controller' => 'Sonata\\AdminBundle\\Controller\\CRUDController::exportAction',  '_sonata_admin' => 'sonata.admin.historia',  '_sonata_name' => 'admin_admin_admin_historia_export',  '_route' => 'admin_admin_admin_historia_export',);
+                        // admin_admin_admin_telefono_export
+                        if ($pathinfo === '/admin/admin/admin/telefono/export') {
+                            return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\TelefonoAdminController::exportAction',  '_sonata_admin' => 'admin_admin.admin.telefono',  '_sonata_name' => 'admin_admin_admin_telefono_export',  '_route' => 'admin_admin_admin_telefono_export',);
                         }
 
                     }
