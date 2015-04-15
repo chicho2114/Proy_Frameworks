@@ -41,8 +41,8 @@ class PacienteAdmin extends Admin
             ->add('edad')
             ->add('fechaNac', 'date', array(
                     'pattern' => 'dd MMM Y G',
-                    'locale' => 'en',
-                    'timezone' => 'America/Caracas',
+                    'locale' => 'es',
+                    'timezone' => 'América/Caracas',
                 ))
             ->add('telefonos')
             ->add('seguroSocial')
@@ -76,7 +76,7 @@ class PacienteAdmin extends Admin
             ->add('seguroSocial')
             ->add('formaActual')
             ->add('medicoPref')
-            ->add('contactoEmerg')
+            ->add('contactoEmerg', 'sonata_type_model', array('multiple' => true))
         ;
     }
 
@@ -107,5 +107,6 @@ class PacienteAdmin extends Admin
     public function preUpdate($paciente)
     {
         $paciente->setTelefonos($paciente->getTelefonos());
+        $paciente->setContactoEmerg($paciente->getContactoEmerg());
     }
 }

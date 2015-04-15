@@ -64,10 +64,10 @@ class Paciente extends \Admin\AdminBundle\Entity\Paciente implements \Doctrine\O
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'id', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'nombre', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'apellido', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'edad', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'fechaNac', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'direccion', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'seguroSocial', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'formaActual', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'medicoPref', 'telefonos', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'contactoEmerg');
+            return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'id', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'nombre', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'apellido', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'edad', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'fechaNac', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'direccion', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'seguroSocial', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'formaActual', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'medicoPref', 'telefonos', 'contactoEmerg');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'id', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'nombre', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'apellido', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'edad', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'fechaNac', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'direccion', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'seguroSocial', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'formaActual', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'medicoPref', 'telefonos', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'contactoEmerg');
+        return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'id', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'nombre', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'apellido', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'edad', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'fechaNac', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'direccion', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'seguroSocial', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'formaActual', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'medicoPref', 'telefonos', 'contactoEmerg');
     }
 
     /**
@@ -378,28 +378,6 @@ class Paciente extends \Admin\AdminBundle\Entity\Paciente implements \Doctrine\O
     /**
      * {@inheritDoc}
      */
-    public function setContactoEmerg($contactoEmerg)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setContactoEmerg', array($contactoEmerg));
-
-        return parent::setContactoEmerg($contactoEmerg);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getContactoEmerg()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getContactoEmerg', array());
-
-        return parent::getContactoEmerg();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function addTelefono(\Admin\AdminBundle\Entity\Telefono $telefonos)
     {
 
@@ -439,6 +417,50 @@ class Paciente extends \Admin\AdminBundle\Entity\Paciente implements \Doctrine\O
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTelefonos', array($telefonos));
 
         return parent::setTelefonos($telefonos);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addContactoEmerg(\Admin\AdminBundle\Entity\ContEmergencia $contactoEmerg)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addContactoEmerg', array($contactoEmerg));
+
+        return parent::addContactoEmerg($contactoEmerg);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeContactoEmerg(\Admin\AdminBundle\Entity\ContEmergencia $contactoEmerg)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeContactoEmerg', array($contactoEmerg));
+
+        return parent::removeContactoEmerg($contactoEmerg);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getContactoEmerg()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getContactoEmerg', array());
+
+        return parent::getContactoEmerg();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setContactoEmerg($ContactoEmerg)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setContactoEmerg', array($ContactoEmerg));
+
+        return parent::setContactoEmerg($ContactoEmerg);
     }
 
 }
