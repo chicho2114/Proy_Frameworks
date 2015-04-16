@@ -11,6 +11,9 @@
 
 namespace Application\Sonata\UserBundle\Entity;
 
+
+use Doctrine\ORM\Mapping as ORM;
+
 use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 use Admin\AdminBundle\Entity\Paciente as Paciente;
 
@@ -46,4 +49,10 @@ class User extends BaseUser
     {
         return $this->id;
     }
+
+    public function __toString()
+    {
+        return 'Dr(a). ' . $this->getFirstname() . ' ' . $this->getLastname();
+    }
+   
 }

@@ -75,7 +75,7 @@ class Paciente
     private $formaActual;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="paciente")
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="paciente")
      * @ORM\JoinColumn(name="medico_id", referencedColumnName="id")
      */
     protected $medicoPref;
@@ -368,5 +368,29 @@ class Paciente
         }
 
         return $this;
+    }
+
+
+    /**
+     * Set medicoPref
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $medicoPref
+     * @return Paciente
+     */
+    public function setMedicoPref(\Application\Sonata\UserBundle\Entity\User $medicoPref = null)
+    {
+        $this->medicoPref = $medicoPref;
+
+        return $this;
+    }
+
+    /**
+     * Get medicoPref
+     *
+     * @return \Application\Sonata\UserBundle\Entity\User 
+     */
+    public function getMedicoPref()
+    {
+        return $this->medicoPref;
     }
 }

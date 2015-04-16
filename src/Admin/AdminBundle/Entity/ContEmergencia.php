@@ -64,7 +64,7 @@ class ContEmergencia
      */
     public function __toString()
     {
-        return $this->getNombre() . ' - ' . $this->getRelacion();
+        return $this->getNombre() .' '. $this->getApellido() .' - ' . $this->getRelacion();
     }
 
     /**

@@ -5,6 +5,8 @@ namespace Admin\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use Application\Sonata\UserBundle\Entity\User as User;
+
 /**
  * Paciente
  *
@@ -73,7 +75,7 @@ class Paciente
     private $formaActual;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Empleado", inversedBy="paciente")
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="paciente")
      * @ORM\JoinColumn(name="medico_id", referencedColumnName="id")
      */
     protected $medicoPref;
@@ -282,29 +284,6 @@ class Paciente
     }
 
     /**
-     * Set medicoPref
-     *
-     * @param string $medicoPref
-     * @return Paciente
-     */
-    public function setMedicoPref($medicoPref)
-    {
-        $this->medicoPref = $medicoPref;
-
-        return $this;
-    }
-
-    /**
-     * Get medicoPref
-     *
-     * @return string 
-     */
-    public function getMedicoPref()
-    {
-        return $this->medicoPref;
-    }
-
-    /**
      * Add telefonos
      *
      * @param \Admin\AdminBundle\Entity\Telefono $telefonos
@@ -390,4 +369,5 @@ class Paciente
 
         return $this;
     }
+
 }

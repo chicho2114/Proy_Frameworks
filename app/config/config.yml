@@ -78,6 +78,8 @@ swiftmailer:
 #Vainas de  Sonata
 sonata_admin:
     title: BAD Clinica
+    title_logo: bundles/adminadmin/images/logo1.png
+
     security:
         handler: sonata.admin.security.handler.role
 
@@ -97,6 +99,11 @@ sonata_block:
 sonata_user:
     security_acl: true
     manager_type: orm # can be orm or mongodb
+
+    profile:
+            default_avatar: 'bundles/sonatauser/logo_clinica.png' # Default avatar displayed if user doesn't have one
+
+
 
 fos_user:
     db_driver:      orm # can be orm or odm

@@ -64,10 +64,10 @@ class Paciente extends \Admin\AdminBundle\Entity\Paciente implements \Doctrine\O
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'id', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'nombre', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'apellido', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'edad', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'fechaNac', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'direccion', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'seguroSocial', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'formaActual', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'medicoPref', 'telefonos', 'contactoEmerg');
+            return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'id', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'nombre', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'apellido', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'edad', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'fechaNac', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'direccion', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'seguroSocial', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'formaActual', 'medicoPref', 'telefonos', 'contactoEmerg');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'id', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'nombre', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'apellido', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'edad', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'fechaNac', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'direccion', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'seguroSocial', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'formaActual', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'medicoPref', 'telefonos', 'contactoEmerg');
+        return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'id', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'nombre', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'apellido', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'edad', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'fechaNac', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'direccion', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'seguroSocial', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'formaActual', 'medicoPref', 'telefonos', 'contactoEmerg');
     }
 
     /**
@@ -356,28 +356,6 @@ class Paciente extends \Admin\AdminBundle\Entity\Paciente implements \Doctrine\O
     /**
      * {@inheritDoc}
      */
-    public function setMedicoPref($medicoPref)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setMedicoPref', array($medicoPref));
-
-        return parent::setMedicoPref($medicoPref);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getMedicoPref()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMedicoPref', array());
-
-        return parent::getMedicoPref();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function addTelefono(\Admin\AdminBundle\Entity\Telefono $telefonos)
     {
 
@@ -461,6 +439,28 @@ class Paciente extends \Admin\AdminBundle\Entity\Paciente implements \Doctrine\O
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setContactoEmerg', array($ContactoEmerg));
 
         return parent::setContactoEmerg($ContactoEmerg);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setMedicoPref(\Application\Sonata\UserBundle\Entity\User $medicoPref = NULL)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setMedicoPref', array($medicoPref));
+
+        return parent::setMedicoPref($medicoPref);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getMedicoPref()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMedicoPref', array());
+
+        return parent::getMedicoPref();
     }
 
 }
