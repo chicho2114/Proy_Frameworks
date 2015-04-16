@@ -5,6 +5,8 @@ namespace Admin\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use Application\Sonata\UserBundle\Entity\User as User;
+
 /**
  * Paciente
  *
@@ -73,11 +75,10 @@ class Paciente
     private $formaActual;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="medico_pref", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="paciente")
+     * @ORM\JoinColumn(name="medico_id", referencedColumnName="id")
      */
-    private $medicoPref;
+    protected $medicoPref;
 
     /**
      * @ORM\OneToMany(targetEntity="Telefono", mappedBy="paciente", cascade={"persist"}, orphanRemoval=true)
@@ -98,6 +99,7 @@ class Paciente
     {
         $this->telefonos = new ArrayCollection();
         $this->contactoEmerg = new ArrayCollection();
+        $this->medicoPref = new ArrayCollection();
     }
 
     /**
@@ -279,29 +281,6 @@ class Paciente
     public function getFormaActual()
     {
         return $this->formaActual;
-    }
-
-    /**
-     * Set medicoPref
-     *
-     * @param string $medicoPref
-     * @return Paciente
-     */
-    public function setMedicoPref($medicoPref)
-    {
-        $this->medicoPref = $medicoPref;
-
-        return $this;
-    }
-
-    /**
-     * Get medicoPref
-     *
-     * @return string 
-     */
-    public function getMedicoPref()
-    {
-        return $this->medicoPref;
     }
 
     /**
