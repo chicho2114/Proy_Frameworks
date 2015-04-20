@@ -16,9 +16,11 @@ class ContEmergenciaAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
+
             ->add('nombre')
             ->add('apellido')
             ->add('relacion')
+            ->add('telefonos')
             ->add('fecha')
         ;
     }
@@ -32,6 +34,7 @@ class ContEmergenciaAdmin extends Admin
             ->add('nombre')
             ->add('apellido')
             ->add('relacion')
+            ->add('telefonos')
             ->add('fecha')
             ->add('_action', 'actions', array(
                 'actions' => array(
@@ -62,7 +65,11 @@ class ContEmergenciaAdmin extends Admin
                     'expanded'  => false,
                     'placeholder' => 'Seleccione la relacion que tiene con el paciente',
                 ))
-            ->add('fecha', null, array('label' => 'Introduzca la fecha en que esta añadiendo al paciente'))
+            ->add('telefonos', 'sonata_type_collection', array(), array(
+                'edit' => 'inline',
+                'inline' => 'table',
+                'sortable'  => 'position'
+            ))
         ;
     }
 
@@ -72,10 +79,24 @@ class ContEmergenciaAdmin extends Admin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('nombre')
-            ->add('apellido')
-            ->add('relacion')
-            ->add('fecha')
+            ->with('Contacto de Emergencia')
+                ->add('nombre')
+                ->add('apellido')
+                ->add('paciente')
+                ->add('relacion')
+                ->add('telefonos')
+                ->add('fecha')
+            ->end()
         ;
+    }
+
+    public function prePersist($ContEmergencia)
+    {
+        $this->preUpdate($ContEmergencia);
+    }
+
+    public function preUpdate($ContEmergencia)
+    {
+        $ContEmergencia->setTelefonos($ContEmergencia->getTelefonos());
     }
 }

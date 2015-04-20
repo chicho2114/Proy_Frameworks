@@ -3,6 +3,7 @@
 namespace Admin\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * ContEmergencia
@@ -56,6 +57,21 @@ class ContEmergencia
      */
     protected $paciente;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Telefono", mappedBy="contEmerg", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
+     */
+    protected $telefonos;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->setFecha(new \DateTime());
+        $this->telefonos = new ArrayCollection();
+    }
 
     /**
      * __toString
@@ -190,5 +206,48 @@ class ContEmergencia
     public function getPaciente()
     {
         return $this->paciente;
+    }
+
+    /**
+     * Add telefonos
+     *
+     * @param \Admin\AdminBundle\Entity\Telefono $telefonos
+     * @return ContEmergencia
+     */
+    public function addTelefono(\Admin\AdminBundle\Entity\Telefono $telefonos)
+    {
+        $telefonos->setContEmerg($this);
+        $this->telefonos->add($telefonos);
+    }
+
+    /**
+     * Remove telefonos
+     *
+     * @param \Admin\AdminBundle\Entity\Telefono $telefonos
+     */
+    public function removeTelefono(\Admin\AdminBundle\Entity\Telefono $telefonos)
+    {
+        $this->telefonos->removeElement($telefonos);
+    }
+
+    /**
+     * Get telefonos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTelefonos()
+    {
+        return $this->telefonos;
+    }
+
+    public function setTelefonos($telefonos)
+    {
+        if (count($telefonos) > 0) {
+            foreach ($telefonos as $telefono) {
+                $this->addTelefono($telefono);
+            }
+        }
+
+        return $this;
     }
 }

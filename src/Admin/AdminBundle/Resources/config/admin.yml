@@ -3,16 +3,16 @@ services:
         class: Admin\AdminBundle\Admin\PacienteAdmin
         arguments: [~, Admin\AdminBundle\Entity\Paciente, AdminAdminBundle:PacienteAdmin]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: Paciente}
+            - {name: sonata.admin, manager_type: orm, group: Administración, label: Pacientes}
 
     admin_admin.admin.telefono:
         class: Admin\AdminBundle\Admin\TelefonoAdmin
         arguments: [~, Admin\AdminBundle\Entity\Telefono, AdminAdminBundle:TelefonoAdmin]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: Telefono}
+            - {name: sonata.admin, manager_type: orm, group: Administración, label: Telefonos}
 
     admin_admin.admin.cont_emergencia:
         class: Admin\AdminBundle\Admin\ContEmergenciaAdmin
         arguments: [~, Admin\AdminBundle\Entity\ContEmergencia, AdminAdminBundle:ContEmergenciaAdmin]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: ContEmergencia}
+            - {name: sonata.admin, manager_type: orm, group: Administración, label: Contactos Emergencia}

@@ -16,6 +16,8 @@ class TelefonoAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
+            ->add('paciente')
+            ->add('contEmerg', null, array('label' => 'Contacto de emergencia'))
             ->add('telefono')
             ->add('tipo')
         ;
@@ -27,6 +29,8 @@ class TelefonoAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+            ->add('paciente')
+            ->add('contEmerg', null, array('label' => 'Contacto de emergencia'))
             ->add('telefono')
             ->add('tipo')
             ->add('_action', 'actions', array(
@@ -64,6 +68,8 @@ class TelefonoAdmin extends Admin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
+            ->add('paciente')
+            ->add('contEmerg', null, array('label' => 'Contacto de emergencia'))
             ->add('telefono')
             ->add('tipo')
         ;

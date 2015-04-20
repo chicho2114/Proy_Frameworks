@@ -40,6 +40,12 @@ class Telefono
      * @ORM\Column(name="tipo", type="string", length=255)
      */
     private $tipo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ContEmergencia", inversedBy="telefonos")
+     * @ORM\JoinColumn(name="contEmerg_id", referencedColumnName="id")
+     */
+    protected $contEmerg;
     
 
     /**
@@ -49,7 +55,7 @@ class Telefono
      */
     public function __toString()
     {
-        return $this->getTelefono();
+        return $this->getTelefono() . ' - ' . $this->getTipo();
     }
 
     /**

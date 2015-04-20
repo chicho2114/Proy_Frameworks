@@ -109,7 +109,7 @@ class Paciente
      */
     public function __toString()
     {
-        return $this->getNombre();
+        return $this->getNombre() . ' '. $this->getApellido();
     }
 
     /**

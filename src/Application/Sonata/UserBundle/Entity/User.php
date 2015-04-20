@@ -52,7 +52,22 @@ class User extends BaseUser
 
     public function __toString()
     {
-        return 'Dr(a). ' . $this->getFirstname() . ' ' . $this->getLastname();
+        if ($this->hasGroup('Administrador')) {
+            
+            return 'Administrador '. $this->getFirstname() . ' ' . $this->getLastname();
+    
+        }elseif ($this->hasGroup('Médico'))  {
+
+            return 'Dr(a). ' . $this->getFirstname() . ' ' . $this->getLastname();
+
+        }elseif ($this->hasGroup('Personal Médico')) {
+
+            return $this->getFirstname() . ' ' . $this->getLastname() . ' - (Personal. M.)';
+            
+        }else{
+
+            return $this->getFirstname() . ' ' . $this->getLastname();
+        }
     }
    
 }

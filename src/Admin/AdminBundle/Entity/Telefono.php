@@ -40,6 +40,12 @@ class Telefono
      * @ORM\Column(name="tipo", type="string", length=255)
      */
     private $tipo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ContEmergencia", inversedBy="telefonos")
+     * @ORM\JoinColumn(name="contEmerg_id", referencedColumnName="id")
+     */
+    protected $contEmerg;
     
 
     /**
@@ -129,5 +135,28 @@ class Telefono
     public function getPaciente()
     {
         return $this->paciente;
+    }
+
+    /**
+     * Set contEmerg
+     *
+     * @param \Admin\AdminBundle\Entity\ContEmergencia $contEmerg
+     * @return Telefono
+     */
+    public function setContEmerg(\Admin\AdminBundle\Entity\ContEmergencia $contEmerg = null)
+    {
+        $this->contEmerg = $contEmerg;
+
+        return $this;
+    }
+
+    /**
+     * Get contEmerg
+     *
+     * @return \Admin\AdminBundle\Entity\ContEmergencia 
+     */
+    public function getContEmerg()
+    {
+        return $this->contEmerg;
     }
 }

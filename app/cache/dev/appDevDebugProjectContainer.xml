@@ -1088,7 +1088,7 @@
   </parameters>
   <services>
     <service id="admin_admin.admin.paciente" class="Admin\AdminBundle\Admin\PacienteAdmin" scope="prototype">
-      <tag name="sonata.admin" manager_type="orm" group="admin" label="Paciente"/>
+      <tag name="sonata.admin" manager_type="orm" group="Administración" label="Pacientes"/>
       <argument>admin_admin.admin.paciente</argument>
       <argument>Admin\AdminBundle\Entity\Paciente</argument>
       <argument>AdminAdminBundle:PacienteAdmin</argument>
@@ -1148,7 +1148,7 @@
         <argument>default</argument>
       </call>
       <call method="setLabel">
-        <argument>Paciente</argument>
+        <argument>Pacientes</argument>
       </call>
       <call method="setPersistFilters">
         <argument>false</argument>
@@ -1223,7 +1223,7 @@
       </call>
     </service>
     <service id="admin_admin.admin.telefono" class="Admin\AdminBundle\Admin\TelefonoAdmin" scope="prototype">
-      <tag name="sonata.admin" manager_type="orm" group="admin" label="Telefono"/>
+      <tag name="sonata.admin" manager_type="orm" group="Administración" label="Telefonos"/>
       <argument>admin_admin.admin.telefono</argument>
       <argument>Admin\AdminBundle\Entity\Telefono</argument>
       <argument>AdminAdminBundle:TelefonoAdmin</argument>
@@ -1283,7 +1283,7 @@
         <argument>default</argument>
       </call>
       <call method="setLabel">
-        <argument>Telefono</argument>
+        <argument>Telefonos</argument>
       </call>
       <call method="setPersistFilters">
         <argument>false</argument>
@@ -1358,7 +1358,7 @@
       </call>
     </service>
     <service id="admin_admin.admin.cont_emergencia" class="Admin\AdminBundle\Admin\ContEmergenciaAdmin" scope="prototype">
-      <tag name="sonata.admin" manager_type="orm" group="admin" label="ContEmergencia"/>
+      <tag name="sonata.admin" manager_type="orm" group="Administración" label="Contactos Emergencia"/>
       <argument>admin_admin.admin.cont_emergencia</argument>
       <argument>Admin\AdminBundle\Entity\ContEmergencia</argument>
       <argument>AdminAdminBundle:ContEmergenciaAdmin</argument>
@@ -1418,7 +1418,7 @@
         <argument>default</argument>
       </call>
       <call method="setLabel">
-        <argument>ContEmergencia</argument>
+        <argument>Contactos Emergencia</argument>
       </call>
       <call method="setPersistFilters">
         <argument>false</argument>
@@ -4258,7 +4258,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>552f28bb84964</argument>
+            <argument>5534867e20333</argument>
           </service>
         </argument>
         <argument type="service">
@@ -4272,7 +4272,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>552f28bb84964</argument>
+            <argument>5534867e20333</argument>
           </service>
         </argument>
       </argument>
@@ -4676,7 +4676,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>552f28bb84964</argument>
+            <argument>5534867e20333</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -4787,7 +4787,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>552f28bb84964</argument>
+            <argument>5534867e20333</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -6085,8 +6085,8 @@
       </call>
       <call method="setAdminGroups">
         <argument type="collection">
-          <argument key="admin" type="collection">
-            <argument key="label">admin</argument>
+          <argument key="Administración" type="collection">
+            <argument key="label">Administración</argument>
             <argument key="label_catalogue">SonataAdminBundle</argument>
             <argument key="icon">&lt;i class="fa fa-folder"&gt;&lt;/i&gt;</argument>
             <argument key="roles" type="collection"/>

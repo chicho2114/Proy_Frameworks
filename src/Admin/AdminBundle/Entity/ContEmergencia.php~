@@ -3,6 +3,7 @@
 namespace Admin\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * ContEmergencia
@@ -56,6 +57,21 @@ class ContEmergencia
      */
     protected $paciente;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Telefono", mappedBy="contEmerg", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
+     */
+    protected $telefonos;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->setFecha(new \DateTime());
+        $this->telefonos = new ArrayCollection();
+    }
 
     /**
      * __toString
@@ -64,7 +80,7 @@ class ContEmergencia
      */
     public function __toString()
     {
-        return $this->getNombre() . ' - ' . $this->getRelacion();
+        return $this->getNombre() .' '. $this->getApellido() .' - ' . $this->getRelacion();
     }
 
     /**
