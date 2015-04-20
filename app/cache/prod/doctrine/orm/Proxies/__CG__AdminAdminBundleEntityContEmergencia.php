@@ -64,10 +64,10 @@ class ContEmergencia extends \Admin\AdminBundle\Entity\ContEmergencia implements
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'id', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'nombre', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'apellido', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'relacion', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'fecha', 'paciente');
+            return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'id', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'nombre', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'apellido', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'relacion', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'fecha', 'paciente', 'telefonos');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'id', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'nombre', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'apellido', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'relacion', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'fecha', 'paciente');
+        return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'id', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'nombre', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'apellido', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'relacion', '' . "\0" . 'Admin\\AdminBundle\\Entity\\ContEmergencia' . "\0" . 'fecha', 'paciente', 'telefonos');
     }
 
     /**
@@ -307,6 +307,50 @@ class ContEmergencia extends \Admin\AdminBundle\Entity\ContEmergencia implements
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPaciente', array());
 
         return parent::getPaciente();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addTelefono(\Admin\AdminBundle\Entity\Telefono $telefonos)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addTelefono', array($telefonos));
+
+        return parent::addTelefono($telefonos);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeTelefono(\Admin\AdminBundle\Entity\Telefono $telefonos)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeTelefono', array($telefonos));
+
+        return parent::removeTelefono($telefonos);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTelefonos()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTelefonos', array());
+
+        return parent::getTelefonos();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setTelefonos($telefonos)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTelefonos', array($telefonos));
+
+        return parent::setTelefonos($telefonos);
     }
 
 }

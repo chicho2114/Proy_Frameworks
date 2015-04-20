@@ -64,10 +64,10 @@ class Telefono extends \Admin\AdminBundle\Entity\Telefono implements \Doctrine\O
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Telefono' . "\0" . 'id', 'paciente', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Telefono' . "\0" . 'telefono', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Telefono' . "\0" . 'tipo');
+            return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Telefono' . "\0" . 'id', 'paciente', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Telefono' . "\0" . 'telefono', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Telefono' . "\0" . 'tipo', 'contEmerg');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Telefono' . "\0" . 'id', 'paciente', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Telefono' . "\0" . 'telefono', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Telefono' . "\0" . 'tipo');
+        return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Telefono' . "\0" . 'id', 'paciente', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Telefono' . "\0" . 'telefono', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Telefono' . "\0" . 'tipo', 'contEmerg');
     }
 
     /**
@@ -263,6 +263,28 @@ class Telefono extends \Admin\AdminBundle\Entity\Telefono implements \Doctrine\O
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPaciente', array());
 
         return parent::getPaciente();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setContEmerg(\Admin\AdminBundle\Entity\ContEmergencia $contEmerg = NULL)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setContEmerg', array($contEmerg));
+
+        return parent::setContEmerg($contEmerg);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getContEmerg()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getContEmerg', array());
+
+        return parent::getContEmerg();
     }
 
 }
