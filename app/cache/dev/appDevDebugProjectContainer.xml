@@ -698,6 +698,27 @@
         <parameter key="cache">sonata.cache.noop</parameter>
         <parameter key="settings" type="collection"/>
       </parameter>
+      <parameter key="sonata.admin.block.stats" type="collection">
+        <parameter key="contexts" type="collection">
+          <parameter>cms</parameter>
+        </parameter>
+        <parameter key="cache">sonata.cache.noop</parameter>
+        <parameter key="settings" type="collection"/>
+      </parameter>
+      <parameter key="sonata.block.service.menu" type="collection">
+        <parameter key="contexts" type="collection">
+          <parameter>cms</parameter>
+        </parameter>
+        <parameter key="cache">sonata.cache.noop</parameter>
+        <parameter key="settings" type="collection"/>
+      </parameter>
+      <parameter key="sonata.admin_doctrine_orm.block.audit" type="collection">
+        <parameter key="contexts" type="collection">
+          <parameter>cms</parameter>
+        </parameter>
+        <parameter key="cache">sonata.cache.noop</parameter>
+        <parameter key="settings" type="collection"/>
+      </parameter>
     </parameter>
     <parameter key="sonata_block.blocks_by_class" type="collection"/>
     <parameter key="sonata_block.cache_blocks" type="collection">
@@ -707,6 +728,9 @@
         <parameter key="sonata.user.block.account">sonata.cache.noop</parameter>
         <parameter key="sonata.block.service.text">sonata.cache.noop</parameter>
         <parameter key="sonata.admin.block.search_result">sonata.cache.noop</parameter>
+        <parameter key="sonata.admin.block.stats">sonata.cache.noop</parameter>
+        <parameter key="sonata.block.service.menu">sonata.cache.noop</parameter>
+        <parameter key="sonata.admin_doctrine_orm.block.audit">sonata.cache.noop</parameter>
       </parameter>
     </parameter>
     <parameter key="knp_menu.factory.class">Knp\Menu\MenuFactory</parameter>
@@ -818,9 +842,19 @@
     <parameter key="sonata.admin.configuration.dashboard_blocks" type="collection">
       <parameter type="collection">
         <parameter key="position">left</parameter>
-        <parameter key="settings" type="collection"/>
         <parameter key="type">sonata.admin.block.admin_list</parameter>
         <parameter key="roles" type="collection"/>
+        <parameter key="settings" type="collection"/>
+        <parameter key="class">col-md-4</parameter>
+      </parameter>
+      <parameter type="collection">
+        <parameter key="position">right</parameter>
+        <parameter key="type">sonata.block.service.text</parameter>
+        <parameter key="settings" type="collection">
+          <parameter key="content">&lt;h2&gt;Bienvenido!&lt;/h2&gt; &lt;font size=3&gt; Has ingresado al sistema de administracion de &lt;font color="3366FF"&gt;&lt;b&gt;&lt;i&gt; BAD Clinica &lt;i class="fa fa-user-md"&gt;&lt;/i&gt; &lt;sup&gt;TM&lt;/sup&gt;&lt;/b&gt;&lt;/i&gt; &lt;/font&gt; . &lt;br&gt;&lt;br&gt;El sistema consta de muchas funcionalidades, las cuales seran explicadas brevemente a continuacion. &lt;ul&gt;&lt;li&gt;El sistema tiene la opcion de administrar pacientes (Agregar, Editar, Buscar y Eliminar).&lt;/li&gt;&lt;li&gt;El sistema permite el seguimiento de la historia clinica del paciente.&lt;/li&gt;&lt;li&gt;El sistema permite la administracion de citas para los pacientes. &lt;/li&gt;&lt;li&gt;El sistema permite administracion de examenes para los pacientes.&lt;/li&gt; &lt;/ul&gt;&lt;/font&gt; </parameter>
+        </parameter>
+        <parameter key="roles" type="collection"/>
+        <parameter key="class">col-md-4</parameter>
       </parameter>
     </parameter>
     <parameter key="sonata.admin.security.acl_user_manager">fos_user.user_manager</parameter>
@@ -4258,7 +4292,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>553486ea9be37</argument>
+            <argument>5535d227a0819</argument>
           </service>
         </argument>
         <argument type="service">
@@ -4272,7 +4306,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>553486ea9be37</argument>
+            <argument>5535d227a0819</argument>
           </service>
         </argument>
       </argument>
@@ -4676,7 +4710,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>553486ea9be37</argument>
+            <argument>5535d227a0819</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -4787,7 +4821,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>553486ea9be37</argument>
+            <argument>5535d227a0819</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -5663,7 +5697,9 @@
       <call method="add">
         <argument>sonata.block.service.menu</argument>
         <argument>sonata.block.service.menu</argument>
-        <argument type="collection"/>
+        <argument type="collection">
+          <argument>cms</argument>
+        </argument>
       </call>
       <call method="add">
         <argument>sonata.block.service.template</argument>
@@ -5687,7 +5723,9 @@
       <call method="add">
         <argument>sonata.admin.block.stats</argument>
         <argument>sonata.admin.block.stats</argument>
-        <argument type="collection"/>
+        <argument type="collection">
+          <argument>cms</argument>
+        </argument>
       </call>
       <call method="add">
         <argument>sonata.user.block.menu</argument>
@@ -5714,6 +5752,9 @@
           <argument key="sonata.user.block.account">sonata.cache.noop</argument>
           <argument key="sonata.block.service.text">sonata.cache.noop</argument>
           <argument key="sonata.admin.block.search_result">sonata.cache.noop</argument>
+          <argument key="sonata.admin.block.stats">sonata.cache.noop</argument>
+          <argument key="sonata.block.service.menu">sonata.cache.noop</argument>
+          <argument key="sonata.admin_doctrine_orm.block.audit">sonata.cache.noop</argument>
         </argument>
       </argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
@@ -5734,6 +5775,9 @@
           <argument key="sonata.user.block.account">sonata.cache.noop</argument>
           <argument key="sonata.block.service.text">sonata.cache.noop</argument>
           <argument key="sonata.admin.block.search_result">sonata.cache.noop</argument>
+          <argument key="sonata.admin.block.stats">sonata.cache.noop</argument>
+          <argument key="sonata.block.service.menu">sonata.cache.noop</argument>
+          <argument key="sonata.admin_doctrine_orm.block.audit">sonata.cache.noop</argument>
         </argument>
       </argument>
       <argument type="service" id="sonata.block.renderer.default"/>
@@ -5756,6 +5800,9 @@
         <argument>sonata.user.block.account</argument>
         <argument>sonata.block.service.text</argument>
         <argument>sonata.admin.block.search_result</argument>
+        <argument>sonata.admin.block.stats</argument>
+        <argument>sonata.block.service.menu</argument>
+        <argument>sonata.admin_doctrine_orm.block.audit</argument>
       </argument>
     </service>
     <service id="sonata.block.twig.global" class="Sonata\BlockBundle\Twig\GlobalVariables">

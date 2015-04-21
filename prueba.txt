@@ -1,0 +1,10 @@
+"<h2>Bienvenido!</h2> <font size=3> Has ingresado al sistema de administracion de <font color=\"blue\"> BAD Clinica <i class=\"fa fa-user-md\"></i> </font> .
+
+El sistema consta de muchas funcionalidades, las cuales seran explicadas brevemente a continuacion: 
+
+El sistema tiene la opcion de administrar pacientes (Agregar, Editar, Buscar y Eliminar)
+El sistema permite el seguimiento de la historia clinica del paciente.
+El sistema permite la administracion de citas para los pacientes.
+El sistema permite administracion de examenes para los pacientes.
+
+</font> "}}
