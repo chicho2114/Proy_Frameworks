@@ -40,7 +40,6 @@ class PacienteAdmin extends Admin
             ->add('apellido')
             ->add('edad')
             ->add('fechaNac', 'date', array('label' => 'Fecha de nacimiento'))
-            ->add('telefonos')
             ->add('seguroSocial')
             ->add('medicoPref', null, array('label' => 'Médico'))
             ->add('_action', 'actions', array(
@@ -83,6 +82,7 @@ class PacienteAdmin extends Admin
                     ->add('formaActual', null, array('label' => 'Forma actual del paciente', 'help'=>'Introduce una breve descripción del estatus actual del paciente'))
                     ->add('medicoPref', null, array('label' => 'Médico'))
                     ->add('contactoEmerg', 'sonata_type_model', array('multiple' => true, 'label' => 'Contacto de emergencia'))
+                    ->add('historia', 'sonata_type_model', array( 'required'=>false, 'label' => 'Crear historia clinica'))
                 ->end()
             ->end()
         ;
@@ -118,5 +118,6 @@ class PacienteAdmin extends Admin
     {
         $paciente->setTelefonos($paciente->getTelefonos());
         $paciente->setContactoEmerg($paciente->getContactoEmerg());
+        $paciente->setHistoria($paciente->getHistoria());
     }
 }

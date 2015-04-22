@@ -4,7 +4,7 @@
     <parameter key="kernel.root_dir">/var/www/Proy_new/app</parameter>
     <parameter key="kernel.environment">dev</parameter>
     <parameter key="kernel.debug">true</parameter>
-    <parameter key="kernel.name">ap_</parameter>
+    <parameter key="kernel.name">app</parameter>
     <parameter key="kernel.cache_dir">/var/www/Proy_new/app/cache/dev</parameter>
     <parameter key="kernel.logs_dir">/var/www/Proy_new/app/logs</parameter>
     <parameter key="kernel.bundles" type="collection">
@@ -887,54 +887,6 @@
     <parameter key="sonata.admin.configuration.dashboard_groups" type="collection"/>
     <parameter key="sonata.admin.configuration.dashboard_blocks" type="collection">
       <parameter type="collection">
-        <parameter key="class">col-lg-3 col-xs-6</parameter>
-        <parameter key="position">top</parameter>
-        <parameter key="type">sonata.admin.block.stats</parameter>
-        <parameter key="settings" type="collection">
-          <parameter key="code">admin_admin.admin.paciente</parameter>
-          <parameter key="icon">fa fa-wheelchair</parameter>
-          <parameter key="text">Pacientes</parameter>
-          <parameter key="filters">null</parameter>
-        </parameter>
-        <parameter key="roles" type="collection"/>
-      </parameter>
-      <parameter type="collection">
-        <parameter key="class">col-lg-3 col-xs-6</parameter>
-        <parameter key="position">top</parameter>
-        <parameter key="type">sonata.admin.block.stats</parameter>
-        <parameter key="settings" type="collection">
-          <parameter key="code">admin_admin.admin.cita</parameter>
-          <parameter key="icon">fa fa-calendar-o</parameter>
-          <parameter key="text">Citas</parameter>
-          <parameter key="color">bg-blue</parameter>
-        </parameter>
-        <parameter key="roles" type="collection"/>
-      </parameter>
-      <parameter type="collection">
-        <parameter key="class">col-lg-3 col-xs-6</parameter>
-        <parameter key="position">top</parameter>
-        <parameter key="type">sonata.admin.block.stats</parameter>
-        <parameter key="settings" type="collection">
-          <parameter key="code">sonata.user.admin.user</parameter>
-          <parameter key="icon">fa fa-user-md</parameter>
-          <parameter key="text">Usuarios</parameter>
-          <parameter key="color">bg-green</parameter>
-        </parameter>
-        <parameter key="roles" type="collection"/>
-      </parameter>
-      <parameter type="collection">
-        <parameter key="class">col-lg-3 col-xs-6</parameter>
-        <parameter key="position">top</parameter>
-        <parameter key="type">sonata.admin.block.stats</parameter>
-        <parameter key="settings" type="collection">
-          <parameter key="code">admin_admin.admin.cita</parameter>
-          <parameter key="icon">fa fa-list-alt</parameter>
-          <parameter key="text">Citas</parameter>
-          <parameter key="color">bg-blue</parameter>
-        </parameter>
-        <parameter key="roles" type="collection"/>
-      </parameter>
-      <parameter type="collection">
         <parameter key="position">left</parameter>
         <parameter key="type">sonata.admin.block.admin_list</parameter>
         <parameter key="roles" type="collection"/>
@@ -1216,7 +1168,7 @@
   </parameters>
   <services>
     <service id="admin_admin.admin.paciente" class="Admin\AdminBundle\Admin\PacienteAdmin" scope="prototype">
-      <tag name="sonata.admin" manager_type="orm" group="Administración" label="Pacientes"/>
+      <tag name="sonata.admin" manager_type="orm" group="Administracion" label="Paciente"/>
       <argument>admin_admin.admin.paciente</argument>
       <argument>Admin\AdminBundle\Entity\Paciente</argument>
       <argument>AdminAdminBundle:PacienteAdmin</argument>
@@ -1276,7 +1228,7 @@
         <argument>default</argument>
       </call>
       <call method="setLabel">
-        <argument>Pacientes</argument>
+        <argument>Paciente</argument>
       </call>
       <call method="setPersistFilters">
         <argument>false</argument>
@@ -1351,7 +1303,7 @@
       </call>
     </service>
     <service id="admin_admin.admin.telefono" class="Admin\AdminBundle\Admin\TelefonoAdmin" scope="prototype">
-      <tag name="sonata.admin" manager_type="orm" group="Administración" label="Telefonos"/>
+      <tag name="sonata.admin" manager_type="orm" group="Otros" label="Telefono"/>
       <argument>admin_admin.admin.telefono</argument>
       <argument>Admin\AdminBundle\Entity\Telefono</argument>
       <argument>AdminAdminBundle:TelefonoAdmin</argument>
@@ -1411,7 +1363,7 @@
         <argument>default</argument>
       </call>
       <call method="setLabel">
-        <argument>Telefonos</argument>
+        <argument>Telefono</argument>
       </call>
       <call method="setPersistFilters">
         <argument>false</argument>
@@ -1486,7 +1438,7 @@
       </call>
     </service>
     <service id="admin_admin.admin.cont_emergencia" class="Admin\AdminBundle\Admin\ContEmergenciaAdmin" scope="prototype">
-      <tag name="sonata.admin" manager_type="orm" group="Administración" label="Contactos Emergencia"/>
+      <tag name="sonata.admin" manager_type="orm" group="Otros" label="ContEmergencia"/>
       <argument>admin_admin.admin.cont_emergencia</argument>
       <argument>Admin\AdminBundle\Entity\ContEmergencia</argument>
       <argument>AdminAdminBundle:ContEmergenciaAdmin</argument>
@@ -1546,7 +1498,7 @@
         <argument>default</argument>
       </call>
       <call method="setLabel">
-        <argument>Contactos Emergencia</argument>
+        <argument>ContEmergencia</argument>
       </call>
       <call method="setPersistFilters">
         <argument>false</argument>
@@ -1621,10 +1573,10 @@
       </call>
     </service>
     <service id="admin_admin.admin.cita" class="Admin\AdminBundle\Admin\CitaAdmin" scope="prototype">
-      <tag name="sonata.admin" manager_type="orm" group="Administración" label="Citas"/>
+      <tag name="sonata.admin" manager_type="orm" group="Administracion" label="Cita"/>
       <argument>admin_admin.admin.cita</argument>
       <argument>Admin\AdminBundle\Entity\Cita</argument>
-      <argument>AdminAdminBundle:CitaAdmin</argument>
+      <argument>SonataAdminBundle:CRUD</argument>
       <call method="setFormTheme">
         <argument type="collection">
           <argument>SonataDoctrineORMAdminBundle:Form:form_admin_fields.html.twig</argument>
@@ -1681,7 +1633,1087 @@
         <argument>default</argument>
       </call>
       <call method="setLabel">
-        <argument>Citas</argument>
+        <argument>Cita</argument>
+      </call>
+      <call method="setPersistFilters">
+        <argument>false</argument>
+      </call>
+      <call method="setTemplates">
+        <argument type="collection">
+          <argument key="user_block">SonataUserBundle:Admin/Core:user_block.html.twig</argument>
+          <argument key="add_block">SonataAdminBundle:Core:add_block.html.twig</argument>
+          <argument key="layout">SonataAdminBundle::standard_layout.html.twig</argument>
+          <argument key="ajax">SonataAdminBundle::ajax_layout.html.twig</argument>
+          <argument key="dashboard">SonataAdminBundle:Core:dashboard.html.twig</argument>
+          <argument key="list">SonataAdminBundle:CRUD:list.html.twig</argument>
+          <argument key="filter">SonataAdminBundle:Form:filter_admin_fields.html.twig</argument>
+          <argument key="show">SonataAdminBundle:CRUD:show.html.twig</argument>
+          <argument key="show_compare">SonataAdminBundle:CRUD:show_compare.html.twig</argument>
+          <argument key="edit">SonataAdminBundle:CRUD:edit.html.twig</argument>
+          <argument key="history">SonataAdminBundle:CRUD:history.html.twig</argument>
+          <argument key="history_revision_timestamp">SonataAdminBundle:CRUD:history_revision_timestamp.html.twig</argument>
+          <argument key="acl">SonataAdminBundle:CRUD:acl.html.twig</argument>
+          <argument key="action">SonataAdminBundle:CRUD:action.html.twig</argument>
+          <argument key="short_object_description">SonataAdminBundle:Helper:short-object-description.html.twig</argument>
+          <argument key="preview">SonataAdminBundle:CRUD:preview.html.twig</argument>
+          <argument key="list_block">SonataAdminBundle:Block:block_admin_list.html.twig</argument>
+          <argument key="delete">SonataAdminBundle:CRUD:delete.html.twig</argument>
+          <argument key="batch">SonataAdminBundle:CRUD:list__batch.html.twig</argument>
+          <argument key="select">SonataAdminBundle:CRUD:list__select.html.twig</argument>
+          <argument key="batch_confirmation">SonataAdminBundle:CRUD:batch_confirmation.html.twig</argument>
+          <argument key="inner_list_row">SonataAdminBundle:CRUD:list_inner_row.html.twig</argument>
+          <argument key="base_list_field">SonataAdminBundle:CRUD:base_list_field.html.twig</argument>
+          <argument key="pager_links">SonataAdminBundle:Pager:links.html.twig</argument>
+          <argument key="pager_results">SonataAdminBundle:Pager:results.html.twig</argument>
+          <argument key="tab_menu_template">SonataAdminBundle:Core:tab_menu_template.html.twig</argument>
+          <argument key="knp_menu_template">SonataAdminBundle:Menu:sonata_menu.html.twig</argument>
+          <argument key="outer_list_rows_mosaic">SonataAdminBundle:CRUD:list_outer_rows_mosaic.html.twig</argument>
+          <argument key="outer_list_rows_list">SonataAdminBundle:CRUD:list_outer_rows_list.html.twig</argument>
+          <argument key="outer_list_rows_tree">SonataAdminBundle:CRUD:list_outer_rows_tree.html.twig</argument>
+          <argument key="search">SonataAdminBundle:Core:search.html.twig</argument>
+          <argument key="search_result_block">SonataAdminBundle:Block:block_search_result.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setSecurityInformation">
+        <argument type="collection">
+          <argument key="EDIT" type="collection">
+            <argument>EDIT</argument>
+          </argument>
+          <argument key="LIST" type="collection">
+            <argument>LIST</argument>
+          </argument>
+          <argument key="CREATE" type="collection">
+            <argument>CREATE</argument>
+          </argument>
+          <argument key="VIEW" type="collection">
+            <argument>VIEW</argument>
+          </argument>
+          <argument key="DELETE" type="collection">
+            <argument>DELETE</argument>
+          </argument>
+          <argument key="EXPORT" type="collection">
+            <argument>EXPORT</argument>
+          </argument>
+          <argument key="OPERATOR" type="collection">
+            <argument>OPERATOR</argument>
+          </argument>
+          <argument key="MASTER" type="collection">
+            <argument>MASTER</argument>
+          </argument>
+        </argument>
+      </call>
+      <call method="initialize"/>
+      <call method="addExtension">
+        <argument type="service" id="sonata.admin.event.extension"/>
+      </call>
+    </service>
+    <service id="admin_admin.admin.historia" class="Admin\AdminBundle\Admin\HistoriaAdmin" scope="prototype">
+      <tag name="sonata.admin" manager_type="orm" group="Administracion" label="Historia"/>
+      <argument>admin_admin.admin.historia</argument>
+      <argument>Admin\AdminBundle\Entity\Historia</argument>
+      <argument>AdminAdminBundle:HistoriaAdmin</argument>
+      <call method="setFormTheme">
+        <argument type="collection">
+          <argument>SonataDoctrineORMAdminBundle:Form:form_admin_fields.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setFilterTheme">
+        <argument type="collection">
+          <argument>SonataDoctrineORMAdminBundle:Form:filter_admin_fields.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setManagerType">
+        <argument>orm</argument>
+      </call>
+      <call method="setModelManager">
+        <argument type="service" id="sonata.admin.manager.orm"/>
+      </call>
+      <call method="setFormContractor">
+        <argument type="service" id="sonata.admin.builder.orm_form"/>
+      </call>
+      <call method="setShowBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_show"/>
+      </call>
+      <call method="setListBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_list"/>
+      </call>
+      <call method="setDatagridBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_datagrid"/>
+      </call>
+      <call method="setTranslator">
+        <argument type="service" id="translator"/>
+      </call>
+      <call method="setConfigurationPool">
+        <argument type="service" id="sonata.admin.pool"/>
+      </call>
+      <call method="setRouteGenerator">
+        <argument type="service" id="sonata.admin.route.default_generator"/>
+      </call>
+      <call method="setValidator">
+        <argument type="service" id="validator"/>
+      </call>
+      <call method="setSecurityHandler">
+        <argument type="service" id="sonata.admin.security.handler"/>
+      </call>
+      <call method="setMenuFactory">
+        <argument type="service" id="knp_menu.factory"/>
+      </call>
+      <call method="setRouteBuilder">
+        <argument type="service" id="sonata.admin.route.path_info"/>
+      </call>
+      <call method="setLabelTranslatorStrategy">
+        <argument type="service" id="sonata.admin.label.strategy.native"/>
+      </call>
+      <call method="setPagerType">
+        <argument>default</argument>
+      </call>
+      <call method="setLabel">
+        <argument>Historia</argument>
+      </call>
+      <call method="setPersistFilters">
+        <argument>false</argument>
+      </call>
+      <call method="setTemplates">
+        <argument type="collection">
+          <argument key="user_block">SonataUserBundle:Admin/Core:user_block.html.twig</argument>
+          <argument key="add_block">SonataAdminBundle:Core:add_block.html.twig</argument>
+          <argument key="layout">SonataAdminBundle::standard_layout.html.twig</argument>
+          <argument key="ajax">SonataAdminBundle::ajax_layout.html.twig</argument>
+          <argument key="dashboard">SonataAdminBundle:Core:dashboard.html.twig</argument>
+          <argument key="list">SonataAdminBundle:CRUD:list.html.twig</argument>
+          <argument key="filter">SonataAdminBundle:Form:filter_admin_fields.html.twig</argument>
+          <argument key="show">SonataAdminBundle:CRUD:show.html.twig</argument>
+          <argument key="show_compare">SonataAdminBundle:CRUD:show_compare.html.twig</argument>
+          <argument key="edit">SonataAdminBundle:CRUD:edit.html.twig</argument>
+          <argument key="history">SonataAdminBundle:CRUD:history.html.twig</argument>
+          <argument key="history_revision_timestamp">SonataAdminBundle:CRUD:history_revision_timestamp.html.twig</argument>
+          <argument key="acl">SonataAdminBundle:CRUD:acl.html.twig</argument>
+          <argument key="action">SonataAdminBundle:CRUD:action.html.twig</argument>
+          <argument key="short_object_description">SonataAdminBundle:Helper:short-object-description.html.twig</argument>
+          <argument key="preview">SonataAdminBundle:CRUD:preview.html.twig</argument>
+          <argument key="list_block">SonataAdminBundle:Block:block_admin_list.html.twig</argument>
+          <argument key="delete">SonataAdminBundle:CRUD:delete.html.twig</argument>
+          <argument key="batch">SonataAdminBundle:CRUD:list__batch.html.twig</argument>
+          <argument key="select">SonataAdminBundle:CRUD:list__select.html.twig</argument>
+          <argument key="batch_confirmation">SonataAdminBundle:CRUD:batch_confirmation.html.twig</argument>
+          <argument key="inner_list_row">SonataAdminBundle:CRUD:list_inner_row.html.twig</argument>
+          <argument key="base_list_field">SonataAdminBundle:CRUD:base_list_field.html.twig</argument>
+          <argument key="pager_links">SonataAdminBundle:Pager:links.html.twig</argument>
+          <argument key="pager_results">SonataAdminBundle:Pager:results.html.twig</argument>
+          <argument key="tab_menu_template">SonataAdminBundle:Core:tab_menu_template.html.twig</argument>
+          <argument key="knp_menu_template">SonataAdminBundle:Menu:sonata_menu.html.twig</argument>
+          <argument key="outer_list_rows_mosaic">SonataAdminBundle:CRUD:list_outer_rows_mosaic.html.twig</argument>
+          <argument key="outer_list_rows_list">SonataAdminBundle:CRUD:list_outer_rows_list.html.twig</argument>
+          <argument key="outer_list_rows_tree">SonataAdminBundle:CRUD:list_outer_rows_tree.html.twig</argument>
+          <argument key="search">SonataAdminBundle:Core:search.html.twig</argument>
+          <argument key="search_result_block">SonataAdminBundle:Block:block_search_result.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setSecurityInformation">
+        <argument type="collection">
+          <argument key="EDIT" type="collection">
+            <argument>EDIT</argument>
+          </argument>
+          <argument key="LIST" type="collection">
+            <argument>LIST</argument>
+          </argument>
+          <argument key="CREATE" type="collection">
+            <argument>CREATE</argument>
+          </argument>
+          <argument key="VIEW" type="collection">
+            <argument>VIEW</argument>
+          </argument>
+          <argument key="DELETE" type="collection">
+            <argument>DELETE</argument>
+          </argument>
+          <argument key="EXPORT" type="collection">
+            <argument>EXPORT</argument>
+          </argument>
+          <argument key="OPERATOR" type="collection">
+            <argument>OPERATOR</argument>
+          </argument>
+          <argument key="MASTER" type="collection">
+            <argument>MASTER</argument>
+          </argument>
+        </argument>
+      </call>
+      <call method="initialize"/>
+      <call method="addExtension">
+        <argument type="service" id="sonata.admin.event.extension"/>
+      </call>
+    </service>
+    <service id="admin_admin.admin.alergia" class="Admin\AdminBundle\Admin\AlergiaAdmin" scope="prototype">
+      <tag name="sonata.admin" manager_type="orm" group="Otros" label="Alergia"/>
+      <argument>admin_admin.admin.alergia</argument>
+      <argument>Admin\AdminBundle\Entity\Alergia</argument>
+      <argument>AdminAdminBundle:AlergiaAdmin</argument>
+      <call method="setFormTheme">
+        <argument type="collection">
+          <argument>SonataDoctrineORMAdminBundle:Form:form_admin_fields.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setFilterTheme">
+        <argument type="collection">
+          <argument>SonataDoctrineORMAdminBundle:Form:filter_admin_fields.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setManagerType">
+        <argument>orm</argument>
+      </call>
+      <call method="setModelManager">
+        <argument type="service" id="sonata.admin.manager.orm"/>
+      </call>
+      <call method="setFormContractor">
+        <argument type="service" id="sonata.admin.builder.orm_form"/>
+      </call>
+      <call method="setShowBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_show"/>
+      </call>
+      <call method="setListBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_list"/>
+      </call>
+      <call method="setDatagridBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_datagrid"/>
+      </call>
+      <call method="setTranslator">
+        <argument type="service" id="translator"/>
+      </call>
+      <call method="setConfigurationPool">
+        <argument type="service" id="sonata.admin.pool"/>
+      </call>
+      <call method="setRouteGenerator">
+        <argument type="service" id="sonata.admin.route.default_generator"/>
+      </call>
+      <call method="setValidator">
+        <argument type="service" id="validator"/>
+      </call>
+      <call method="setSecurityHandler">
+        <argument type="service" id="sonata.admin.security.handler"/>
+      </call>
+      <call method="setMenuFactory">
+        <argument type="service" id="knp_menu.factory"/>
+      </call>
+      <call method="setRouteBuilder">
+        <argument type="service" id="sonata.admin.route.path_info"/>
+      </call>
+      <call method="setLabelTranslatorStrategy">
+        <argument type="service" id="sonata.admin.label.strategy.native"/>
+      </call>
+      <call method="setPagerType">
+        <argument>default</argument>
+      </call>
+      <call method="setLabel">
+        <argument>Alergia</argument>
+      </call>
+      <call method="setPersistFilters">
+        <argument>false</argument>
+      </call>
+      <call method="setTemplates">
+        <argument type="collection">
+          <argument key="user_block">SonataUserBundle:Admin/Core:user_block.html.twig</argument>
+          <argument key="add_block">SonataAdminBundle:Core:add_block.html.twig</argument>
+          <argument key="layout">SonataAdminBundle::standard_layout.html.twig</argument>
+          <argument key="ajax">SonataAdminBundle::ajax_layout.html.twig</argument>
+          <argument key="dashboard">SonataAdminBundle:Core:dashboard.html.twig</argument>
+          <argument key="list">SonataAdminBundle:CRUD:list.html.twig</argument>
+          <argument key="filter">SonataAdminBundle:Form:filter_admin_fields.html.twig</argument>
+          <argument key="show">SonataAdminBundle:CRUD:show.html.twig</argument>
+          <argument key="show_compare">SonataAdminBundle:CRUD:show_compare.html.twig</argument>
+          <argument key="edit">SonataAdminBundle:CRUD:edit.html.twig</argument>
+          <argument key="history">SonataAdminBundle:CRUD:history.html.twig</argument>
+          <argument key="history_revision_timestamp">SonataAdminBundle:CRUD:history_revision_timestamp.html.twig</argument>
+          <argument key="acl">SonataAdminBundle:CRUD:acl.html.twig</argument>
+          <argument key="action">SonataAdminBundle:CRUD:action.html.twig</argument>
+          <argument key="short_object_description">SonataAdminBundle:Helper:short-object-description.html.twig</argument>
+          <argument key="preview">SonataAdminBundle:CRUD:preview.html.twig</argument>
+          <argument key="list_block">SonataAdminBundle:Block:block_admin_list.html.twig</argument>
+          <argument key="delete">SonataAdminBundle:CRUD:delete.html.twig</argument>
+          <argument key="batch">SonataAdminBundle:CRUD:list__batch.html.twig</argument>
+          <argument key="select">SonataAdminBundle:CRUD:list__select.html.twig</argument>
+          <argument key="batch_confirmation">SonataAdminBundle:CRUD:batch_confirmation.html.twig</argument>
+          <argument key="inner_list_row">SonataAdminBundle:CRUD:list_inner_row.html.twig</argument>
+          <argument key="base_list_field">SonataAdminBundle:CRUD:base_list_field.html.twig</argument>
+          <argument key="pager_links">SonataAdminBundle:Pager:links.html.twig</argument>
+          <argument key="pager_results">SonataAdminBundle:Pager:results.html.twig</argument>
+          <argument key="tab_menu_template">SonataAdminBundle:Core:tab_menu_template.html.twig</argument>
+          <argument key="knp_menu_template">SonataAdminBundle:Menu:sonata_menu.html.twig</argument>
+          <argument key="outer_list_rows_mosaic">SonataAdminBundle:CRUD:list_outer_rows_mosaic.html.twig</argument>
+          <argument key="outer_list_rows_list">SonataAdminBundle:CRUD:list_outer_rows_list.html.twig</argument>
+          <argument key="outer_list_rows_tree">SonataAdminBundle:CRUD:list_outer_rows_tree.html.twig</argument>
+          <argument key="search">SonataAdminBundle:Core:search.html.twig</argument>
+          <argument key="search_result_block">SonataAdminBundle:Block:block_search_result.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setSecurityInformation">
+        <argument type="collection">
+          <argument key="EDIT" type="collection">
+            <argument>EDIT</argument>
+          </argument>
+          <argument key="LIST" type="collection">
+            <argument>LIST</argument>
+          </argument>
+          <argument key="CREATE" type="collection">
+            <argument>CREATE</argument>
+          </argument>
+          <argument key="VIEW" type="collection">
+            <argument>VIEW</argument>
+          </argument>
+          <argument key="DELETE" type="collection">
+            <argument>DELETE</argument>
+          </argument>
+          <argument key="EXPORT" type="collection">
+            <argument>EXPORT</argument>
+          </argument>
+          <argument key="OPERATOR" type="collection">
+            <argument>OPERATOR</argument>
+          </argument>
+          <argument key="MASTER" type="collection">
+            <argument>MASTER</argument>
+          </argument>
+        </argument>
+      </call>
+      <call method="initialize"/>
+      <call method="addExtension">
+        <argument type="service" id="sonata.admin.event.extension"/>
+      </call>
+    </service>
+    <service id="admin_admin.admin.medicamento" class="Admin\AdminBundle\Admin\MedicamentoAdmin" scope="prototype">
+      <tag name="sonata.admin" manager_type="orm" group="Otros" label="Medicamento"/>
+      <argument>admin_admin.admin.medicamento</argument>
+      <argument>Admin\AdminBundle\Entity\Medicamento</argument>
+      <argument>AdminAdminBundle:MedicamentoAdmin</argument>
+      <call method="setFormTheme">
+        <argument type="collection">
+          <argument>SonataDoctrineORMAdminBundle:Form:form_admin_fields.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setFilterTheme">
+        <argument type="collection">
+          <argument>SonataDoctrineORMAdminBundle:Form:filter_admin_fields.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setManagerType">
+        <argument>orm</argument>
+      </call>
+      <call method="setModelManager">
+        <argument type="service" id="sonata.admin.manager.orm"/>
+      </call>
+      <call method="setFormContractor">
+        <argument type="service" id="sonata.admin.builder.orm_form"/>
+      </call>
+      <call method="setShowBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_show"/>
+      </call>
+      <call method="setListBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_list"/>
+      </call>
+      <call method="setDatagridBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_datagrid"/>
+      </call>
+      <call method="setTranslator">
+        <argument type="service" id="translator"/>
+      </call>
+      <call method="setConfigurationPool">
+        <argument type="service" id="sonata.admin.pool"/>
+      </call>
+      <call method="setRouteGenerator">
+        <argument type="service" id="sonata.admin.route.default_generator"/>
+      </call>
+      <call method="setValidator">
+        <argument type="service" id="validator"/>
+      </call>
+      <call method="setSecurityHandler">
+        <argument type="service" id="sonata.admin.security.handler"/>
+      </call>
+      <call method="setMenuFactory">
+        <argument type="service" id="knp_menu.factory"/>
+      </call>
+      <call method="setRouteBuilder">
+        <argument type="service" id="sonata.admin.route.path_info"/>
+      </call>
+      <call method="setLabelTranslatorStrategy">
+        <argument type="service" id="sonata.admin.label.strategy.native"/>
+      </call>
+      <call method="setPagerType">
+        <argument>default</argument>
+      </call>
+      <call method="setLabel">
+        <argument>Medicamento</argument>
+      </call>
+      <call method="setPersistFilters">
+        <argument>false</argument>
+      </call>
+      <call method="setTemplates">
+        <argument type="collection">
+          <argument key="user_block">SonataUserBundle:Admin/Core:user_block.html.twig</argument>
+          <argument key="add_block">SonataAdminBundle:Core:add_block.html.twig</argument>
+          <argument key="layout">SonataAdminBundle::standard_layout.html.twig</argument>
+          <argument key="ajax">SonataAdminBundle::ajax_layout.html.twig</argument>
+          <argument key="dashboard">SonataAdminBundle:Core:dashboard.html.twig</argument>
+          <argument key="list">SonataAdminBundle:CRUD:list.html.twig</argument>
+          <argument key="filter">SonataAdminBundle:Form:filter_admin_fields.html.twig</argument>
+          <argument key="show">SonataAdminBundle:CRUD:show.html.twig</argument>
+          <argument key="show_compare">SonataAdminBundle:CRUD:show_compare.html.twig</argument>
+          <argument key="edit">SonataAdminBundle:CRUD:edit.html.twig</argument>
+          <argument key="history">SonataAdminBundle:CRUD:history.html.twig</argument>
+          <argument key="history_revision_timestamp">SonataAdminBundle:CRUD:history_revision_timestamp.html.twig</argument>
+          <argument key="acl">SonataAdminBundle:CRUD:acl.html.twig</argument>
+          <argument key="action">SonataAdminBundle:CRUD:action.html.twig</argument>
+          <argument key="short_object_description">SonataAdminBundle:Helper:short-object-description.html.twig</argument>
+          <argument key="preview">SonataAdminBundle:CRUD:preview.html.twig</argument>
+          <argument key="list_block">SonataAdminBundle:Block:block_admin_list.html.twig</argument>
+          <argument key="delete">SonataAdminBundle:CRUD:delete.html.twig</argument>
+          <argument key="batch">SonataAdminBundle:CRUD:list__batch.html.twig</argument>
+          <argument key="select">SonataAdminBundle:CRUD:list__select.html.twig</argument>
+          <argument key="batch_confirmation">SonataAdminBundle:CRUD:batch_confirmation.html.twig</argument>
+          <argument key="inner_list_row">SonataAdminBundle:CRUD:list_inner_row.html.twig</argument>
+          <argument key="base_list_field">SonataAdminBundle:CRUD:base_list_field.html.twig</argument>
+          <argument key="pager_links">SonataAdminBundle:Pager:links.html.twig</argument>
+          <argument key="pager_results">SonataAdminBundle:Pager:results.html.twig</argument>
+          <argument key="tab_menu_template">SonataAdminBundle:Core:tab_menu_template.html.twig</argument>
+          <argument key="knp_menu_template">SonataAdminBundle:Menu:sonata_menu.html.twig</argument>
+          <argument key="outer_list_rows_mosaic">SonataAdminBundle:CRUD:list_outer_rows_mosaic.html.twig</argument>
+          <argument key="outer_list_rows_list">SonataAdminBundle:CRUD:list_outer_rows_list.html.twig</argument>
+          <argument key="outer_list_rows_tree">SonataAdminBundle:CRUD:list_outer_rows_tree.html.twig</argument>
+          <argument key="search">SonataAdminBundle:Core:search.html.twig</argument>
+          <argument key="search_result_block">SonataAdminBundle:Block:block_search_result.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setSecurityInformation">
+        <argument type="collection">
+          <argument key="EDIT" type="collection">
+            <argument>EDIT</argument>
+          </argument>
+          <argument key="LIST" type="collection">
+            <argument>LIST</argument>
+          </argument>
+          <argument key="CREATE" type="collection">
+            <argument>CREATE</argument>
+          </argument>
+          <argument key="VIEW" type="collection">
+            <argument>VIEW</argument>
+          </argument>
+          <argument key="DELETE" type="collection">
+            <argument>DELETE</argument>
+          </argument>
+          <argument key="EXPORT" type="collection">
+            <argument>EXPORT</argument>
+          </argument>
+          <argument key="OPERATOR" type="collection">
+            <argument>OPERATOR</argument>
+          </argument>
+          <argument key="MASTER" type="collection">
+            <argument>MASTER</argument>
+          </argument>
+        </argument>
+      </call>
+      <call method="initialize"/>
+      <call method="addExtension">
+        <argument type="service" id="sonata.admin.event.extension"/>
+      </call>
+    </service>
+    <service id="admin_admin.admin.nota_cita" class="Admin\AdminBundle\Admin\NotaCitaAdmin" scope="prototype">
+      <tag name="sonata.admin" manager_type="orm" group="Otros" label="NotaCita"/>
+      <argument>admin_admin.admin.nota_cita</argument>
+      <argument>Admin\AdminBundle\Entity\NotaCita</argument>
+      <argument>AdminAdminBundle:NotaCitaAdmin</argument>
+      <call method="setFormTheme">
+        <argument type="collection">
+          <argument>SonataDoctrineORMAdminBundle:Form:form_admin_fields.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setFilterTheme">
+        <argument type="collection">
+          <argument>SonataDoctrineORMAdminBundle:Form:filter_admin_fields.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setManagerType">
+        <argument>orm</argument>
+      </call>
+      <call method="setModelManager">
+        <argument type="service" id="sonata.admin.manager.orm"/>
+      </call>
+      <call method="setFormContractor">
+        <argument type="service" id="sonata.admin.builder.orm_form"/>
+      </call>
+      <call method="setShowBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_show"/>
+      </call>
+      <call method="setListBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_list"/>
+      </call>
+      <call method="setDatagridBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_datagrid"/>
+      </call>
+      <call method="setTranslator">
+        <argument type="service" id="translator"/>
+      </call>
+      <call method="setConfigurationPool">
+        <argument type="service" id="sonata.admin.pool"/>
+      </call>
+      <call method="setRouteGenerator">
+        <argument type="service" id="sonata.admin.route.default_generator"/>
+      </call>
+      <call method="setValidator">
+        <argument type="service" id="validator"/>
+      </call>
+      <call method="setSecurityHandler">
+        <argument type="service" id="sonata.admin.security.handler"/>
+      </call>
+      <call method="setMenuFactory">
+        <argument type="service" id="knp_menu.factory"/>
+      </call>
+      <call method="setRouteBuilder">
+        <argument type="service" id="sonata.admin.route.path_info"/>
+      </call>
+      <call method="setLabelTranslatorStrategy">
+        <argument type="service" id="sonata.admin.label.strategy.native"/>
+      </call>
+      <call method="setPagerType">
+        <argument>default</argument>
+      </call>
+      <call method="setLabel">
+        <argument>NotaCita</argument>
+      </call>
+      <call method="setPersistFilters">
+        <argument>false</argument>
+      </call>
+      <call method="setTemplates">
+        <argument type="collection">
+          <argument key="user_block">SonataUserBundle:Admin/Core:user_block.html.twig</argument>
+          <argument key="add_block">SonataAdminBundle:Core:add_block.html.twig</argument>
+          <argument key="layout">SonataAdminBundle::standard_layout.html.twig</argument>
+          <argument key="ajax">SonataAdminBundle::ajax_layout.html.twig</argument>
+          <argument key="dashboard">SonataAdminBundle:Core:dashboard.html.twig</argument>
+          <argument key="list">SonataAdminBundle:CRUD:list.html.twig</argument>
+          <argument key="filter">SonataAdminBundle:Form:filter_admin_fields.html.twig</argument>
+          <argument key="show">SonataAdminBundle:CRUD:show.html.twig</argument>
+          <argument key="show_compare">SonataAdminBundle:CRUD:show_compare.html.twig</argument>
+          <argument key="edit">SonataAdminBundle:CRUD:edit.html.twig</argument>
+          <argument key="history">SonataAdminBundle:CRUD:history.html.twig</argument>
+          <argument key="history_revision_timestamp">SonataAdminBundle:CRUD:history_revision_timestamp.html.twig</argument>
+          <argument key="acl">SonataAdminBundle:CRUD:acl.html.twig</argument>
+          <argument key="action">SonataAdminBundle:CRUD:action.html.twig</argument>
+          <argument key="short_object_description">SonataAdminBundle:Helper:short-object-description.html.twig</argument>
+          <argument key="preview">SonataAdminBundle:CRUD:preview.html.twig</argument>
+          <argument key="list_block">SonataAdminBundle:Block:block_admin_list.html.twig</argument>
+          <argument key="delete">SonataAdminBundle:CRUD:delete.html.twig</argument>
+          <argument key="batch">SonataAdminBundle:CRUD:list__batch.html.twig</argument>
+          <argument key="select">SonataAdminBundle:CRUD:list__select.html.twig</argument>
+          <argument key="batch_confirmation">SonataAdminBundle:CRUD:batch_confirmation.html.twig</argument>
+          <argument key="inner_list_row">SonataAdminBundle:CRUD:list_inner_row.html.twig</argument>
+          <argument key="base_list_field">SonataAdminBundle:CRUD:base_list_field.html.twig</argument>
+          <argument key="pager_links">SonataAdminBundle:Pager:links.html.twig</argument>
+          <argument key="pager_results">SonataAdminBundle:Pager:results.html.twig</argument>
+          <argument key="tab_menu_template">SonataAdminBundle:Core:tab_menu_template.html.twig</argument>
+          <argument key="knp_menu_template">SonataAdminBundle:Menu:sonata_menu.html.twig</argument>
+          <argument key="outer_list_rows_mosaic">SonataAdminBundle:CRUD:list_outer_rows_mosaic.html.twig</argument>
+          <argument key="outer_list_rows_list">SonataAdminBundle:CRUD:list_outer_rows_list.html.twig</argument>
+          <argument key="outer_list_rows_tree">SonataAdminBundle:CRUD:list_outer_rows_tree.html.twig</argument>
+          <argument key="search">SonataAdminBundle:Core:search.html.twig</argument>
+          <argument key="search_result_block">SonataAdminBundle:Block:block_search_result.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setSecurityInformation">
+        <argument type="collection">
+          <argument key="EDIT" type="collection">
+            <argument>EDIT</argument>
+          </argument>
+          <argument key="LIST" type="collection">
+            <argument>LIST</argument>
+          </argument>
+          <argument key="CREATE" type="collection">
+            <argument>CREATE</argument>
+          </argument>
+          <argument key="VIEW" type="collection">
+            <argument>VIEW</argument>
+          </argument>
+          <argument key="DELETE" type="collection">
+            <argument>DELETE</argument>
+          </argument>
+          <argument key="EXPORT" type="collection">
+            <argument>EXPORT</argument>
+          </argument>
+          <argument key="OPERATOR" type="collection">
+            <argument>OPERATOR</argument>
+          </argument>
+          <argument key="MASTER" type="collection">
+            <argument>MASTER</argument>
+          </argument>
+        </argument>
+      </call>
+      <call method="initialize"/>
+      <call method="addExtension">
+        <argument type="service" id="sonata.admin.event.extension"/>
+      </call>
+    </service>
+    <service id="admin_admin.admin.visita" class="Admin\AdminBundle\Admin\VisitaAdmin" scope="prototype">
+      <tag name="sonata.admin" manager_type="orm" group="Administracion" label="Visita"/>
+      <argument>admin_admin.admin.visita</argument>
+      <argument>Admin\AdminBundle\Entity\Visita</argument>
+      <argument>AdminAdminBundle:VisitaAdmin</argument>
+      <call method="setFormTheme">
+        <argument type="collection">
+          <argument>SonataDoctrineORMAdminBundle:Form:form_admin_fields.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setFilterTheme">
+        <argument type="collection">
+          <argument>SonataDoctrineORMAdminBundle:Form:filter_admin_fields.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setManagerType">
+        <argument>orm</argument>
+      </call>
+      <call method="setModelManager">
+        <argument type="service" id="sonata.admin.manager.orm"/>
+      </call>
+      <call method="setFormContractor">
+        <argument type="service" id="sonata.admin.builder.orm_form"/>
+      </call>
+      <call method="setShowBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_show"/>
+      </call>
+      <call method="setListBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_list"/>
+      </call>
+      <call method="setDatagridBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_datagrid"/>
+      </call>
+      <call method="setTranslator">
+        <argument type="service" id="translator"/>
+      </call>
+      <call method="setConfigurationPool">
+        <argument type="service" id="sonata.admin.pool"/>
+      </call>
+      <call method="setRouteGenerator">
+        <argument type="service" id="sonata.admin.route.default_generator"/>
+      </call>
+      <call method="setValidator">
+        <argument type="service" id="validator"/>
+      </call>
+      <call method="setSecurityHandler">
+        <argument type="service" id="sonata.admin.security.handler"/>
+      </call>
+      <call method="setMenuFactory">
+        <argument type="service" id="knp_menu.factory"/>
+      </call>
+      <call method="setRouteBuilder">
+        <argument type="service" id="sonata.admin.route.path_info"/>
+      </call>
+      <call method="setLabelTranslatorStrategy">
+        <argument type="service" id="sonata.admin.label.strategy.native"/>
+      </call>
+      <call method="setPagerType">
+        <argument>default</argument>
+      </call>
+      <call method="setLabel">
+        <argument>Visita</argument>
+      </call>
+      <call method="setPersistFilters">
+        <argument>false</argument>
+      </call>
+      <call method="setTemplates">
+        <argument type="collection">
+          <argument key="user_block">SonataUserBundle:Admin/Core:user_block.html.twig</argument>
+          <argument key="add_block">SonataAdminBundle:Core:add_block.html.twig</argument>
+          <argument key="layout">SonataAdminBundle::standard_layout.html.twig</argument>
+          <argument key="ajax">SonataAdminBundle::ajax_layout.html.twig</argument>
+          <argument key="dashboard">SonataAdminBundle:Core:dashboard.html.twig</argument>
+          <argument key="list">SonataAdminBundle:CRUD:list.html.twig</argument>
+          <argument key="filter">SonataAdminBundle:Form:filter_admin_fields.html.twig</argument>
+          <argument key="show">SonataAdminBundle:CRUD:show.html.twig</argument>
+          <argument key="show_compare">SonataAdminBundle:CRUD:show_compare.html.twig</argument>
+          <argument key="edit">SonataAdminBundle:CRUD:edit.html.twig</argument>
+          <argument key="history">SonataAdminBundle:CRUD:history.html.twig</argument>
+          <argument key="history_revision_timestamp">SonataAdminBundle:CRUD:history_revision_timestamp.html.twig</argument>
+          <argument key="acl">SonataAdminBundle:CRUD:acl.html.twig</argument>
+          <argument key="action">SonataAdminBundle:CRUD:action.html.twig</argument>
+          <argument key="short_object_description">SonataAdminBundle:Helper:short-object-description.html.twig</argument>
+          <argument key="preview">SonataAdminBundle:CRUD:preview.html.twig</argument>
+          <argument key="list_block">SonataAdminBundle:Block:block_admin_list.html.twig</argument>
+          <argument key="delete">SonataAdminBundle:CRUD:delete.html.twig</argument>
+          <argument key="batch">SonataAdminBundle:CRUD:list__batch.html.twig</argument>
+          <argument key="select">SonataAdminBundle:CRUD:list__select.html.twig</argument>
+          <argument key="batch_confirmation">SonataAdminBundle:CRUD:batch_confirmation.html.twig</argument>
+          <argument key="inner_list_row">SonataAdminBundle:CRUD:list_inner_row.html.twig</argument>
+          <argument key="base_list_field">SonataAdminBundle:CRUD:base_list_field.html.twig</argument>
+          <argument key="pager_links">SonataAdminBundle:Pager:links.html.twig</argument>
+          <argument key="pager_results">SonataAdminBundle:Pager:results.html.twig</argument>
+          <argument key="tab_menu_template">SonataAdminBundle:Core:tab_menu_template.html.twig</argument>
+          <argument key="knp_menu_template">SonataAdminBundle:Menu:sonata_menu.html.twig</argument>
+          <argument key="outer_list_rows_mosaic">SonataAdminBundle:CRUD:list_outer_rows_mosaic.html.twig</argument>
+          <argument key="outer_list_rows_list">SonataAdminBundle:CRUD:list_outer_rows_list.html.twig</argument>
+          <argument key="outer_list_rows_tree">SonataAdminBundle:CRUD:list_outer_rows_tree.html.twig</argument>
+          <argument key="search">SonataAdminBundle:Core:search.html.twig</argument>
+          <argument key="search_result_block">SonataAdminBundle:Block:block_search_result.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setSecurityInformation">
+        <argument type="collection">
+          <argument key="EDIT" type="collection">
+            <argument>EDIT</argument>
+          </argument>
+          <argument key="LIST" type="collection">
+            <argument>LIST</argument>
+          </argument>
+          <argument key="CREATE" type="collection">
+            <argument>CREATE</argument>
+          </argument>
+          <argument key="VIEW" type="collection">
+            <argument>VIEW</argument>
+          </argument>
+          <argument key="DELETE" type="collection">
+            <argument>DELETE</argument>
+          </argument>
+          <argument key="EXPORT" type="collection">
+            <argument>EXPORT</argument>
+          </argument>
+          <argument key="OPERATOR" type="collection">
+            <argument>OPERATOR</argument>
+          </argument>
+          <argument key="MASTER" type="collection">
+            <argument>MASTER</argument>
+          </argument>
+        </argument>
+      </call>
+      <call method="initialize"/>
+      <call method="addExtension">
+        <argument type="service" id="sonata.admin.event.extension"/>
+      </call>
+    </service>
+    <service id="admin_admin.admin.receta" class="Admin\AdminBundle\Admin\RecetaAdmin" scope="prototype">
+      <tag name="sonata.admin" manager_type="orm" group="Otros" label="Receta"/>
+      <argument>admin_admin.admin.receta</argument>
+      <argument>Admin\AdminBundle\Entity\Receta</argument>
+      <argument>AdminAdminBundle:RecetaAdmin</argument>
+      <call method="setFormTheme">
+        <argument type="collection">
+          <argument>SonataDoctrineORMAdminBundle:Form:form_admin_fields.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setFilterTheme">
+        <argument type="collection">
+          <argument>SonataDoctrineORMAdminBundle:Form:filter_admin_fields.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setManagerType">
+        <argument>orm</argument>
+      </call>
+      <call method="setModelManager">
+        <argument type="service" id="sonata.admin.manager.orm"/>
+      </call>
+      <call method="setFormContractor">
+        <argument type="service" id="sonata.admin.builder.orm_form"/>
+      </call>
+      <call method="setShowBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_show"/>
+      </call>
+      <call method="setListBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_list"/>
+      </call>
+      <call method="setDatagridBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_datagrid"/>
+      </call>
+      <call method="setTranslator">
+        <argument type="service" id="translator"/>
+      </call>
+      <call method="setConfigurationPool">
+        <argument type="service" id="sonata.admin.pool"/>
+      </call>
+      <call method="setRouteGenerator">
+        <argument type="service" id="sonata.admin.route.default_generator"/>
+      </call>
+      <call method="setValidator">
+        <argument type="service" id="validator"/>
+      </call>
+      <call method="setSecurityHandler">
+        <argument type="service" id="sonata.admin.security.handler"/>
+      </call>
+      <call method="setMenuFactory">
+        <argument type="service" id="knp_menu.factory"/>
+      </call>
+      <call method="setRouteBuilder">
+        <argument type="service" id="sonata.admin.route.path_info"/>
+      </call>
+      <call method="setLabelTranslatorStrategy">
+        <argument type="service" id="sonata.admin.label.strategy.native"/>
+      </call>
+      <call method="setPagerType">
+        <argument>default</argument>
+      </call>
+      <call method="setLabel">
+        <argument>Receta</argument>
+      </call>
+      <call method="setPersistFilters">
+        <argument>false</argument>
+      </call>
+      <call method="setTemplates">
+        <argument type="collection">
+          <argument key="user_block">SonataUserBundle:Admin/Core:user_block.html.twig</argument>
+          <argument key="add_block">SonataAdminBundle:Core:add_block.html.twig</argument>
+          <argument key="layout">SonataAdminBundle::standard_layout.html.twig</argument>
+          <argument key="ajax">SonataAdminBundle::ajax_layout.html.twig</argument>
+          <argument key="dashboard">SonataAdminBundle:Core:dashboard.html.twig</argument>
+          <argument key="list">SonataAdminBundle:CRUD:list.html.twig</argument>
+          <argument key="filter">SonataAdminBundle:Form:filter_admin_fields.html.twig</argument>
+          <argument key="show">SonataAdminBundle:CRUD:show.html.twig</argument>
+          <argument key="show_compare">SonataAdminBundle:CRUD:show_compare.html.twig</argument>
+          <argument key="edit">SonataAdminBundle:CRUD:edit.html.twig</argument>
+          <argument key="history">SonataAdminBundle:CRUD:history.html.twig</argument>
+          <argument key="history_revision_timestamp">SonataAdminBundle:CRUD:history_revision_timestamp.html.twig</argument>
+          <argument key="acl">SonataAdminBundle:CRUD:acl.html.twig</argument>
+          <argument key="action">SonataAdminBundle:CRUD:action.html.twig</argument>
+          <argument key="short_object_description">SonataAdminBundle:Helper:short-object-description.html.twig</argument>
+          <argument key="preview">SonataAdminBundle:CRUD:preview.html.twig</argument>
+          <argument key="list_block">SonataAdminBundle:Block:block_admin_list.html.twig</argument>
+          <argument key="delete">SonataAdminBundle:CRUD:delete.html.twig</argument>
+          <argument key="batch">SonataAdminBundle:CRUD:list__batch.html.twig</argument>
+          <argument key="select">SonataAdminBundle:CRUD:list__select.html.twig</argument>
+          <argument key="batch_confirmation">SonataAdminBundle:CRUD:batch_confirmation.html.twig</argument>
+          <argument key="inner_list_row">SonataAdminBundle:CRUD:list_inner_row.html.twig</argument>
+          <argument key="base_list_field">SonataAdminBundle:CRUD:base_list_field.html.twig</argument>
+          <argument key="pager_links">SonataAdminBundle:Pager:links.html.twig</argument>
+          <argument key="pager_results">SonataAdminBundle:Pager:results.html.twig</argument>
+          <argument key="tab_menu_template">SonataAdminBundle:Core:tab_menu_template.html.twig</argument>
+          <argument key="knp_menu_template">SonataAdminBundle:Menu:sonata_menu.html.twig</argument>
+          <argument key="outer_list_rows_mosaic">SonataAdminBundle:CRUD:list_outer_rows_mosaic.html.twig</argument>
+          <argument key="outer_list_rows_list">SonataAdminBundle:CRUD:list_outer_rows_list.html.twig</argument>
+          <argument key="outer_list_rows_tree">SonataAdminBundle:CRUD:list_outer_rows_tree.html.twig</argument>
+          <argument key="search">SonataAdminBundle:Core:search.html.twig</argument>
+          <argument key="search_result_block">SonataAdminBundle:Block:block_search_result.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setSecurityInformation">
+        <argument type="collection">
+          <argument key="EDIT" type="collection">
+            <argument>EDIT</argument>
+          </argument>
+          <argument key="LIST" type="collection">
+            <argument>LIST</argument>
+          </argument>
+          <argument key="CREATE" type="collection">
+            <argument>CREATE</argument>
+          </argument>
+          <argument key="VIEW" type="collection">
+            <argument>VIEW</argument>
+          </argument>
+          <argument key="DELETE" type="collection">
+            <argument>DELETE</argument>
+          </argument>
+          <argument key="EXPORT" type="collection">
+            <argument>EXPORT</argument>
+          </argument>
+          <argument key="OPERATOR" type="collection">
+            <argument>OPERATOR</argument>
+          </argument>
+          <argument key="MASTER" type="collection">
+            <argument>MASTER</argument>
+          </argument>
+        </argument>
+      </call>
+      <call method="initialize"/>
+      <call method="addExtension">
+        <argument type="service" id="sonata.admin.event.extension"/>
+      </call>
+    </service>
+    <service id="admin_admin.admin.diagnostico" class="Admin\AdminBundle\Admin\DiagnosticoAdmin" scope="prototype">
+      <tag name="sonata.admin" manager_type="orm" group="Otros" label="Diagnostico"/>
+      <argument>admin_admin.admin.diagnostico</argument>
+      <argument>Admin\AdminBundle\Entity\Diagnostico</argument>
+      <argument>AdminAdminBundle:DiagnosticoAdmin</argument>
+      <call method="setFormTheme">
+        <argument type="collection">
+          <argument>SonataDoctrineORMAdminBundle:Form:form_admin_fields.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setFilterTheme">
+        <argument type="collection">
+          <argument>SonataDoctrineORMAdminBundle:Form:filter_admin_fields.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setManagerType">
+        <argument>orm</argument>
+      </call>
+      <call method="setModelManager">
+        <argument type="service" id="sonata.admin.manager.orm"/>
+      </call>
+      <call method="setFormContractor">
+        <argument type="service" id="sonata.admin.builder.orm_form"/>
+      </call>
+      <call method="setShowBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_show"/>
+      </call>
+      <call method="setListBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_list"/>
+      </call>
+      <call method="setDatagridBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_datagrid"/>
+      </call>
+      <call method="setTranslator">
+        <argument type="service" id="translator"/>
+      </call>
+      <call method="setConfigurationPool">
+        <argument type="service" id="sonata.admin.pool"/>
+      </call>
+      <call method="setRouteGenerator">
+        <argument type="service" id="sonata.admin.route.default_generator"/>
+      </call>
+      <call method="setValidator">
+        <argument type="service" id="validator"/>
+      </call>
+      <call method="setSecurityHandler">
+        <argument type="service" id="sonata.admin.security.handler"/>
+      </call>
+      <call method="setMenuFactory">
+        <argument type="service" id="knp_menu.factory"/>
+      </call>
+      <call method="setRouteBuilder">
+        <argument type="service" id="sonata.admin.route.path_info"/>
+      </call>
+      <call method="setLabelTranslatorStrategy">
+        <argument type="service" id="sonata.admin.label.strategy.native"/>
+      </call>
+      <call method="setPagerType">
+        <argument>default</argument>
+      </call>
+      <call method="setLabel">
+        <argument>Diagnostico</argument>
+      </call>
+      <call method="setPersistFilters">
+        <argument>false</argument>
+      </call>
+      <call method="setTemplates">
+        <argument type="collection">
+          <argument key="user_block">SonataUserBundle:Admin/Core:user_block.html.twig</argument>
+          <argument key="add_block">SonataAdminBundle:Core:add_block.html.twig</argument>
+          <argument key="layout">SonataAdminBundle::standard_layout.html.twig</argument>
+          <argument key="ajax">SonataAdminBundle::ajax_layout.html.twig</argument>
+          <argument key="dashboard">SonataAdminBundle:Core:dashboard.html.twig</argument>
+          <argument key="list">SonataAdminBundle:CRUD:list.html.twig</argument>
+          <argument key="filter">SonataAdminBundle:Form:filter_admin_fields.html.twig</argument>
+          <argument key="show">SonataAdminBundle:CRUD:show.html.twig</argument>
+          <argument key="show_compare">SonataAdminBundle:CRUD:show_compare.html.twig</argument>
+          <argument key="edit">SonataAdminBundle:CRUD:edit.html.twig</argument>
+          <argument key="history">SonataAdminBundle:CRUD:history.html.twig</argument>
+          <argument key="history_revision_timestamp">SonataAdminBundle:CRUD:history_revision_timestamp.html.twig</argument>
+          <argument key="acl">SonataAdminBundle:CRUD:acl.html.twig</argument>
+          <argument key="action">SonataAdminBundle:CRUD:action.html.twig</argument>
+          <argument key="short_object_description">SonataAdminBundle:Helper:short-object-description.html.twig</argument>
+          <argument key="preview">SonataAdminBundle:CRUD:preview.html.twig</argument>
+          <argument key="list_block">SonataAdminBundle:Block:block_admin_list.html.twig</argument>
+          <argument key="delete">SonataAdminBundle:CRUD:delete.html.twig</argument>
+          <argument key="batch">SonataAdminBundle:CRUD:list__batch.html.twig</argument>
+          <argument key="select">SonataAdminBundle:CRUD:list__select.html.twig</argument>
+          <argument key="batch_confirmation">SonataAdminBundle:CRUD:batch_confirmation.html.twig</argument>
+          <argument key="inner_list_row">SonataAdminBundle:CRUD:list_inner_row.html.twig</argument>
+          <argument key="base_list_field">SonataAdminBundle:CRUD:base_list_field.html.twig</argument>
+          <argument key="pager_links">SonataAdminBundle:Pager:links.html.twig</argument>
+          <argument key="pager_results">SonataAdminBundle:Pager:results.html.twig</argument>
+          <argument key="tab_menu_template">SonataAdminBundle:Core:tab_menu_template.html.twig</argument>
+          <argument key="knp_menu_template">SonataAdminBundle:Menu:sonata_menu.html.twig</argument>
+          <argument key="outer_list_rows_mosaic">SonataAdminBundle:CRUD:list_outer_rows_mosaic.html.twig</argument>
+          <argument key="outer_list_rows_list">SonataAdminBundle:CRUD:list_outer_rows_list.html.twig</argument>
+          <argument key="outer_list_rows_tree">SonataAdminBundle:CRUD:list_outer_rows_tree.html.twig</argument>
+          <argument key="search">SonataAdminBundle:Core:search.html.twig</argument>
+          <argument key="search_result_block">SonataAdminBundle:Block:block_search_result.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setSecurityInformation">
+        <argument type="collection">
+          <argument key="EDIT" type="collection">
+            <argument>EDIT</argument>
+          </argument>
+          <argument key="LIST" type="collection">
+            <argument>LIST</argument>
+          </argument>
+          <argument key="CREATE" type="collection">
+            <argument>CREATE</argument>
+          </argument>
+          <argument key="VIEW" type="collection">
+            <argument>VIEW</argument>
+          </argument>
+          <argument key="DELETE" type="collection">
+            <argument>DELETE</argument>
+          </argument>
+          <argument key="EXPORT" type="collection">
+            <argument>EXPORT</argument>
+          </argument>
+          <argument key="OPERATOR" type="collection">
+            <argument>OPERATOR</argument>
+          </argument>
+          <argument key="MASTER" type="collection">
+            <argument>MASTER</argument>
+          </argument>
+        </argument>
+      </call>
+      <call method="initialize"/>
+      <call method="addExtension">
+        <argument type="service" id="sonata.admin.event.extension"/>
+      </call>
+    </service>
+    <service id="admin_admin.admin.referencia" class="Admin\AdminBundle\Admin\ReferenciaAdmin" scope="prototype">
+      <tag name="sonata.admin" manager_type="orm" group="Otros" label="Referencia"/>
+      <argument>admin_admin.admin.referencia</argument>
+      <argument>Admin\AdminBundle\Entity\Referencia</argument>
+      <argument>AdminAdminBundle:ReferenciaAdmin</argument>
+      <call method="setFormTheme">
+        <argument type="collection">
+          <argument>SonataDoctrineORMAdminBundle:Form:form_admin_fields.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setFilterTheme">
+        <argument type="collection">
+          <argument>SonataDoctrineORMAdminBundle:Form:filter_admin_fields.html.twig</argument>
+        </argument>
+      </call>
+      <call method="setManagerType">
+        <argument>orm</argument>
+      </call>
+      <call method="setModelManager">
+        <argument type="service" id="sonata.admin.manager.orm"/>
+      </call>
+      <call method="setFormContractor">
+        <argument type="service" id="sonata.admin.builder.orm_form"/>
+      </call>
+      <call method="setShowBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_show"/>
+      </call>
+      <call method="setListBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_list"/>
+      </call>
+      <call method="setDatagridBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_datagrid"/>
+      </call>
+      <call method="setTranslator">
+        <argument type="service" id="translator"/>
+      </call>
+      <call method="setConfigurationPool">
+        <argument type="service" id="sonata.admin.pool"/>
+      </call>
+      <call method="setRouteGenerator">
+        <argument type="service" id="sonata.admin.route.default_generator"/>
+      </call>
+      <call method="setValidator">
+        <argument type="service" id="validator"/>
+      </call>
+      <call method="setSecurityHandler">
+        <argument type="service" id="sonata.admin.security.handler"/>
+      </call>
+      <call method="setMenuFactory">
+        <argument type="service" id="knp_menu.factory"/>
+      </call>
+      <call method="setRouteBuilder">
+        <argument type="service" id="sonata.admin.route.path_info"/>
+      </call>
+      <call method="setLabelTranslatorStrategy">
+        <argument type="service" id="sonata.admin.label.strategy.native"/>
+      </call>
+      <call method="setPagerType">
+        <argument>default</argument>
+      </call>
+      <call method="setLabel">
+        <argument>Referencia</argument>
       </call>
       <call method="setPersistFilters">
         <argument>false</argument>
@@ -4521,7 +5553,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>55372a893c3e8</argument>
+            <argument>553807f5100db</argument>
           </service>
         </argument>
         <argument type="service">
@@ -4535,7 +5567,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>55372a893c3e8</argument>
+            <argument>553807f5100db</argument>
           </service>
         </argument>
       </argument>
@@ -4961,7 +5993,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>55372a893c3e8</argument>
+            <argument>553807f5100db</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -5072,7 +6104,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>55372a893c3e8</argument>
+            <argument>553807f5100db</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -6393,14 +7425,22 @@
           <argument>admin_admin.admin.telefono</argument>
           <argument>admin_admin.admin.cont_emergencia</argument>
           <argument>admin_admin.admin.cita</argument>
+          <argument>admin_admin.admin.historia</argument>
+          <argument>admin_admin.admin.alergia</argument>
+          <argument>admin_admin.admin.medicamento</argument>
+          <argument>admin_admin.admin.nota_cita</argument>
+          <argument>admin_admin.admin.visita</argument>
+          <argument>admin_admin.admin.receta</argument>
+          <argument>admin_admin.admin.diagnostico</argument>
+          <argument>admin_admin.admin.referencia</argument>
           <argument>sonata.user.admin.user</argument>
           <argument>sonata.user.admin.group</argument>
         </argument>
       </call>
       <call method="setAdminGroups">
         <argument type="collection">
-          <argument key="Administración" type="collection">
-            <argument key="label">Administración</argument>
+          <argument key="Administracion" type="collection">
+            <argument key="label">Administracion</argument>
             <argument key="label_catalogue">SonataAdminBundle</argument>
             <argument key="icon">&lt;i class="fa fa-folder"&gt;&lt;/i&gt;</argument>
             <argument key="roles" type="collection"/>
@@ -6411,6 +7451,32 @@
                 <argument key="route"></argument>
                 <argument key="route_params" type="collection"/>
               </argument>
+              <argument type="collection">
+                <argument key="admin">admin_admin.admin.cita</argument>
+                <argument key="label"></argument>
+                <argument key="route"></argument>
+                <argument key="route_params" type="collection"/>
+              </argument>
+              <argument type="collection">
+                <argument key="admin">admin_admin.admin.historia</argument>
+                <argument key="label"></argument>
+                <argument key="route"></argument>
+                <argument key="route_params" type="collection"/>
+              </argument>
+              <argument type="collection">
+                <argument key="admin">admin_admin.admin.visita</argument>
+                <argument key="label"></argument>
+                <argument key="route"></argument>
+                <argument key="route_params" type="collection"/>
+              </argument>
+            </argument>
+          </argument>
+          <argument key="Otros" type="collection">
+            <argument key="label">Otros</argument>
+            <argument key="label_catalogue">SonataAdminBundle</argument>
+            <argument key="icon">&lt;i class="fa fa-folder"&gt;&lt;/i&gt;</argument>
+            <argument key="roles" type="collection"/>
+            <argument key="items" type="collection">
               <argument type="collection">
                 <argument key="admin">admin_admin.admin.telefono</argument>
                 <argument key="label"></argument>
@@ -6424,7 +7490,37 @@
                 <argument key="route_params" type="collection"/>
               </argument>
               <argument type="collection">
-                <argument key="admin">admin_admin.admin.cita</argument>
+                <argument key="admin">admin_admin.admin.alergia</argument>
+                <argument key="label"></argument>
+                <argument key="route"></argument>
+                <argument key="route_params" type="collection"/>
+              </argument>
+              <argument type="collection">
+                <argument key="admin">admin_admin.admin.medicamento</argument>
+                <argument key="label"></argument>
+                <argument key="route"></argument>
+                <argument key="route_params" type="collection"/>
+              </argument>
+              <argument type="collection">
+                <argument key="admin">admin_admin.admin.nota_cita</argument>
+                <argument key="label"></argument>
+                <argument key="route"></argument>
+                <argument key="route_params" type="collection"/>
+              </argument>
+              <argument type="collection">
+                <argument key="admin">admin_admin.admin.receta</argument>
+                <argument key="label"></argument>
+                <argument key="route"></argument>
+                <argument key="route_params" type="collection"/>
+              </argument>
+              <argument type="collection">
+                <argument key="admin">admin_admin.admin.diagnostico</argument>
+                <argument key="label"></argument>
+                <argument key="route"></argument>
+                <argument key="route_params" type="collection"/>
+              </argument>
+              <argument type="collection">
+                <argument key="admin">admin_admin.admin.referencia</argument>
                 <argument key="label"></argument>
                 <argument key="route"></argument>
                 <argument key="route_params" type="collection"/>
@@ -6467,6 +7563,30 @@
           <argument key="Admin\AdminBundle\Entity\Cita" type="collection">
             <argument>admin_admin.admin.cita</argument>
           </argument>
+          <argument key="Admin\AdminBundle\Entity\Historia" type="collection">
+            <argument>admin_admin.admin.historia</argument>
+          </argument>
+          <argument key="Admin\AdminBundle\Entity\Alergia" type="collection">
+            <argument>admin_admin.admin.alergia</argument>
+          </argument>
+          <argument key="Admin\AdminBundle\Entity\Medicamento" type="collection">
+            <argument>admin_admin.admin.medicamento</argument>
+          </argument>
+          <argument key="Admin\AdminBundle\Entity\NotaCita" type="collection">
+            <argument>admin_admin.admin.nota_cita</argument>
+          </argument>
+          <argument key="Admin\AdminBundle\Entity\Visita" type="collection">
+            <argument>admin_admin.admin.visita</argument>
+          </argument>
+          <argument key="Admin\AdminBundle\Entity\Receta" type="collection">
+            <argument>admin_admin.admin.receta</argument>
+          </argument>
+          <argument key="Admin\AdminBundle\Entity\Diagnostico" type="collection">
+            <argument>admin_admin.admin.diagnostico</argument>
+          </argument>
+          <argument key="Admin\AdminBundle\Entity\Referencia" type="collection">
+            <argument>admin_admin.admin.referencia</argument>
+          </argument>
           <argument key="Application\Sonata\UserBundle\Entity\User" type="collection">
             <argument>sonata.user.admin.user</argument>
           </argument>
@@ -6484,6 +7604,14 @@
         <argument>admin_admin.admin.telefono</argument>
         <argument>admin_admin.admin.cont_emergencia</argument>
         <argument>admin_admin.admin.cita</argument>
+        <argument>admin_admin.admin.historia</argument>
+        <argument>admin_admin.admin.alergia</argument>
+        <argument>admin_admin.admin.medicamento</argument>
+        <argument>admin_admin.admin.nota_cita</argument>
+        <argument>admin_admin.admin.visita</argument>
+        <argument>admin_admin.admin.receta</argument>
+        <argument>admin_admin.admin.diagnostico</argument>
+        <argument>admin_admin.admin.referencia</argument>
         <argument>sonata.user.admin.user</argument>
         <argument>sonata.user.admin.group</argument>
       </argument>

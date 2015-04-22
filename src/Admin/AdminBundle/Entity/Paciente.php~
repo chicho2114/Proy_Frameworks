@@ -93,9 +93,16 @@ class Paciente
     protected $contactoEmerg;
 
     /**
-     * @ORM\OneToMany(targetEntity="Cita", mappedBy="paciente")
+     * @ORM\OneToMany(targetEntity="Cita", mappedBy="paciente", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
      */
     protected $citas;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Historia", inversedBy="paciente")
+     * @ORM\JoinColumn(name="historia_id", referencedColumnName="id")
+     **/
+    private $historia;
 
     /**
      * Constructor
@@ -398,5 +405,38 @@ class Paciente
     public function getMedicoPref()
     {
         return $this->medicoPref;
+    }
+
+    /**
+     * Add citas
+     *
+     * @param \Admin\AdminBundle\Entity\Cita $citas
+     * @return Paciente
+     */
+    public function addCita(\Admin\AdminBundle\Entity\Cita $citas)
+    {
+        $this->citas[] = $citas;
+
+        return $this;
+    }
+
+    /**
+     * Remove citas
+     *
+     * @param \Admin\AdminBundle\Entity\Cita $citas
+     */
+    public function removeCita(\Admin\AdminBundle\Entity\Cita $citas)
+    {
+        $this->citas->removeElement($citas);
+    }
+
+    /**
+     * Get citas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCitas()
+    {
+        return $this->citas;
     }
 }

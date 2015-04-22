@@ -86,42 +86,42 @@ sonata_admin:
     dashboard:
         blocks:
 
-            -   class: col-lg-3 col-xs-6
-                position: top
-                type: sonata.admin.block.stats
-                settings:
-                    code: admin_admin.admin.paciente
-                    icon: fa fa-wheelchair
-                    text: Pacientes
-                    filters:
-            -
-                class: col-lg-3 col-xs-6
-                position: top
-                type: sonata.admin.block.stats
-                settings:
-                    code: admin_admin.admin.cita 
-                    icon: fa fa-calendar-o
-                    text: Citas
-                    color: bg-blue
-
-            -
-                class: col-lg-3 col-xs-6
-                position: top
-                type: sonata.admin.block.stats
-                settings:
-                    code: sonata.user.admin.user 
-                    icon: fa fa-user-md
-                    text: Usuarios
-                    color: bg-green
-            -
-                class: col-lg-3 col-xs-6
-                position: top
-                type: sonata.admin.block.stats
-                settings:
-                    code: admin_admin.admin.cita 
-                    icon: fa fa-list-alt
-                    text: Citas
-                    color: bg-blue
+#            -   class: col-lg-3 col-xs-6
+#                position: top
+#                type: sonata.admin.block.stats
+#                settings:
+#                    code: admin_admin.admin.paciente
+#                    icon: fa fa-wheelchair
+#                    text: Pacientes
+#                    filters:
+#            -
+#                class: col-lg-3 col-xs-6
+#                position: top
+#                type: sonata.admin.block.stats
+#                settings:
+#                    code: admin_admin.admin.cita 
+#                    icon: fa fa-calendar-o
+#                    text: Citas
+#                    color: bg-blue##
+#
+#            -
+#                class: col-lg-3 col-xs-6
+#                position: top
+#                type: sonata.admin.block.stats
+#                settings:
+#                    code: sonata.user.admin.user 
+#                    icon: fa fa-user-md
+#                    text: Usuarios
+#                    color: bg-green
+#            -
+#                class: col-lg-3 col-xs-6
+#                position: top
+#                type: sonata.admin.block.stats
+#                settings:
+#                    code: admin_admin.admin.cita 
+#                    icon: fa fa-list-alt
+#                    text: Citas
+#                    color: bg-blue
 
             - { position: left, type: sonata.admin.block.admin_list }
             - { position: right, type: sonata.block.service.text, settings: { content: "<h2>Bienvenido!</h2> <font size=3> Has ingresado al sistema de administracion de <font color=\"3366FF\"><b><i> BAD Clinica <i class=\"fa fa-user-md\"></i> <sup>TM</sup></b></i> </font> . <br><br>El sistema consta de muchas funcionalidades, las cuales seran explicadas brevemente a continuacion. <ul><li>El sistema tiene la opcion de administrar pacientes (Agregar, Editar, Buscar y Eliminar).</li><li>El sistema permite el seguimiento de la historia clinica del paciente.</li><li>El sistema permite la administracion de citas para los pacientes. </li><li>El sistema permite administracion de examenes para los pacientes.</li> </ul></font> "}}

@@ -3,12 +3,13 @@
 namespace Admin\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Historia
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Admin\AdminBundle\Entity\HistoriaRepository")
+ * @ORM\Entity
  */
 class Historia
 {
@@ -24,45 +25,137 @@ class Historia
     /**
      * @var string
      *
-     * @ORM\Column(name="paciente", type="string", length=255)
+     * @ORM\Column(name="condicion_medica", type="string", length=255)
      */
+    private $condicionMedica;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Receta")
+     * @ORM\JoinColumn(name="receta_id", referencedColumnName="id")
+     **/
+    private $receta;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Diagnostico", mappedBy="historia", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
+     **/
+    private $diagnostico;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Referencia", mappedBy="historia", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
+     **/
+    private $referencia;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="tabaco", type="boolean")
+     */
+    private $tabaco;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="alcohol", type="boolean")
+     */
+    private $alcohol;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="altura", type="float")
+     */
+    private $altura;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="peso", type="float")
+     */
+    private $peso;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="presion_arterial", type="float")
+     */
+    private $presionArterial;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="frecuenta_cardiaca", type="float")
+     */
+    private $frecuentaCardiaca;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="temperatura", type="float")
+     */
+    private $temperatura;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Alergia")
+     * @ORM\JoinColumn(name="alergia_id", referencedColumnName="id")
+     **/
+    private $alergia;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Medicamento")
+     * @ORM\JoinColumn(name="medicamento_id", referencedColumnName="id")
+     **/
+    private $medicamento;
+
+    /**
+     * @ORM\OneToOne(targetEntity="NotaCita")
+     * @ORM\JoinColumn(name="notacita_id", referencedColumnName="id")
+     **/
+    private $notacita;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Paciente", mappedBy="historia")
+     * @ORM\OrderBy({"id" = "ASC"})
+     **/
     private $paciente;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="fumador", type="boolean")
-     */
-    private $fumador;
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="medico_id", referencedColumnName="id")
+     **/
+    private $redireccion;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="alcoholico", type="boolean")
+     * @ORM\OneToMany(targetEntity="Cita", mappedBy="historia", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
      */
-    private $alcoholico;
+    protected $citas;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="medicamentos", type="text")
+     * @ORM\OneToMany(targetEntity="Visita", mappedBy="historia", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
      */
-    private $medicamentos;
+    protected $visitas;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->citas = new ArrayCollection();
+        $this->visitas = new ArrayCollection();
+    }
 
     /**
-     * @var string
+     * __toString
      *
-     * @ORM\Column(name="alergias", type="text")
+     * @return string 
      */
-    private $alergias;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="condicion_ant", type="text")
-     */
-    private $condicionAnt;
-
+    public function __toString()
+    {
+        return $this->getPaciente();
+    }
 
     /**
      * Get id
@@ -75,12 +168,334 @@ class Historia
     }
 
     /**
-     * Set paciente
+     * Set condicionMedica
      *
-     * @param string $paciente
+     * @param string $condicionMedica
      * @return Historia
      */
-    public function setPaciente($paciente)
+    public function setCondicionMedica($condicionMedica)
+    {
+        $this->condicionMedica = $condicionMedica;
+
+        return $this;
+    }
+
+    /**
+     * Get condicionMedica
+     *
+     * @return string 
+     */
+    public function getCondicionMedica()
+    {
+        return $this->condicionMedica;
+    }
+
+    /**
+     * Set recetasMedicas
+     *
+     * @param string $recetasMedicas
+     * @return Historia
+     */
+    public function setRecetasMedicas($recetasMedicas)
+    {
+        $this->recetasMedicas = $recetasMedicas;
+
+        return $this;
+    }
+
+    /**
+     * Get recetasMedicas
+     *
+     * @return string 
+     */
+    public function getRecetasMedicas()
+    {
+        return $this->recetasMedicas;
+    }
+
+    /**
+     * Set diagnosticos
+     *
+     * @param string $diagnosticos
+     * @return Historia
+     */
+    public function setDiagnosticos($diagnosticos)
+    {
+        $this->diagnosticos = $diagnosticos;
+
+        return $this;
+    }
+
+    /**
+     * Get diagnosticos
+     *
+     * @return string 
+     */
+    public function getDiagnosticos()
+    {
+        return $this->diagnosticos;
+    }
+
+    /**
+     * Set referencias
+     *
+     * @param string $referencias
+     * @return Historia
+     */
+    public function setReferencias($referencias)
+    {
+        $this->referencias = $referencias;
+
+        return $this;
+    }
+
+    /**
+     * Get referencias
+     *
+     * @return string 
+     */
+    public function getReferencias()
+    {
+        return $this->referencias;
+    }
+
+    /**
+     * Set tabaco
+     *
+     * @param boolean $tabaco
+     * @return Historia
+     */
+    public function setTabaco($tabaco)
+    {
+        $this->tabaco = $tabaco;
+
+        return $this;
+    }
+
+    /**
+     * Get tabaco
+     *
+     * @return boolean 
+     */
+    public function getTabaco()
+    {
+        return $this->tabaco;
+    }
+
+    /**
+     * Set alcohol
+     *
+     * @param boolean $alcohol
+     * @return Historia
+     */
+    public function setAlcohol($alcohol)
+    {
+        $this->alcohol = $alcohol;
+
+        return $this;
+    }
+
+    /**
+     * Get alcohol
+     *
+     * @return boolean 
+     */
+    public function getAlcohol()
+    {
+        return $this->alcohol;
+    }
+
+    /**
+     * Set altura
+     *
+     * @param float $altura
+     * @return Historia
+     */
+    public function setAltura($altura)
+    {
+        $this->altura = $altura;
+
+        return $this;
+    }
+
+    /**
+     * Get altura
+     *
+     * @return float 
+     */
+    public function getAltura()
+    {
+        return $this->altura;
+    }
+
+    /**
+     * Set peso
+     *
+     * @param float $peso
+     * @return Historia
+     */
+    public function setPeso($peso)
+    {
+        $this->peso = $peso;
+
+        return $this;
+    }
+
+    /**
+     * Get peso
+     *
+     * @return float 
+     */
+    public function getPeso()
+    {
+        return $this->peso;
+    }
+
+    /**
+     * Set presionArterial
+     *
+     * @param float $presionArterial
+     * @return Historia
+     */
+    public function setPresionArterial($presionArterial)
+    {
+        $this->presionArterial = $presionArterial;
+
+        return $this;
+    }
+
+    /**
+     * Get presionArterial
+     *
+     * @return float 
+     */
+    public function getPresionArterial()
+    {
+        return $this->presionArterial;
+    }
+
+    /**
+     * Set frecuentaCardiaca
+     *
+     * @param float $frecuentaCardiaca
+     * @return Historia
+     */
+    public function setFrecuentaCardiaca($frecuentaCardiaca)
+    {
+        $this->frecuentaCardiaca = $frecuentaCardiaca;
+
+        return $this;
+    }
+
+    /**
+     * Get frecuentaCardiaca
+     *
+     * @return float 
+     */
+    public function getFrecuentaCardiaca()
+    {
+        return $this->frecuentaCardiaca;
+    }
+
+    /**
+     * Set temperatura
+     *
+     * @param float $temperatura
+     * @return Historia
+     */
+    public function setTemperatura($temperatura)
+    {
+        $this->temperatura = $temperatura;
+
+        return $this;
+    }
+
+    /**
+     * Get temperatura
+     *
+     * @return float 
+     */
+    public function getTemperatura()
+    {
+        return $this->temperatura;
+    }
+
+    /**
+     * Set alergia
+     *
+     * @param \Admin\AdminBundle\Entity\Alergia $alergia
+     * @return Historia
+     */
+    public function setAlergia(\Admin\AdminBundle\Entity\Alergia $alergia = null)
+    {
+        $this->alergia = $alergia;
+
+        return $this;
+    }
+
+    /**
+     * Get alergia
+     *
+     * @return \Admin\AdminBundle\Entity\Alergia 
+     */
+    public function getAlergia()
+    {
+        return $this->alergia;
+    }
+
+    /**
+     * Set medicamento
+     *
+     * @param \Admin\AdminBundle\Entity\Medicamento $medicamento
+     * @return Historia
+     */
+    public function setMedicamento(\Admin\AdminBundle\Entity\Medicamento $medicamento = null)
+    {
+        $this->medicamento = $medicamento;
+
+        return $this;
+    }
+
+    /**
+     * Get medicamento
+     *
+     * @return \Admin\AdminBundle\Entity\Medicamento 
+     */
+    public function getMedicamento()
+    {
+        return $this->medicamento;
+    }
+
+    /**
+     * Set notacita
+     *
+     * @param \Admin\AdminBundle\Entity\NotaCita $notacita
+     * @return Historia
+     */
+    public function setNotacita(\Admin\AdminBundle\Entity\NotaCita $notacita = null)
+    {
+        $this->notacita = $notacita;
+
+        return $this;
+    }
+
+    /**
+     * Get notacita
+     *
+     * @return \Admin\AdminBundle\Entity\NotaCita 
+     */
+    public function getNotacita()
+    {
+        return $this->notacita;
+    }
+
+    /**
+     * Set paciente
+     *
+     * @param \Admin\AdminBundle\Entity\Paciente $paciente
+     * @return Historia
+     */
+    public function setPaciente(\Admin\AdminBundle\Entity\Paciente $paciente = null)
     {
         $this->paciente = $paciente;
 
@@ -90,7 +505,7 @@ class Historia
     /**
      * Get paciente
      *
-     * @return string 
+     * @return \Admin\AdminBundle\Entity\Paciente 
      */
     public function getPaciente()
     {
@@ -98,117 +513,183 @@ class Historia
     }
 
     /**
-     * Set fumador
+     * Set redireccion
      *
-     * @param boolean $fumador
+     * @param \Application\Sonata\UserBundle\Entity\User $redireccion
      * @return Historia
      */
-    public function setFumador($fumador)
+    public function setRedireccion(\Application\Sonata\UserBundle\Entity\User $redireccion = null)
     {
-        $this->fumador = $fumador;
+        $this->redireccion = $redireccion;
 
         return $this;
     }
 
     /**
-     * Get fumador
+     * Get redireccion
      *
-     * @return boolean 
+     * @return \Application\Sonata\UserBundle\Entity\User 
      */
-    public function getFumador()
+    public function getRedireccion()
     {
-        return $this->fumador;
+        return $this->redireccion;
     }
 
     /**
-     * Set alcoholico
+     * Add citas
      *
-     * @param boolean $alcoholico
+     * @param \Admin\AdminBundle\Entity\Cita $citas
      * @return Historia
      */
-    public function setAlcoholico($alcoholico)
+    public function addCita(\Admin\AdminBundle\Entity\Cita $citas)
     {
-        $this->alcoholico = $alcoholico;
+        $this->citas[] = $citas;
 
         return $this;
     }
 
     /**
-     * Get alcoholico
+     * Remove citas
      *
-     * @return boolean 
+     * @param \Admin\AdminBundle\Entity\Cita $citas
      */
-    public function getAlcoholico()
+    public function removeCita(\Admin\AdminBundle\Entity\Cita $citas)
     {
-        return $this->alcoholico;
+        $this->citas->removeElement($citas);
     }
 
     /**
-     * Set medicamentos
+     * Get citas
      *
-     * @param string $medicamentos
-     * @return Historia
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function setMedicamentos($medicamentos)
+    public function getCitas()
     {
-        $this->medicamentos = $medicamentos;
+        return $this->citas;
+    }
+
+    public function setCitas($citas)
+    {
+        if (count($citas) > 0) {
+            foreach ($citas as $cita) {
+                $this->addCita($cita);
+            }
+        }
 
         return $this;
     }
 
     /**
-     * Get medicamentos
+     * Add visitas
      *
-     * @return string 
-     */
-    public function getMedicamentos()
-    {
-        return $this->medicamentos;
-    }
-
-    /**
-     * Set alergias
-     *
-     * @param string $alergias
+     * @param \Admin\AdminBundle\Entity\Visita $visitas
      * @return Historia
      */
-    public function setAlergias($alergias)
+    public function addVisita(\Admin\AdminBundle\Entity\Visita $visitas)
     {
-        $this->alergias = $alergias;
+        $this->visitas[] = $visitas;
 
         return $this;
     }
 
     /**
-     * Get alergias
+     * Remove visitas
      *
-     * @return string 
+     * @param \Admin\AdminBundle\Entity\Visita $visitas
      */
-    public function getAlergias()
+    public function removeVisita(\Admin\AdminBundle\Entity\Visita $visitas)
     {
-        return $this->alergias;
+        $this->visitas->removeElement($visitas);
     }
 
     /**
-     * Set condicionAnt
+     * Get visitas
      *
-     * @param string $condicionAnt
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVisitas()
+    {
+        return $this->visitas;
+    }
+
+    public function setVisitas($visitas)
+    {
+        if (count($visitas) > 0) {
+            foreach ($visitas as $visita) {
+                $this->addVisita($visita);
+            }
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * Set receta
+     *
+     * @param \Admin\AdminBundle\Entity\Receta $receta
      * @return Historia
      */
-    public function setCondicionAnt($condicionAnt)
+    public function setReceta(\Admin\AdminBundle\Entity\Receta $receta = null)
     {
-        $this->condicionAnt = $condicionAnt;
+        $this->receta = $receta;
 
         return $this;
     }
 
     /**
-     * Get condicionAnt
+     * Get receta
      *
-     * @return string 
+     * @return \Admin\AdminBundle\Entity\Receta 
      */
-    public function getCondicionAnt()
+    public function getReceta()
     {
-        return $this->condicionAnt;
+        return $this->receta;
+    }
+
+    /**
+     * Set diagnostico
+     *
+     * @param \Admin\AdminBundle\Entity\Diagnostico $diagnostico
+     * @return Historia
+     */
+    public function setDiagnostico(\Admin\AdminBundle\Entity\Diagnostico $diagnostico = null)
+    {
+        $this->diagnostico = $diagnostico;
+
+        return $this;
+    }
+
+    /**
+     * Get diagnostico
+     *
+     * @return \Admin\AdminBundle\Entity\Diagnostico 
+     */
+    public function getDiagnostico()
+    {
+        return $this->diagnostico;
+    }
+
+    /**
+     * Set referencia
+     *
+     * @param \Admin\AdminBundle\Entity\Referencia $referencia
+     * @return Historia
+     */
+    public function setReferencia(\Admin\AdminBundle\Entity\Referencia $referencia = null)
+    {
+        $this->referencia = $referencia;
+
+        return $this;
+    }
+
+    /**
+     * Get referencia
+     *
+     * @return \Admin\AdminBundle\Entity\Referencia 
+     */
+    public function getReferencia()
+    {
+        return $this->referencia;
     }
 }

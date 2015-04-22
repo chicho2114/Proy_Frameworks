@@ -93,9 +93,16 @@ class Paciente
     protected $contactoEmerg;
 
     /**
-     * @ORM\OneToMany(targetEntity="Cita", mappedBy="paciente")
+     * @ORM\OneToMany(targetEntity="Cita", mappedBy="paciente", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
      */
     protected $citas;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Historia", inversedBy="paciente", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\JoinColumn(name="historia_id", referencedColumnName="id")
+     **/
+    private $historia;
 
     /**
      * Constructor
@@ -431,5 +438,28 @@ class Paciente
     public function getCitas()
     {
         return $this->citas;
+    }
+
+    /**
+     * Set historia
+     *
+     * @param \Admin\AdminBundle\Entity\Historia $historia
+     * @return Paciente
+     */
+    public function setHistoria(\Admin\AdminBundle\Entity\Historia $historia = null)
+    {
+        $this->historia = $historia;
+
+        return $this;
+    }
+
+    /**
+     * Get historia
+     *
+     * @return \Admin\AdminBundle\Entity\Historia 
+     */
+    public function getHistoria()
+    {
+        return $this->historia;
     }
 }

@@ -3,22 +3,70 @@ services:
         class: Admin\AdminBundle\Admin\PacienteAdmin
         arguments: [~, Admin\AdminBundle\Entity\Paciente, AdminAdminBundle:PacienteAdmin]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: Administración, label: Pacientes}
+            - {name: sonata.admin, manager_type: orm, group: Administracion, label: Paciente}
 
     admin_admin.admin.telefono:
         class: Admin\AdminBundle\Admin\TelefonoAdmin
         arguments: [~, Admin\AdminBundle\Entity\Telefono, AdminAdminBundle:TelefonoAdmin]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: Administración, label: Telefonos}
+            - {name: sonata.admin, manager_type: orm, group: Otros, label: Telefono}
 
     admin_admin.admin.cont_emergencia:
         class: Admin\AdminBundle\Admin\ContEmergenciaAdmin
         arguments: [~, Admin\AdminBundle\Entity\ContEmergencia, AdminAdminBundle:ContEmergenciaAdmin]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: Administración, label: Contactos Emergencia}
+            - {name: sonata.admin, manager_type: orm, group: Otros, label: ContEmergencia}
 
     admin_admin.admin.cita:
         class: Admin\AdminBundle\Admin\CitaAdmin
-        arguments: [~, Admin\AdminBundle\Entity\Cita, AdminAdminBundle:CitaAdmin]
+        arguments: [~, Admin\AdminBundle\Entity\Cita, SonataAdminBundle:CRUD]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: Administración, label: Citas}
+            - {name: sonata.admin, manager_type: orm, group: Administracion, label: Cita}
+
+    admin_admin.admin.historia:
+        class: Admin\AdminBundle\Admin\HistoriaAdmin
+        arguments: [~, Admin\AdminBundle\Entity\Historia, AdminAdminBundle:HistoriaAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Administracion, label: Historia}
+
+    admin_admin.admin.alergia:
+        class: Admin\AdminBundle\Admin\AlergiaAdmin
+        arguments: [~, Admin\AdminBundle\Entity\Alergia, AdminAdminBundle:AlergiaAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Otros, label: Alergia}
+
+    admin_admin.admin.medicamento:
+        class: Admin\AdminBundle\Admin\MedicamentoAdmin
+        arguments: [~, Admin\AdminBundle\Entity\Medicamento, AdminAdminBundle:MedicamentoAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Otros, label: Medicamento}
+
+    admin_admin.admin.nota_cita:
+        class: Admin\AdminBundle\Admin\NotaCitaAdmin
+        arguments: [~, Admin\AdminBundle\Entity\NotaCita, AdminAdminBundle:NotaCitaAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Otros, label: NotaCita}
+
+    admin_admin.admin.visita:
+        class: Admin\AdminBundle\Admin\VisitaAdmin
+        arguments: [~, Admin\AdminBundle\Entity\Visita, AdminAdminBundle:VisitaAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Administracion, label: Visita}
+
+    admin_admin.admin.receta:
+        class: Admin\AdminBundle\Admin\RecetaAdmin
+        arguments: [~, Admin\AdminBundle\Entity\Receta, AdminAdminBundle:RecetaAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Otros, label: Receta}
+
+    admin_admin.admin.diagnostico:
+        class: Admin\AdminBundle\Admin\DiagnosticoAdmin
+        arguments: [~, Admin\AdminBundle\Entity\Diagnostico, AdminAdminBundle:DiagnosticoAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Otros, label: Diagnostico}
+
+    admin_admin.admin.referencia:
+        class: Admin\AdminBundle\Admin\ReferenciaAdmin
+        arguments: [~, Admin\AdminBundle\Entity\Referencia, AdminAdminBundle:ReferenciaAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Otros, label: Referencia}

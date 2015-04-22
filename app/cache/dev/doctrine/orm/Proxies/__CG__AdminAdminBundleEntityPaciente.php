@@ -64,10 +64,10 @@ class Paciente extends \Admin\AdminBundle\Entity\Paciente implements \Doctrine\O
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'id', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'nombre', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'apellido', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'edad', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'fechaNac', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'direccion', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'seguroSocial', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'formaActual', 'medicoPref', 'telefonos', 'contactoEmerg');
+            return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'id', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'nombre', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'apellido', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'edad', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'fechaNac', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'direccion', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'seguroSocial', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'formaActual', 'medicoPref', 'telefonos', 'contactoEmerg', 'citas', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'historia');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'id', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'nombre', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'apellido', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'edad', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'fechaNac', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'direccion', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'seguroSocial', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'formaActual', 'medicoPref', 'telefonos', 'contactoEmerg');
+        return array('__isInitialized__', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'id', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'nombre', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'apellido', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'edad', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'fechaNac', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'direccion', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'seguroSocial', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'formaActual', 'medicoPref', 'telefonos', 'contactoEmerg', 'citas', '' . "\0" . 'Admin\\AdminBundle\\Entity\\Paciente' . "\0" . 'historia');
     }
 
     /**
@@ -461,6 +461,61 @@ class Paciente extends \Admin\AdminBundle\Entity\Paciente implements \Doctrine\O
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMedicoPref', array());
 
         return parent::getMedicoPref();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addCita(\Admin\AdminBundle\Entity\Cita $citas)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addCita', array($citas));
+
+        return parent::addCita($citas);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeCita(\Admin\AdminBundle\Entity\Cita $citas)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeCita', array($citas));
+
+        return parent::removeCita($citas);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCitas()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCitas', array());
+
+        return parent::getCitas();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setHistoria(\Admin\AdminBundle\Entity\Historia $historia = NULL)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setHistoria', array($historia));
+
+        return parent::setHistoria($historia);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getHistoria()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getHistoria', array());
+
+        return parent::getHistoria();
     }
 
 }
