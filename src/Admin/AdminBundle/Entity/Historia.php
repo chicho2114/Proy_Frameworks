@@ -191,75 +191,6 @@ class Historia
     }
 
     /**
-     * Set recetasMedicas
-     *
-     * @param string $recetasMedicas
-     * @return Historia
-     */
-    public function setRecetasMedicas($recetasMedicas)
-    {
-        $this->recetasMedicas = $recetasMedicas;
-
-        return $this;
-    }
-
-    /**
-     * Get recetasMedicas
-     *
-     * @return string 
-     */
-    public function getRecetasMedicas()
-    {
-        return $this->recetasMedicas;
-    }
-
-    /**
-     * Set diagnosticos
-     *
-     * @param string $diagnosticos
-     * @return Historia
-     */
-    public function setDiagnosticos($diagnosticos)
-    {
-        $this->diagnosticos = $diagnosticos;
-
-        return $this;
-    }
-
-    /**
-     * Get diagnosticos
-     *
-     * @return string 
-     */
-    public function getDiagnosticos()
-    {
-        return $this->diagnosticos;
-    }
-
-    /**
-     * Set referencias
-     *
-     * @param string $referencias
-     * @return Historia
-     */
-    public function setReferencias($referencias)
-    {
-        $this->referencias = $referencias;
-
-        return $this;
-    }
-
-    /**
-     * Get referencias
-     *
-     * @return string 
-     */
-    public function getReferencias()
-    {
-        return $this->referencias;
-    }
-
-    /**
      * Set tabaco
      *
      * @param boolean $tabaco
@@ -421,6 +352,75 @@ class Historia
     }
 
     /**
+     * Set receta
+     *
+     * @param \Admin\AdminBundle\Entity\Receta $receta
+     * @return Historia
+     */
+    public function setReceta(\Admin\AdminBundle\Entity\Receta $receta = null)
+    {
+        $this->receta = $receta;
+
+        return $this;
+    }
+
+    /**
+     * Get receta
+     *
+     * @return \Admin\AdminBundle\Entity\Receta 
+     */
+    public function getReceta()
+    {
+        return $this->receta;
+    }
+
+    /**
+     * Set diagnostico
+     *
+     * @param \Admin\AdminBundle\Entity\Diagnostico $diagnostico
+     * @return Historia
+     */
+    public function setDiagnostico(\Admin\AdminBundle\Entity\Diagnostico $diagnostico = null)
+    {
+        $this->diagnostico = $diagnostico;
+
+        return $this;
+    }
+
+    /**
+     * Get diagnostico
+     *
+     * @return \Admin\AdminBundle\Entity\Diagnostico 
+     */
+    public function getDiagnostico()
+    {
+        return $this->diagnostico;
+    }
+
+    /**
+     * Set referencia
+     *
+     * @param \Admin\AdminBundle\Entity\Referencia $referencia
+     * @return Historia
+     */
+    public function setReferencia(\Admin\AdminBundle\Entity\Referencia $referencia = null)
+    {
+        $this->referencia = $referencia;
+
+        return $this;
+    }
+
+    /**
+     * Get referencia
+     *
+     * @return \Admin\AdminBundle\Entity\Referencia 
+     */
+    public function getReferencia()
+    {
+        return $this->referencia;
+    }
+
+    /**
      * Set alergia
      *
      * @param \Admin\AdminBundle\Entity\Alergia $alergia
@@ -568,17 +568,6 @@ class Historia
         return $this->citas;
     }
 
-    public function setCitas($citas)
-    {
-        if (count($citas) > 0) {
-            foreach ($citas as $cita) {
-                $this->addCita($cita);
-            }
-        }
-
-        return $this;
-    }
-
     /**
      * Add visitas
      *
@@ -610,86 +599,5 @@ class Historia
     public function getVisitas()
     {
         return $this->visitas;
-    }
-
-    public function setVisitas($visitas)
-    {
-        if (count($visitas) > 0) {
-            foreach ($visitas as $visita) {
-                $this->addVisita($visita);
-            }
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * Set receta
-     *
-     * @param \Admin\AdminBundle\Entity\Receta $receta
-     * @return Historia
-     */
-    public function setReceta(\Admin\AdminBundle\Entity\Receta $receta = null)
-    {
-        $this->receta = $receta;
-
-        return $this;
-    }
-
-    /**
-     * Get receta
-     *
-     * @return \Admin\AdminBundle\Entity\Receta 
-     */
-    public function getReceta()
-    {
-        return $this->receta;
-    }
-
-    /**
-     * Set diagnostico
-     *
-     * @param \Admin\AdminBundle\Entity\Diagnostico $diagnostico
-     * @return Historia
-     */
-    public function setDiagnostico(\Admin\AdminBundle\Entity\Diagnostico $diagnostico = null)
-    {
-        $this->diagnostico = $diagnostico;
-
-        return $this;
-    }
-
-    /**
-     * Get diagnostico
-     *
-     * @return \Admin\AdminBundle\Entity\Diagnostico 
-     */
-    public function getDiagnostico()
-    {
-        return $this->diagnostico;
-    }
-
-    /**
-     * Set referencia
-     *
-     * @param \Admin\AdminBundle\Entity\Referencia $referencia
-     * @return Historia
-     */
-    public function setReferencia(\Admin\AdminBundle\Entity\Referencia $referencia = null)
-    {
-        $this->referencia = $referencia;
-
-        return $this;
-    }
-
-    /**
-     * Get referencia
-     *
-     * @return \Admin\AdminBundle\Entity\Referencia 
-     */
-    public function getReferencia()
-    {
-        return $this->referencia;
     }
 }

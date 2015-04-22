@@ -113,5 +113,6 @@ class HistoriaAdmin extends Admin
     {
         $historia->setCitas($historia->getCitas());
         $historia->setVisitas($historia->getVisitas());
+        $historia->setVisitas($historia->getVisitas());
     }
 }

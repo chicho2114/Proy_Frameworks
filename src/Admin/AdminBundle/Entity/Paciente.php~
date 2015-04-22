@@ -99,7 +99,7 @@ class Paciente
     protected $citas;
 
     /**
-     * @ORM\OneToOne(targetEntity="Historia", inversedBy="paciente")
+     * @ORM\OneToOne(targetEntity="Historia", inversedBy="paciente", cascade={"persist"}, orphanRemoval=true)
      * @ORM\JoinColumn(name="historia_id", referencedColumnName="id")
      **/
     private $historia;
@@ -438,5 +438,28 @@ class Paciente
     public function getCitas()
     {
         return $this->citas;
+    }
+
+    /**
+     * Set historia
+     *
+     * @param \Admin\AdminBundle\Entity\Historia $historia
+     * @return Paciente
+     */
+    public function setHistoria(\Admin\AdminBundle\Entity\Historia $historia = null)
+    {
+        $this->historia = $historia;
+
+        return $this;
+    }
+
+    /**
+     * Get historia
+     *
+     * @return \Admin\AdminBundle\Entity\Historia 
+     */
+    public function getHistoria()
+    {
+        return $this->historia;
     }
 }

@@ -66,7 +66,7 @@ class PacienteAdmin extends Admin
                     ->add('nombre')
                     ->add('apellido')
                     ->add('edad')
-                    ->add('fechaNac', null, array('label' => 'Fecha de Nacimiento'))
+                    ->add('fechaNac', null, array('label' => 'Fecha de Nacimiento', 'years'=> range(1920, date('Y'))))
                     ->add('telefonos', 'sonata_type_collection', array(), array(
                         'edit' => 'inline',
                         'inline' => 'table',
@@ -98,7 +98,7 @@ class PacienteAdmin extends Admin
                 ->add('nombre')
                 ->add('apellido')
                 ->add('edad')
-                ->add('fechaNac', 'date', array('label' => 'Fecha de nacimiento'))
+                ->add('fechaNac', 'date', array('label' => 'Fecha de nacimiento', 'years'=> range(1920, date('Y'))))
                 ->add('telefonos')
                 ->add('direccion')
                 ->add('seguroSocial')

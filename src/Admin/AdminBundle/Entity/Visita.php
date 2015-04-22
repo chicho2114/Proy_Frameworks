@@ -53,6 +53,7 @@ class Visita
         return $this->getDiagnostico();
     }
 
+
     /**
      * Get id
      *

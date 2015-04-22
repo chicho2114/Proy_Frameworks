@@ -68,26 +68,26 @@ class Diagnostico
     }
 
     /**
-     * Set descripccion
+     * Set descripcion
      *
-     * @param string $descripccion
+     * @param string $descripcion
      * @return Diagnostico
      */
-    public function setDescripccion($descripccion)
+    public function setDescripcion($descripcion)
     {
-        $this->descripccion = $descripccion;
+        $this->descripcion = $descripcion;
 
         return $this;
     }
 
     /**
-     * Get descripccion
+     * Get descripcion
      *
      * @return string 
      */
-    public function getDescripccion()
+    public function getDescripcion()
     {
-        return $this->descripccion;
+        return $this->descripcion;
     }
 
     /**
@@ -157,28 +157,5 @@ class Diagnostico
     public function getHistoria()
     {
         return $this->historia;
-    }
-
-    /**
-     * Set descripcion
-     *
-     * @param string $descripcion
-     * @return Diagnostico
-     */
-    public function setDescripcion($descripcion)
-    {
-        $this->descripcion = $descripcion;
-
-        return $this;
-    }
-
-    /**
-     * Get descripcion
-     *
-     * @return string 
-     */
-    public function getDescripcion()
-    {
-        return $this->descripcion;
     }
 }

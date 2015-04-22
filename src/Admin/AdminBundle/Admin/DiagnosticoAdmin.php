@@ -16,7 +16,7 @@ class DiagnosticoAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('descripccion')
+            ->add('descripcion')
             ->add('fecha')
         ;
     }
@@ -27,7 +27,7 @@ class DiagnosticoAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('descripccion')
+            ->add('descripcion')
             ->add('fecha')
             ->add('_action', 'actions', array(
                 'actions' => array(
@@ -45,7 +45,7 @@ class DiagnosticoAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('descripccion')
+            ->add('descripcion')
             ->add('fecha')
         ;
     }
@@ -56,7 +56,7 @@ class DiagnosticoAdmin extends Admin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('descripccion')
+            ->add('descripcion')
             ->add('fecha')
         ;
     }

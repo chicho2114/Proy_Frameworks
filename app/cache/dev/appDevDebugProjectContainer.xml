@@ -4,7 +4,7 @@
     <parameter key="kernel.root_dir">/var/www/Proy_new/app</parameter>
     <parameter key="kernel.environment">dev</parameter>
     <parameter key="kernel.debug">true</parameter>
-    <parameter key="kernel.name">app</parameter>
+    <parameter key="kernel.name">ap_</parameter>
     <parameter key="kernel.cache_dir">/var/www/Proy_new/app/cache/dev</parameter>
     <parameter key="kernel.logs_dir">/var/www/Proy_new/app/logs</parameter>
     <parameter key="kernel.bundles" type="collection">
@@ -304,38 +304,115 @@
     <parameter key="security.authentication.hide_user_not_found">true</parameter>
     <parameter key="security.role_hierarchy.roles" type="collection">
       <parameter key="ROLE_PERSONAL_ADMINISTRATIVO" type="collection">
-        <parameter>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_LIST</parameter>
-        <parameter>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_VIEW</parameter>
-        <parameter>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_CREATE</parameter>
         <parameter>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_EDIT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_LIST</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_CREATE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_VIEW</parameter>
         <parameter>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_DELETE</parameter>
         <parameter>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_EXPORT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_OPERATOR</parameter>
         <parameter>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_MASTER</parameter>
-        <parameter>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_LIST</parameter>
-        <parameter>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_VIEW</parameter>
-        <parameter>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_CREATE</parameter>
         <parameter>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_EDIT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_LIST</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_CREATE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_VIEW</parameter>
         <parameter>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_DELETE</parameter>
         <parameter>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_EXPORT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_OPERATOR</parameter>
         <parameter>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_MASTER</parameter>
-        <parameter>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_LIST</parameter>
-        <parameter>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_VIEW</parameter>
-        <parameter>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_CREATE</parameter>
         <parameter>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_EDIT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_LIST</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_CREATE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_VIEW</parameter>
         <parameter>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_DELETE</parameter>
         <parameter>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_EXPORT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_OPERATOR</parameter>
         <parameter>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_MASTER</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_CITA_EDIT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_CITA_LIST</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_CITA_CREATE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_CITA_VIEW</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_CITA_DELETE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_CITA_EXPORT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_CITA_OPERATOR</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_CITA_MASTER</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_VISITA_EDIT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_VISITA_LIST</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_VISITA_CREATE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_VISITA_VIEW</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_VISITA_EXPORT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_VISITA_OPERATOR</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_VISITA_MASTER</parameter>
       </parameter>
       <parameter key="ROLE_PERSONAL_MEDICO" type="collection">
-        <parameter>ROLE_SONATA_ADMIN_PACIENTE_CREATE</parameter>
-        <parameter>ROLE_SONATA_ADMIN_PACIENTE_EDIT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_EDIT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_LIST</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_CREATE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_VIEW</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_DELETE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_EXPORT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_OPERATOR</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_MASTER</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_EDIT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_LIST</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_VIEW</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_EXPORT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_OPERATOR</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_MASTER</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_EDIT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_LIST</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_VIEW</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_EXPORT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_OPERATOR</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_MASTER</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_RECETA_EDIT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_RECETA_LIST</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_RECETA_VIEW</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_RECETA_EXPORT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_RECETA_OPERATOR</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_RECETA_MASTER</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_LIST</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_VIEW</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_EXPORT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_OPERATOR</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_MASTER</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_VIEW</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_LIST</parameter>
       </parameter>
       <parameter key="ROLE_MEDICO" type="collection">
-        <parameter>ROLE_SONATA_ADMIN_PACIENTE_DELETE</parameter>
-        <parameter>ROLE_SONATA_ADMIN_PACIENTE_EXPORT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_DELETE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_CREATE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_RECETA_DELETE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_RECETA_CREATE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_EDIT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_LIST</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_CREATE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_VIEW</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_DELETE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_EXPORT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_OPERATOR</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_MASTER</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_EDIT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_LIST</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_CREATE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_VIEW</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_DELETE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_EXPORT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_OPERATOR</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_MASTER</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_EDIT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_LIST</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_CREATE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_VIEW</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_DELETE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_EXPORT</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_OPERATOR</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_MASTER</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_VISITA_DELETE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_CREATE</parameter>
+        <parameter>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_DELETE</parameter>
       </parameter>
       <parameter key="ROLE_ADMIN_ADMINISTRATIVO" type="collection">
-        <parameter>ROLE_SONATA_ADMIN_EDITOR</parameter>
         <parameter>ROLE_USER</parameter>
         <parameter>ROLE_SONATA_ADMIN</parameter>
         <parameter>ROLE_ADMIN</parameter>
@@ -346,16 +423,18 @@
         <parameter>ROLE_SONATA_ADMIN</parameter>
         <parameter>ROLE_PERSONAL_MEDICO</parameter>
         <parameter>ROLE_ADMIN_ADMINISTRATIVO</parameter>
+        <parameter>ROLE_ADMIN</parameter>
       </parameter>
       <parameter key="ROLE_ADMIN_MEDICO" type="collection">
         <parameter>ROLE_USER</parameter>
         <parameter>ROLE_SONATA_ADMIN</parameter>
-        <parameter>ROLE_NORMAL</parameter>
-        <parameter>ROLE_SONATA_ADMIN_EDITOR</parameter>
+        <parameter>ROLE_ADMIN_PERSONAL_MEDICO</parameter>
+        <parameter>ROLE_ADMIN</parameter>
       </parameter>
       <parameter key="ROLE_ADMIN_ADMIN" type="collection">
         <parameter>ROLE_USER</parameter>
         <parameter>ROLE_SONATA_ADMIN</parameter>
+        <parameter>ROLE_ADMIN_MEDICO</parameter>
       </parameter>
       <parameter key="ROLE_SUPER_ADMIN" type="collection">
         <parameter>ROLE_USER</parameter>
@@ -5553,7 +5632,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>553807f5100db</argument>
+            <argument>553821f661bdd</argument>
           </service>
         </argument>
         <argument type="service">
@@ -5567,7 +5646,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>553807f5100db</argument>
+            <argument>553821f661bdd</argument>
           </service>
         </argument>
       </argument>
@@ -5660,38 +5739,115 @@
     <service id="security.role_hierarchy" class="Symfony\Component\Security\Core\Role\RoleHierarchy" public="false">
       <argument type="collection">
         <argument key="ROLE_PERSONAL_ADMINISTRATIVO" type="collection">
-          <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_LIST</argument>
-          <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_VIEW</argument>
-          <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_CREATE</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_VIEW</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_DELETE</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_OPERATOR</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_MASTER</argument>
-          <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_LIST</argument>
-          <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_VIEW</argument>
-          <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_CREATE</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_VIEW</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_DELETE</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_OPERATOR</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_MASTER</argument>
-          <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_LIST</argument>
-          <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_VIEW</argument>
-          <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_CREATE</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_VIEW</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_DELETE</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_OPERATOR</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CITA_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CITA_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CITA_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CITA_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CITA_DELETE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CITA_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CITA_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CITA_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_VISITA_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_VISITA_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_VISITA_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_VISITA_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_VISITA_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_VISITA_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_VISITA_MASTER</argument>
         </argument>
         <argument key="ROLE_PERSONAL_MEDICO" type="collection">
-          <argument>ROLE_SONATA_ADMIN_PACIENTE_CREATE</argument>
-          <argument>ROLE_SONATA_ADMIN_PACIENTE_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_DELETE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_RECETA_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_RECETA_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_RECETA_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_RECETA_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_RECETA_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_RECETA_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_LIST</argument>
         </argument>
         <argument key="ROLE_MEDICO" type="collection">
-          <argument>ROLE_SONATA_ADMIN_PACIENTE_DELETE</argument>
-          <argument>ROLE_SONATA_ADMIN_PACIENTE_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_DELETE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_RECETA_DELETE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_RECETA_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_DELETE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_DELETE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_DELETE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_VISITA_DELETE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_DELETE</argument>
         </argument>
         <argument key="ROLE_ADMIN_ADMINISTRATIVO" type="collection">
-          <argument>ROLE_SONATA_ADMIN_EDITOR</argument>
           <argument>ROLE_USER</argument>
           <argument>ROLE_SONATA_ADMIN</argument>
           <argument>ROLE_ADMIN</argument>
@@ -5702,16 +5858,18 @@
           <argument>ROLE_SONATA_ADMIN</argument>
           <argument>ROLE_PERSONAL_MEDICO</argument>
           <argument>ROLE_ADMIN_ADMINISTRATIVO</argument>
+          <argument>ROLE_ADMIN</argument>
         </argument>
         <argument key="ROLE_ADMIN_MEDICO" type="collection">
           <argument>ROLE_USER</argument>
           <argument>ROLE_SONATA_ADMIN</argument>
-          <argument>ROLE_NORMAL</argument>
-          <argument>ROLE_SONATA_ADMIN_EDITOR</argument>
+          <argument>ROLE_ADMIN_PERSONAL_MEDICO</argument>
+          <argument>ROLE_ADMIN</argument>
         </argument>
         <argument key="ROLE_ADMIN_ADMIN" type="collection">
           <argument>ROLE_USER</argument>
           <argument>ROLE_SONATA_ADMIN</argument>
+          <argument>ROLE_ADMIN_MEDICO</argument>
         </argument>
         <argument key="ROLE_SUPER_ADMIN" type="collection">
           <argument>ROLE_USER</argument>
@@ -5993,7 +6151,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>553807f5100db</argument>
+            <argument>553821f661bdd</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -6104,7 +6262,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>553807f5100db</argument>
+            <argument>553821f661bdd</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -8361,38 +8519,115 @@
       <argument type="service" id="sonata.admin.pool"/>
       <argument type="collection">
         <argument key="ROLE_PERSONAL_ADMINISTRATIVO" type="collection">
-          <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_LIST</argument>
-          <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_VIEW</argument>
-          <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_CREATE</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_VIEW</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_DELETE</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_OPERATOR</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_MASTER</argument>
-          <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_LIST</argument>
-          <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_VIEW</argument>
-          <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_CREATE</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_VIEW</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_DELETE</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_OPERATOR</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_MASTER</argument>
-          <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_LIST</argument>
-          <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_VIEW</argument>
-          <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_CREATE</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_VIEW</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_DELETE</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_OPERATOR</argument>
           <argument>ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CITA_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CITA_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CITA_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CITA_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CITA_DELETE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CITA_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CITA_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_CITA_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_VISITA_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_VISITA_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_VISITA_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_VISITA_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_VISITA_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_VISITA_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_VISITA_MASTER</argument>
         </argument>
         <argument key="ROLE_PERSONAL_MEDICO" type="collection">
-          <argument>ROLE_SONATA_ADMIN_PACIENTE_CREATE</argument>
-          <argument>ROLE_SONATA_ADMIN_PACIENTE_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_DELETE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_RECETA_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_RECETA_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_RECETA_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_RECETA_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_RECETA_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_RECETA_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_LIST</argument>
         </argument>
         <argument key="ROLE_MEDICO" type="collection">
-          <argument>ROLE_SONATA_ADMIN_PACIENTE_DELETE</argument>
-          <argument>ROLE_SONATA_ADMIN_PACIENTE_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_DELETE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_RECETA_DELETE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_RECETA_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_DELETE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_DELETE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_EDIT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_LIST</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_VIEW</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_DELETE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_EXPORT</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_OPERATOR</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_MASTER</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_VISITA_DELETE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_CREATE</argument>
+          <argument>ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_DELETE</argument>
         </argument>
         <argument key="ROLE_ADMIN_ADMINISTRATIVO" type="collection">
-          <argument>ROLE_SONATA_ADMIN_EDITOR</argument>
           <argument>ROLE_USER</argument>
           <argument>ROLE_SONATA_ADMIN</argument>
           <argument>ROLE_ADMIN</argument>
@@ -8403,16 +8638,18 @@
           <argument>ROLE_SONATA_ADMIN</argument>
           <argument>ROLE_PERSONAL_MEDICO</argument>
           <argument>ROLE_ADMIN_ADMINISTRATIVO</argument>
+          <argument>ROLE_ADMIN</argument>
         </argument>
         <argument key="ROLE_ADMIN_MEDICO" type="collection">
           <argument>ROLE_USER</argument>
           <argument>ROLE_SONATA_ADMIN</argument>
-          <argument>ROLE_NORMAL</argument>
-          <argument>ROLE_SONATA_ADMIN_EDITOR</argument>
+          <argument>ROLE_ADMIN_PERSONAL_MEDICO</argument>
+          <argument>ROLE_ADMIN</argument>
         </argument>
         <argument key="ROLE_ADMIN_ADMIN" type="collection">
           <argument>ROLE_USER</argument>
           <argument>ROLE_SONATA_ADMIN</argument>
+          <argument>ROLE_ADMIN_MEDICO</argument>
         </argument>
         <argument key="ROLE_SUPER_ADMIN" type="collection">
           <argument>ROLE_USER</argument>

@@ -3454,7 +3454,7 @@ class appDevDebugProjectContainer extends Container
         $h = new \Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureHandler($c, $a, array(), $d);
         $h->setOptions(array('login_path' => '/admin/login', 'failure_path' => NULL, 'failure_forward' => false, 'failure_path_parameter' => '_failure_path'));
 
-        return $this->services['security.firewall.map.context.admin'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => $this->get('security.channel_listener'), 1 => $this->get('security.context_listener.0'), 2 => $f, 3 => new \Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener($b, $e, $this->get('security.authentication.session_strategy'), $a, 'admin', $g, $h, array('use_forward' => false, 'check_path' => '/admin/login_check', 'require_previous_session' => true, 'username_parameter' => '_username', 'password_parameter' => '_password', 'csrf_parameter' => '_csrf_token', 'intention' => 'authenticate', 'post_only' => true), $d, $this->get('debug.event_dispatcher', ContainerInterface::NULL_ON_INVALID_REFERENCE), NULL), 4 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '553807f5100db', $d, $e), 5 => $this->get('security.access_listener')), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), $a, 'admin', new \Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint($c, $a, '/admin/login', false), NULL, NULL, $d));
+        return $this->services['security.firewall.map.context.admin'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => $this->get('security.channel_listener'), 1 => $this->get('security.context_listener.0'), 2 => $f, 3 => new \Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener($b, $e, $this->get('security.authentication.session_strategy'), $a, 'admin', $g, $h, array('use_forward' => false, 'check_path' => '/admin/login_check', 'require_previous_session' => true, 'username_parameter' => '_username', 'password_parameter' => '_password', 'csrf_parameter' => '_csrf_token', 'intention' => 'authenticate', 'post_only' => true), $d, $this->get('debug.event_dispatcher', ContainerInterface::NULL_ON_INVALID_REFERENCE), NULL), 4 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '553821f661bdd', $d, $e), 5 => $this->get('security.access_listener')), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), $a, 'admin', new \Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint($c, $a, '/admin/login', false), NULL, NULL, $d));
     }
 
     /**
@@ -3496,7 +3496,7 @@ class appDevDebugProjectContainer extends Container
         $h = new \Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureHandler($c, $a, array(), $d);
         $h->setOptions(array('login_path' => '/login', 'failure_path' => NULL, 'failure_forward' => false, 'failure_path_parameter' => '_failure_path'));
 
-        return $this->services['security.firewall.map.context.main'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => $this->get('security.channel_listener'), 1 => $this->get('security.context_listener.0'), 2 => $f, 3 => new \Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener($b, $e, $this->get('security.authentication.session_strategy'), $a, 'main', $g, $h, array('use_forward' => false, 'check_path' => '/login_check', 'require_previous_session' => true, 'username_parameter' => '_username', 'password_parameter' => '_password', 'csrf_parameter' => '_csrf_token', 'intention' => 'authenticate', 'post_only' => true), $d, $this->get('debug.event_dispatcher', ContainerInterface::NULL_ON_INVALID_REFERENCE), NULL), 4 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '553807f5100db', $d, $e), 5 => $this->get('security.access_listener')), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), $a, 'main', new \Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint($c, $a, '/login', false), NULL, NULL, $d));
+        return $this->services['security.firewall.map.context.main'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => $this->get('security.channel_listener'), 1 => $this->get('security.context_listener.0'), 2 => $f, 3 => new \Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener($b, $e, $this->get('security.authentication.session_strategy'), $a, 'main', $g, $h, array('use_forward' => false, 'check_path' => '/login_check', 'require_previous_session' => true, 'username_parameter' => '_username', 'password_parameter' => '_password', 'csrf_parameter' => '_csrf_token', 'intention' => 'authenticate', 'post_only' => true), $d, $this->get('debug.event_dispatcher', ContainerInterface::NULL_ON_INVALID_REFERENCE), NULL), 4 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '553821f661bdd', $d, $e), 5 => $this->get('security.access_listener')), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), $a, 'main', new \Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint($c, $a, '/login', false), NULL, NULL, $d));
     }
 
     /**
@@ -5490,7 +5490,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getSonata_User_EditableRoleBuilderService()
     {
-        return $this->services['sonata.user.editable_role_builder'] = new \Sonata\UserBundle\Security\EditableRolesBuilder($this->get('security.context'), $this->get('sonata.admin.pool'), array('ROLE_PERSONAL_ADMINISTRATIVO' => array(0 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_LIST', 1 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_VIEW', 2 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_CREATE', 3 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_EDIT', 4 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_DELETE', 5 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_EXPORT', 6 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_MASTER', 7 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_LIST', 8 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_VIEW', 9 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_CREATE', 10 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_EDIT', 11 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_DELETE', 12 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_EXPORT', 13 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_MASTER', 14 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_LIST', 15 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_VIEW', 16 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_CREATE', 17 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_EDIT', 18 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_DELETE', 19 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_EXPORT', 20 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_MASTER'), 'ROLE_PERSONAL_MEDICO' => array(0 => 'ROLE_SONATA_ADMIN_PACIENTE_CREATE', 1 => 'ROLE_SONATA_ADMIN_PACIENTE_EDIT'), 'ROLE_MEDICO' => array(0 => 'ROLE_SONATA_ADMIN_PACIENTE_DELETE', 1 => 'ROLE_SONATA_ADMIN_PACIENTE_EXPORT'), 'ROLE_ADMIN_ADMINISTRATIVO' => array(0 => 'ROLE_SONATA_ADMIN_EDITOR', 1 => 'ROLE_USER', 2 => 'ROLE_SONATA_ADMIN', 3 => 'ROLE_ADMIN', 4 => 'ROLE_PERSONAL_ADMINISTRATIVO'), 'ROLE_ADMIN_PERSONAL_MEDICO' => array(0 => 'ROLE_USER', 1 => 'ROLE_SONATA_ADMIN', 2 => 'ROLE_PERSONAL_MEDICO', 3 => 'ROLE_ADMIN_ADMINISTRATIVO'), 'ROLE_ADMIN_MEDICO' => array(0 => 'ROLE_USER', 1 => 'ROLE_SONATA_ADMIN', 2 => 'ROLE_NORMAL', 3 => 'ROLE_SONATA_ADMIN_EDITOR'), 'ROLE_ADMIN_ADMIN' => array(0 => 'ROLE_USER', 1 => 'ROLE_SONATA_ADMIN'), 'ROLE_SUPER_ADMIN' => array(0 => 'ROLE_USER', 1 => 'ROLE_ADMIN', 2 => 'ROLE_ALLOWED_TO_SWITCH', 3 => 'ROLE_ADMIN_ADMIN', 4 => 'ROLE_SONATA_ADMIN'), 'SONATA' => array(0 => 'ROLE_SONATA_PAGE_ADMIN_PAGE_EDIT')));
+        return $this->services['sonata.user.editable_role_builder'] = new \Sonata\UserBundle\Security\EditableRolesBuilder($this->get('security.context'), $this->get('sonata.admin.pool'), array('ROLE_PERSONAL_ADMINISTRATIVO' => array(0 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_EDIT', 1 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_LIST', 2 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_CREATE', 3 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_VIEW', 4 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_DELETE', 5 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_EXPORT', 6 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_OPERATOR', 7 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_MASTER', 8 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_EDIT', 9 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_LIST', 10 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_CREATE', 11 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_VIEW', 12 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_DELETE', 13 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_EXPORT', 14 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_OPERATOR', 15 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_MASTER', 16 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_EDIT', 17 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_LIST', 18 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_CREATE', 19 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_VIEW', 20 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_DELETE', 21 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_EXPORT', 22 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_OPERATOR', 23 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_MASTER', 24 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_EDIT', 25 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_LIST', 26 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_CREATE', 27 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_VIEW', 28 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_DELETE', 29 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_EXPORT', 30 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_OPERATOR', 31 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_MASTER', 32 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_EDIT', 33 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_LIST', 34 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_CREATE', 35 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_VIEW', 36 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_EXPORT', 37 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_OPERATOR', 38 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_MASTER'), 'ROLE_PERSONAL_MEDICO' => array(0 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_EDIT', 1 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_LIST', 2 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_CREATE', 3 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_VIEW', 4 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_DELETE', 5 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_EXPORT', 6 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_OPERATOR', 7 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_MASTER', 8 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_EDIT', 9 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_LIST', 10 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_VIEW', 11 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_EXPORT', 12 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_OPERATOR', 13 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_MASTER', 14 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_EDIT', 15 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_LIST', 16 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_VIEW', 17 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_EXPORT', 18 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_OPERATOR', 19 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_MASTER', 20 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_EDIT', 21 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_LIST', 22 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_VIEW', 23 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_EXPORT', 24 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_OPERATOR', 25 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_MASTER', 26 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_LIST', 27 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_VIEW', 28 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_EXPORT', 29 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_OPERATOR', 30 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_MASTER', 31 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_VIEW', 32 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_LIST'), 'ROLE_MEDICO' => array(0 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_DELETE', 1 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_CREATE', 2 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_DELETE', 3 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_CREATE', 4 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_EDIT', 5 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_LIST', 6 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_CREATE', 7 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_VIEW', 8 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_DELETE', 9 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_EXPORT', 10 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_OPERATOR', 11 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_MASTER', 12 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_EDIT', 13 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_LIST', 14 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_CREATE', 15 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_VIEW', 16 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_DELETE', 17 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_EXPORT', 18 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_OPERATOR', 19 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_MASTER', 20 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_EDIT', 21 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_LIST', 22 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_CREATE', 23 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_VIEW', 24 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_DELETE', 25 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_EXPORT', 26 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_OPERATOR', 27 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_MASTER', 28 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_DELETE', 29 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_CREATE', 30 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_DELETE'), 'ROLE_ADMIN_ADMINISTRATIVO' => array(0 => 'ROLE_USER', 1 => 'ROLE_SONATA_ADMIN', 2 => 'ROLE_ADMIN', 3 => 'ROLE_PERSONAL_ADMINISTRATIVO'), 'ROLE_ADMIN_PERSONAL_MEDICO' => array(0 => 'ROLE_USER', 1 => 'ROLE_SONATA_ADMIN', 2 => 'ROLE_PERSONAL_MEDICO', 3 => 'ROLE_ADMIN_ADMINISTRATIVO', 4 => 'ROLE_ADMIN'), 'ROLE_ADMIN_MEDICO' => array(0 => 'ROLE_USER', 1 => 'ROLE_SONATA_ADMIN', 2 => 'ROLE_ADMIN_PERSONAL_MEDICO', 3 => 'ROLE_ADMIN'), 'ROLE_ADMIN_ADMIN' => array(0 => 'ROLE_USER', 1 => 'ROLE_SONATA_ADMIN', 2 => 'ROLE_ADMIN_MEDICO'), 'ROLE_SUPER_ADMIN' => array(0 => 'ROLE_USER', 1 => 'ROLE_ADMIN', 2 => 'ROLE_ALLOWED_TO_SWITCH', 3 => 'ROLE_ADMIN_ADMIN', 4 => 'ROLE_SONATA_ADMIN'), 'SONATA' => array(0 => 'ROLE_SONATA_PAGE_ADMIN_PAGE_EDIT')));
     }
 
     /**
@@ -7185,7 +7185,7 @@ class appDevDebugProjectContainer extends Container
         $b = $this->get('security.user_checker');
         $c = $this->get('security.encoder_factory');
 
-        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider($a, $b, 'admin', $c, true), 1 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('553807f5100db'), 2 => new \Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider($a, $b, 'main', $c, true), 3 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('553807f5100db')), true);
+        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider($a, $b, 'admin', $c, true), 1 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('553821f661bdd'), 2 => new \Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider($a, $b, 'main', $c, true), 3 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('553821f661bdd')), true);
 
         $instance->setEventDispatcher($this->get('debug.event_dispatcher'));
 
@@ -7310,7 +7310,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getSecurity_RoleHierarchyService()
     {
-        return $this->services['security.role_hierarchy'] = new \Symfony\Component\Security\Core\Role\RoleHierarchy(array('ROLE_PERSONAL_ADMINISTRATIVO' => array(0 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_LIST', 1 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_VIEW', 2 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_CREATE', 3 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_EDIT', 4 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_DELETE', 5 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_EXPORT', 6 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_MASTER', 7 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_LIST', 8 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_VIEW', 9 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_CREATE', 10 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_EDIT', 11 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_DELETE', 12 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_EXPORT', 13 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_MASTER', 14 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_LIST', 15 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_VIEW', 16 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_CREATE', 17 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_EDIT', 18 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_DELETE', 19 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_EXPORT', 20 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_MASTER'), 'ROLE_PERSONAL_MEDICO' => array(0 => 'ROLE_SONATA_ADMIN_PACIENTE_CREATE', 1 => 'ROLE_SONATA_ADMIN_PACIENTE_EDIT'), 'ROLE_MEDICO' => array(0 => 'ROLE_SONATA_ADMIN_PACIENTE_DELETE', 1 => 'ROLE_SONATA_ADMIN_PACIENTE_EXPORT'), 'ROLE_ADMIN_ADMINISTRATIVO' => array(0 => 'ROLE_SONATA_ADMIN_EDITOR', 1 => 'ROLE_USER', 2 => 'ROLE_SONATA_ADMIN', 3 => 'ROLE_ADMIN', 4 => 'ROLE_PERSONAL_ADMINISTRATIVO'), 'ROLE_ADMIN_PERSONAL_MEDICO' => array(0 => 'ROLE_USER', 1 => 'ROLE_SONATA_ADMIN', 2 => 'ROLE_PERSONAL_MEDICO', 3 => 'ROLE_ADMIN_ADMINISTRATIVO'), 'ROLE_ADMIN_MEDICO' => array(0 => 'ROLE_USER', 1 => 'ROLE_SONATA_ADMIN', 2 => 'ROLE_NORMAL', 3 => 'ROLE_SONATA_ADMIN_EDITOR'), 'ROLE_ADMIN_ADMIN' => array(0 => 'ROLE_USER', 1 => 'ROLE_SONATA_ADMIN'), 'ROLE_SUPER_ADMIN' => array(0 => 'ROLE_USER', 1 => 'ROLE_ADMIN', 2 => 'ROLE_ALLOWED_TO_SWITCH', 3 => 'ROLE_ADMIN_ADMIN', 4 => 'ROLE_SONATA_ADMIN'), 'SONATA' => array(0 => 'ROLE_SONATA_PAGE_ADMIN_PAGE_EDIT')));
+        return $this->services['security.role_hierarchy'] = new \Symfony\Component\Security\Core\Role\RoleHierarchy(array('ROLE_PERSONAL_ADMINISTRATIVO' => array(0 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_EDIT', 1 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_LIST', 2 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_CREATE', 3 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_VIEW', 4 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_DELETE', 5 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_EXPORT', 6 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_OPERATOR', 7 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_MASTER', 8 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_EDIT', 9 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_LIST', 10 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_CREATE', 11 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_VIEW', 12 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_DELETE', 13 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_EXPORT', 14 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_OPERATOR', 15 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_MASTER', 16 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_EDIT', 17 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_LIST', 18 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_CREATE', 19 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_VIEW', 20 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_DELETE', 21 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_EXPORT', 22 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_OPERATOR', 23 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_MASTER', 24 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_EDIT', 25 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_LIST', 26 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_CREATE', 27 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_VIEW', 28 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_DELETE', 29 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_EXPORT', 30 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_OPERATOR', 31 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_MASTER', 32 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_EDIT', 33 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_LIST', 34 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_CREATE', 35 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_VIEW', 36 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_EXPORT', 37 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_OPERATOR', 38 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_MASTER'), 'ROLE_PERSONAL_MEDICO' => array(0 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_EDIT', 1 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_LIST', 2 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_CREATE', 3 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_VIEW', 4 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_DELETE', 5 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_EXPORT', 6 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_OPERATOR', 7 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_MASTER', 8 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_EDIT', 9 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_LIST', 10 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_VIEW', 11 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_EXPORT', 12 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_OPERATOR', 13 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_MASTER', 14 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_EDIT', 15 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_LIST', 16 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_VIEW', 17 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_EXPORT', 18 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_OPERATOR', 19 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_MASTER', 20 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_EDIT', 21 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_LIST', 22 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_VIEW', 23 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_EXPORT', 24 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_OPERATOR', 25 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_MASTER', 26 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_LIST', 27 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_VIEW', 28 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_EXPORT', 29 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_OPERATOR', 30 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_MASTER', 31 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_VIEW', 32 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_LIST'), 'ROLE_MEDICO' => array(0 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_DELETE', 1 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_CREATE', 2 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_DELETE', 3 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_CREATE', 4 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_EDIT', 5 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_LIST', 6 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_CREATE', 7 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_VIEW', 8 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_DELETE', 9 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_EXPORT', 10 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_OPERATOR', 11 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_MASTER', 12 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_EDIT', 13 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_LIST', 14 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_CREATE', 15 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_VIEW', 16 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_DELETE', 17 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_EXPORT', 18 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_OPERATOR', 19 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_MASTER', 20 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_EDIT', 21 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_LIST', 22 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_CREATE', 23 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_VIEW', 24 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_DELETE', 25 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_EXPORT', 26 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_OPERATOR', 27 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_MASTER', 28 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_DELETE', 29 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_CREATE', 30 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_DELETE'), 'ROLE_ADMIN_ADMINISTRATIVO' => array(0 => 'ROLE_USER', 1 => 'ROLE_SONATA_ADMIN', 2 => 'ROLE_ADMIN', 3 => 'ROLE_PERSONAL_ADMINISTRATIVO'), 'ROLE_ADMIN_PERSONAL_MEDICO' => array(0 => 'ROLE_USER', 1 => 'ROLE_SONATA_ADMIN', 2 => 'ROLE_PERSONAL_MEDICO', 3 => 'ROLE_ADMIN_ADMINISTRATIVO', 4 => 'ROLE_ADMIN'), 'ROLE_ADMIN_MEDICO' => array(0 => 'ROLE_USER', 1 => 'ROLE_SONATA_ADMIN', 2 => 'ROLE_ADMIN_PERSONAL_MEDICO', 3 => 'ROLE_ADMIN'), 'ROLE_ADMIN_ADMIN' => array(0 => 'ROLE_USER', 1 => 'ROLE_SONATA_ADMIN', 2 => 'ROLE_ADMIN_MEDICO'), 'ROLE_SUPER_ADMIN' => array(0 => 'ROLE_USER', 1 => 'ROLE_ADMIN', 2 => 'ROLE_ALLOWED_TO_SWITCH', 3 => 'ROLE_ADMIN_ADMIN', 4 => 'ROLE_SONATA_ADMIN'), 'SONATA' => array(0 => 'ROLE_SONATA_PAGE_ADMIN_PAGE_EDIT')));
     }
 
     /**
@@ -7501,7 +7501,7 @@ class appDevDebugProjectContainer extends Container
             'kernel.root_dir' => $this->targetDirs[2],
             'kernel.environment' => 'dev',
             'kernel.debug' => true,
-            'kernel.name' => 'app',
+            'kernel.name' => 'ap_',
             'kernel.cache_dir' => __DIR__,
             'kernel.logs_dir' => ($this->targetDirs[2].'/logs'),
             'kernel.bundles' => array(
@@ -7805,58 +7805,137 @@ class appDevDebugProjectContainer extends Container
             'security.authentication.hide_user_not_found' => true,
             'security.role_hierarchy.roles' => array(
                 'ROLE_PERSONAL_ADMINISTRATIVO' => array(
-                    0 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_LIST',
-                    1 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_VIEW',
+                    0 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_EDIT',
+                    1 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_LIST',
                     2 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_CREATE',
-                    3 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_EDIT',
+                    3 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_VIEW',
                     4 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_DELETE',
                     5 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_EXPORT',
-                    6 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_MASTER',
-                    7 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_LIST',
-                    8 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_VIEW',
-                    9 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_CREATE',
-                    10 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_EDIT',
-                    11 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_DELETE',
-                    12 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_EXPORT',
-                    13 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_MASTER',
-                    14 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_LIST',
-                    15 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_VIEW',
-                    16 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_CREATE',
-                    17 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_EDIT',
-                    18 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_DELETE',
-                    19 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_EXPORT',
-                    20 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_MASTER',
+                    6 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_OPERATOR',
+                    7 => 'ROLE_ADMIN_ADMIN_ADMIN_PACIENTE_MASTER',
+                    8 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_EDIT',
+                    9 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_LIST',
+                    10 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_CREATE',
+                    11 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_VIEW',
+                    12 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_DELETE',
+                    13 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_EXPORT',
+                    14 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_OPERATOR',
+                    15 => 'ROLE_ADMIN_ADMIN_ADMIN_TELEFONO_MASTER',
+                    16 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_EDIT',
+                    17 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_LIST',
+                    18 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_CREATE',
+                    19 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_VIEW',
+                    20 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_DELETE',
+                    21 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_EXPORT',
+                    22 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_OPERATOR',
+                    23 => 'ROLE_ADMIN_ADMIN_ADMIN_CONT_EMERGENCIA_MASTER',
+                    24 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_EDIT',
+                    25 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_LIST',
+                    26 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_CREATE',
+                    27 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_VIEW',
+                    28 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_DELETE',
+                    29 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_EXPORT',
+                    30 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_OPERATOR',
+                    31 => 'ROLE_ADMIN_ADMIN_ADMIN_CITA_MASTER',
+                    32 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_EDIT',
+                    33 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_LIST',
+                    34 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_CREATE',
+                    35 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_VIEW',
+                    36 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_EXPORT',
+                    37 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_OPERATOR',
+                    38 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_MASTER',
                 ),
                 'ROLE_PERSONAL_MEDICO' => array(
-                    0 => 'ROLE_SONATA_ADMIN_PACIENTE_CREATE',
-                    1 => 'ROLE_SONATA_ADMIN_PACIENTE_EDIT',
+                    0 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_EDIT',
+                    1 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_LIST',
+                    2 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_CREATE',
+                    3 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_VIEW',
+                    4 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_DELETE',
+                    5 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_EXPORT',
+                    6 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_OPERATOR',
+                    7 => 'ROLE_ADMIN_ADMIN_ADMIN_HISTORIA_MASTER',
+                    8 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_EDIT',
+                    9 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_LIST',
+                    10 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_VIEW',
+                    11 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_EXPORT',
+                    12 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_OPERATOR',
+                    13 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_MASTER',
+                    14 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_EDIT',
+                    15 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_LIST',
+                    16 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_VIEW',
+                    17 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_EXPORT',
+                    18 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_OPERATOR',
+                    19 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_MASTER',
+                    20 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_EDIT',
+                    21 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_LIST',
+                    22 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_VIEW',
+                    23 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_EXPORT',
+                    24 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_OPERATOR',
+                    25 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_MASTER',
+                    26 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_LIST',
+                    27 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_VIEW',
+                    28 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_EXPORT',
+                    29 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_OPERATOR',
+                    30 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_MASTER',
+                    31 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_VIEW',
+                    32 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_LIST',
                 ),
                 'ROLE_MEDICO' => array(
-                    0 => 'ROLE_SONATA_ADMIN_PACIENTE_DELETE',
-                    1 => 'ROLE_SONATA_ADMIN_PACIENTE_EXPORT',
+                    0 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_DELETE',
+                    1 => 'ROLE_ADMIN_ADMIN_ADMIN_MEDICAMENTO_CREATE',
+                    2 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_DELETE',
+                    3 => 'ROLE_ADMIN_ADMIN_ADMIN_RECETA_CREATE',
+                    4 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_EDIT',
+                    5 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_LIST',
+                    6 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_CREATE',
+                    7 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_VIEW',
+                    8 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_DELETE',
+                    9 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_EXPORT',
+                    10 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_OPERATOR',
+                    11 => 'ROLE_ADMIN_ADMIN_ADMIN_NOTA_CITA_MASTER',
+                    12 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_EDIT',
+                    13 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_LIST',
+                    14 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_CREATE',
+                    15 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_VIEW',
+                    16 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_DELETE',
+                    17 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_EXPORT',
+                    18 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_OPERATOR',
+                    19 => 'ROLE_ADMIN_ADMIN_ADMIN_DIAGNOSTICO_MASTER',
+                    20 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_EDIT',
+                    21 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_LIST',
+                    22 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_CREATE',
+                    23 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_VIEW',
+                    24 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_DELETE',
+                    25 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_EXPORT',
+                    26 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_OPERATOR',
+                    27 => 'ROLE_ADMIN_ADMIN_ADMIN_REFERENCIA_MASTER',
+                    28 => 'ROLE_ADMIN_ADMIN_ADMIN_VISITA_DELETE',
+                    29 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_CREATE',
+                    30 => 'ROLE_ADMIN_ADMIN_ADMIN_ALERGIA_DELETE',
                 ),
                 'ROLE_ADMIN_ADMINISTRATIVO' => array(
-                    0 => 'ROLE_SONATA_ADMIN_EDITOR',
-                    1 => 'ROLE_USER',
-                    2 => 'ROLE_SONATA_ADMIN',
-                    3 => 'ROLE_ADMIN',
-                    4 => 'ROLE_PERSONAL_ADMINISTRATIVO',
+                    0 => 'ROLE_USER',
+                    1 => 'ROLE_SONATA_ADMIN',
+                    2 => 'ROLE_ADMIN',
+                    3 => 'ROLE_PERSONAL_ADMINISTRATIVO',
                 ),
                 'ROLE_ADMIN_PERSONAL_MEDICO' => array(
                     0 => 'ROLE_USER',
                     1 => 'ROLE_SONATA_ADMIN',
                     2 => 'ROLE_PERSONAL_MEDICO',
                     3 => 'ROLE_ADMIN_ADMINISTRATIVO',
+                    4 => 'ROLE_ADMIN',
                 ),
                 'ROLE_ADMIN_MEDICO' => array(
                     0 => 'ROLE_USER',
                     1 => 'ROLE_SONATA_ADMIN',
-                    2 => 'ROLE_NORMAL',
-                    3 => 'ROLE_SONATA_ADMIN_EDITOR',
+                    2 => 'ROLE_ADMIN_PERSONAL_MEDICO',
+                    3 => 'ROLE_ADMIN',
                 ),
                 'ROLE_ADMIN_ADMIN' => array(
                     0 => 'ROLE_USER',
                     1 => 'ROLE_SONATA_ADMIN',
+                    2 => 'ROLE_ADMIN_MEDICO',
                 ),
                 'ROLE_SUPER_ADMIN' => array(
                     0 => 'ROLE_USER',
