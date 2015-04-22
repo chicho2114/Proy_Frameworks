@@ -300,37 +300,37 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                         if (0 === strpos($pathinfo, '/admin/admin/admin/cita')) {
                             // admin_admin_admin_cita_list
                             if ($pathinfo === '/admin/admin/admin/cita/list') {
-                                return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::listAction',  '_sonata_admin' => 'admin_admin.admin.citas',  '_sonata_name' => 'admin_admin_admin_cita_list',  '_route' => 'admin_admin_admin_cita_list',);
+                                return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::listAction',  '_sonata_admin' => 'admin_admin.admin.cita',  '_sonata_name' => 'admin_admin_admin_cita_list',  '_route' => 'admin_admin_admin_cita_list',);
                             }
 
                             // admin_admin_admin_cita_create
                             if ($pathinfo === '/admin/admin/admin/cita/create') {
-                                return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::createAction',  '_sonata_admin' => 'admin_admin.admin.citas',  '_sonata_name' => 'admin_admin_admin_cita_create',  '_route' => 'admin_admin_admin_cita_create',);
+                                return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::createAction',  '_sonata_admin' => 'admin_admin.admin.cita',  '_sonata_name' => 'admin_admin_admin_cita_create',  '_route' => 'admin_admin_admin_cita_create',);
                             }
 
                             // admin_admin_admin_cita_batch
                             if ($pathinfo === '/admin/admin/admin/cita/batch') {
-                                return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::batchAction',  '_sonata_admin' => 'admin_admin.admin.citas',  '_sonata_name' => 'admin_admin_admin_cita_batch',  '_route' => 'admin_admin_admin_cita_batch',);
+                                return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::batchAction',  '_sonata_admin' => 'admin_admin.admin.cita',  '_sonata_name' => 'admin_admin_admin_cita_batch',  '_route' => 'admin_admin_admin_cita_batch',);
                             }
 
                             // admin_admin_admin_cita_edit
                             if (preg_match('#^/admin/admin/admin/cita/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
-                                return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_cita_edit')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::editAction',  '_sonata_admin' => 'admin_admin.admin.citas',  '_sonata_name' => 'admin_admin_admin_cita_edit',));
+                                return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_cita_edit')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::editAction',  '_sonata_admin' => 'admin_admin.admin.cita',  '_sonata_name' => 'admin_admin_admin_cita_edit',));
                             }
 
                             // admin_admin_admin_cita_delete
                             if (preg_match('#^/admin/admin/admin/cita/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
-                                return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_cita_delete')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::deleteAction',  '_sonata_admin' => 'admin_admin.admin.citas',  '_sonata_name' => 'admin_admin_admin_cita_delete',));
+                                return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_cita_delete')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::deleteAction',  '_sonata_admin' => 'admin_admin.admin.cita',  '_sonata_name' => 'admin_admin_admin_cita_delete',));
                             }
 
                             // admin_admin_admin_cita_show
                             if (preg_match('#^/admin/admin/admin/cita/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
-                                return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_cita_show')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::showAction',  '_sonata_admin' => 'admin_admin.admin.citas',  '_sonata_name' => 'admin_admin_admin_cita_show',));
+                                return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_cita_show')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::showAction',  '_sonata_admin' => 'admin_admin.admin.cita',  '_sonata_name' => 'admin_admin_admin_cita_show',));
                             }
 
                             // admin_admin_admin_cita_export
                             if ($pathinfo === '/admin/admin/admin/cita/export') {
-                                return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::exportAction',  '_sonata_admin' => 'admin_admin.admin.citas',  '_sonata_name' => 'admin_admin_admin_cita_export',  '_route' => 'admin_admin_admin_cita_export',);
+                                return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::exportAction',  '_sonata_admin' => 'admin_admin.admin.cita',  '_sonata_name' => 'admin_admin_admin_cita_export',  '_route' => 'admin_admin_admin_cita_export',);
                             }
 
                         }

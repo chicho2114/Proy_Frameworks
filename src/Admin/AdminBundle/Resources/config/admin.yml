@@ -17,7 +17,7 @@ services:
         tags:
             - {name: sonata.admin, manager_type: orm, group: Administración, label: Contactos Emergencia}
 
-    admin_admin.admin.citas:
+    admin_admin.admin.cita:
         class: Admin\AdminBundle\Admin\CitaAdmin
         arguments: [~, Admin\AdminBundle\Entity\Cita, AdminAdminBundle:CitaAdmin]
         tags:

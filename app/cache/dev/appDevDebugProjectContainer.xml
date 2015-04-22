@@ -358,9 +358,9 @@
         <parameter>ROLE_SONATA_ADMIN</parameter>
       </parameter>
       <parameter key="ROLE_SUPER_ADMIN" type="collection">
+        <parameter>ROLE_USER</parameter>
         <parameter>ROLE_ADMIN</parameter>
         <parameter>ROLE_ALLOWED_TO_SWITCH</parameter>
-        <parameter>SONATA</parameter>
         <parameter>ROLE_ADMIN_ADMIN</parameter>
         <parameter>ROLE_SONATA_ADMIN</parameter>
       </parameter>
@@ -741,6 +741,27 @@
         <parameter key="cache">sonata.cache.noop</parameter>
         <parameter key="settings" type="collection"/>
       </parameter>
+      <parameter key="sonata.block.service.container" type="collection">
+        <parameter key="contexts" type="collection">
+          <parameter>cms</parameter>
+        </parameter>
+        <parameter key="cache">sonata.cache.noop</parameter>
+        <parameter key="settings" type="collection"/>
+      </parameter>
+      <parameter key="sonata.block.service.rss" type="collection">
+        <parameter key="contexts" type="collection">
+          <parameter>cms</parameter>
+        </parameter>
+        <parameter key="cache">sonata.cache.noop</parameter>
+        <parameter key="settings" type="collection"/>
+      </parameter>
+      <parameter key="sonata.block.service.template" type="collection">
+        <parameter key="contexts" type="collection">
+          <parameter>cms</parameter>
+        </parameter>
+        <parameter key="cache">sonata.cache.noop</parameter>
+        <parameter key="settings" type="collection"/>
+      </parameter>
     </parameter>
     <parameter key="sonata_block.blocks_by_class" type="collection"/>
     <parameter key="sonata_block.cache_blocks" type="collection">
@@ -753,6 +774,9 @@
         <parameter key="sonata.admin.block.stats">sonata.cache.noop</parameter>
         <parameter key="sonata.block.service.menu">sonata.cache.noop</parameter>
         <parameter key="sonata.admin_doctrine_orm.block.audit">sonata.cache.noop</parameter>
+        <parameter key="sonata.block.service.container">sonata.cache.noop</parameter>
+        <parameter key="sonata.block.service.rss">sonata.cache.noop</parameter>
+        <parameter key="sonata.block.service.template">sonata.cache.noop</parameter>
       </parameter>
     </parameter>
     <parameter key="knp_menu.factory.class">Knp\Menu\MenuFactory</parameter>
@@ -876,11 +900,11 @@
       </parameter>
       <parameter type="collection">
         <parameter key="class">col-lg-3 col-xs-6</parameter>
-        <parameter key="position">left</parameter>
+        <parameter key="position">top</parameter>
         <parameter key="type">sonata.admin.block.stats</parameter>
         <parameter key="settings" type="collection">
-          <parameter key="code">admin_admin.admin.citas</parameter>
-          <parameter key="icon">fa fa-user-md</parameter>
+          <parameter key="code">admin_admin.admin.cita</parameter>
+          <parameter key="icon">fa fa-calendar-o</parameter>
           <parameter key="text">Citas</parameter>
           <parameter key="color">bg-blue</parameter>
         </parameter>
@@ -888,7 +912,7 @@
       </parameter>
       <parameter type="collection">
         <parameter key="class">col-lg-3 col-xs-6</parameter>
-        <parameter key="position">center</parameter>
+        <parameter key="position">top</parameter>
         <parameter key="type">sonata.admin.block.stats</parameter>
         <parameter key="settings" type="collection">
           <parameter key="code">sonata.user.admin.user</parameter>
@@ -900,11 +924,11 @@
       </parameter>
       <parameter type="collection">
         <parameter key="class">col-lg-3 col-xs-6</parameter>
-        <parameter key="position">center</parameter>
+        <parameter key="position">top</parameter>
         <parameter key="type">sonata.admin.block.stats</parameter>
         <parameter key="settings" type="collection">
-          <parameter key="code">admin_admin.admin.citas</parameter>
-          <parameter key="icon">fa fa-user-md</parameter>
+          <parameter key="code">admin_admin.admin.cita</parameter>
+          <parameter key="icon">fa fa-list-alt</parameter>
           <parameter key="text">Citas</parameter>
           <parameter key="color">bg-blue</parameter>
         </parameter>
@@ -1596,9 +1620,9 @@
         <argument type="service" id="sonata.admin.event.extension"/>
       </call>
     </service>
-    <service id="admin_admin.admin.citas" class="Admin\AdminBundle\Admin\CitaAdmin" scope="prototype">
+    <service id="admin_admin.admin.cita" class="Admin\AdminBundle\Admin\CitaAdmin" scope="prototype">
       <tag name="sonata.admin" manager_type="orm" group="Administración" label="Citas"/>
-      <argument>admin_admin.admin.citas</argument>
+      <argument>admin_admin.admin.cita</argument>
       <argument>Admin\AdminBundle\Entity\Cita</argument>
       <argument>AdminAdminBundle:CitaAdmin</argument>
       <call method="setFormTheme">
@@ -4497,7 +4521,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>5536e48975002</argument>
+            <argument>55372a893c3e8</argument>
           </service>
         </argument>
         <argument type="service">
@@ -4511,7 +4535,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>5536e48975002</argument>
+            <argument>55372a893c3e8</argument>
           </service>
         </argument>
       </argument>
@@ -4658,9 +4682,9 @@
           <argument>ROLE_SONATA_ADMIN</argument>
         </argument>
         <argument key="ROLE_SUPER_ADMIN" type="collection">
+          <argument>ROLE_USER</argument>
           <argument>ROLE_ADMIN</argument>
           <argument>ROLE_ALLOWED_TO_SWITCH</argument>
-          <argument>SONATA</argument>
           <argument>ROLE_ADMIN_ADMIN</argument>
           <argument>ROLE_SONATA_ADMIN</argument>
         </argument>
@@ -4937,7 +4961,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>5536e48975002</argument>
+            <argument>55372a893c3e8</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -5048,7 +5072,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>5536e48975002</argument>
+            <argument>55372a893c3e8</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -5902,7 +5926,9 @@
       <call method="add">
         <argument>sonata.block.service.container</argument>
         <argument>sonata.block.service.container</argument>
-        <argument type="collection"/>
+        <argument type="collection">
+          <argument>cms</argument>
+        </argument>
       </call>
       <call method="add">
         <argument>sonata.block.service.empty</argument>
@@ -5919,7 +5945,9 @@
       <call method="add">
         <argument>sonata.block.service.rss</argument>
         <argument>sonata.block.service.rss</argument>
-        <argument type="collection"/>
+        <argument type="collection">
+          <argument>cms</argument>
+        </argument>
       </call>
       <call method="add">
         <argument>sonata.block.service.menu</argument>
@@ -5931,7 +5959,9 @@
       <call method="add">
         <argument>sonata.block.service.template</argument>
         <argument>sonata.block.service.template</argument>
-        <argument type="collection"/>
+        <argument type="collection">
+          <argument>cms</argument>
+        </argument>
       </call>
       <call method="add">
         <argument>sonata.admin.block.admin_list</argument>
@@ -5982,6 +6012,9 @@
           <argument key="sonata.admin.block.stats">sonata.cache.noop</argument>
           <argument key="sonata.block.service.menu">sonata.cache.noop</argument>
           <argument key="sonata.admin_doctrine_orm.block.audit">sonata.cache.noop</argument>
+          <argument key="sonata.block.service.container">sonata.cache.noop</argument>
+          <argument key="sonata.block.service.rss">sonata.cache.noop</argument>
+          <argument key="sonata.block.service.template">sonata.cache.noop</argument>
         </argument>
       </argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
@@ -6005,6 +6038,9 @@
           <argument key="sonata.admin.block.stats">sonata.cache.noop</argument>
           <argument key="sonata.block.service.menu">sonata.cache.noop</argument>
           <argument key="sonata.admin_doctrine_orm.block.audit">sonata.cache.noop</argument>
+          <argument key="sonata.block.service.container">sonata.cache.noop</argument>
+          <argument key="sonata.block.service.rss">sonata.cache.noop</argument>
+          <argument key="sonata.block.service.template">sonata.cache.noop</argument>
         </argument>
       </argument>
       <argument type="service" id="sonata.block.renderer.default"/>
@@ -6030,6 +6066,9 @@
         <argument>sonata.admin.block.stats</argument>
         <argument>sonata.block.service.menu</argument>
         <argument>sonata.admin_doctrine_orm.block.audit</argument>
+        <argument>sonata.block.service.container</argument>
+        <argument>sonata.block.service.rss</argument>
+        <argument>sonata.block.service.template</argument>
       </argument>
     </service>
     <service id="sonata.block.twig.global" class="Sonata\BlockBundle\Twig\GlobalVariables">
@@ -6353,7 +6392,7 @@
           <argument>admin_admin.admin.paciente</argument>
           <argument>admin_admin.admin.telefono</argument>
           <argument>admin_admin.admin.cont_emergencia</argument>
-          <argument>admin_admin.admin.citas</argument>
+          <argument>admin_admin.admin.cita</argument>
           <argument>sonata.user.admin.user</argument>
           <argument>sonata.user.admin.group</argument>
         </argument>
@@ -6385,7 +6424,7 @@
                 <argument key="route_params" type="collection"/>
               </argument>
               <argument type="collection">
-                <argument key="admin">admin_admin.admin.citas</argument>
+                <argument key="admin">admin_admin.admin.cita</argument>
                 <argument key="label"></argument>
                 <argument key="route"></argument>
                 <argument key="route_params" type="collection"/>
@@ -6426,7 +6465,7 @@
             <argument>admin_admin.admin.cont_emergencia</argument>
           </argument>
           <argument key="Admin\AdminBundle\Entity\Cita" type="collection">
-            <argument>admin_admin.admin.citas</argument>
+            <argument>admin_admin.admin.cita</argument>
           </argument>
           <argument key="Application\Sonata\UserBundle\Entity\User" type="collection">
             <argument>sonata.user.admin.user</argument>
@@ -6444,7 +6483,7 @@
         <argument>admin_admin.admin.paciente</argument>
         <argument>admin_admin.admin.telefono</argument>
         <argument>admin_admin.admin.cont_emergencia</argument>
-        <argument>admin_admin.admin.citas</argument>
+        <argument>admin_admin.admin.cita</argument>
         <argument>sonata.user.admin.user</argument>
         <argument>sonata.user.admin.group</argument>
       </argument>
@@ -7248,9 +7287,9 @@
           <argument>ROLE_SONATA_ADMIN</argument>
         </argument>
         <argument key="ROLE_SUPER_ADMIN" type="collection">
+          <argument>ROLE_USER</argument>
           <argument>ROLE_ADMIN</argument>
           <argument>ROLE_ALLOWED_TO_SWITCH</argument>
-          <argument>SONATA</argument>
           <argument>ROLE_ADMIN_ADMIN</argument>
           <argument>ROLE_SONATA_ADMIN</argument>
         </argument>

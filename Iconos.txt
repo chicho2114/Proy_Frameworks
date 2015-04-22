@@ -1,0 +1,25 @@
+Iconos:
+
+Ambulancia: <i class="fa fa-ambulance"></i>
+Especie de lista: <i class="fa fa-list-alt"></i>
+H como de hospital: <i class="fa fa-h-square"></i>
+cruz: <i class="fa fa-plus-square"></i>
+maletin de primeros auxilios: <i class="fa fa-medkit"></i>
+hospital: <i class="fa fa-hospital-o"></i>
+estetoscopio: <i class="fa fa-stethoscope"></i>
+corazon: <i class="fa fa-heartbeat"></i>
+lista: <i class="fa fa-th-list"></i>
+otra lista: <i class="fa fa-list-ul"></i>
+hoja de texto: <i class="fa fa-file-text-o"></i>
+otra hoja de texto: <i class="fa fa-file-text"></i>
+gente: <i class="fa fa-street-view"></i>
+carita: <i class="fa fa-smile-o"></i>
+lapicero: <i class="fa fa-pencil-square-o"></i>
+calendario: <i class="fa fa-calendar"></i>
+ruedas de configuracion: <i class="fa fa-cogs"></i>
+logo de info: <i class="fa fa-info-circle"></i>
+persona masculida: <i class="fa fa-male"></i>
+otro lapicero: <i class="fa fa-pencil-square-o"></i>
+usuario con simbolo de mas: <i class="fa fa-user-plus"></i>
+carrito con simbolo de mas: <i class="fa fa-cart-plus"></i>
+
