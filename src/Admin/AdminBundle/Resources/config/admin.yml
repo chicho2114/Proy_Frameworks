@@ -16,3 +16,9 @@ services:
         arguments: [~, Admin\AdminBundle\Entity\ContEmergencia, AdminAdminBundle:ContEmergenciaAdmin]
         tags:
             - {name: sonata.admin, manager_type: orm, group: Administración, label: Contactos Emergencia}
+
+    admin_admin.admin.citas:
+        class: Admin\AdminBundle\Admin\CitaAdmin
+        arguments: [~, Admin\AdminBundle\Entity\Cita, AdminAdminBundle:CitaAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Administración, label: Citas}

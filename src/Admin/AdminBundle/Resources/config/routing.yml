@@ -1,3 +1,14 @@
 admin_admin_homepage:
     path:     /hello/{name}
     defaults: { _controller: AdminAdminBundle:Default:index }
+
+AdminAdminBundle_index:
+    path:  /
+    defaults: { _controller: AdminAdminBundle:Default:index }
+
+AdminAdminBundle_redireccion:
+    path:  /admin/admin/login
+    defaults: { _controller: SonataUserBundle:AdminSecurity:login }
+
+
+

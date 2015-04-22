@@ -52,24 +52,26 @@ class ContEmergenciaAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('nombre')
-            ->add('apellido')
-            ->add('relacion','choice', array(
-                    'choices'   => array(
-                        'familiar'   => 'Familiar',
-                        'conyugue' => 'Conyugue',
-                        'amigo' => 'Amigo cercano',
-                        'otro'   => 'Otro',
-                    ),
-                    'multiple'  => false,
-                    'expanded'  => false,
-                    'placeholder' => 'Seleccione la relacion que tiene con el paciente',
+            ->with('Contacto de Emergencia')
+                ->add('nombre')
+                ->add('apellido')
+                ->add('relacion','choice', array(
+                        'choices'   => array(
+                            'familiar'   => 'Familiar',
+                            'conyugue' => 'Conyugue',
+                            'amigo' => 'Amigo cercano',
+                            'otro'   => 'Otro',
+                        ),
+                        'multiple'  => false,
+                        'expanded'  => false,
+                        'placeholder' => 'Seleccione la relacion que tiene con el paciente',
+                    ))
+                ->add('telefonos', 'sonata_type_collection', array(), array(
+                    'edit' => 'inline',
+                    'inline' => 'table',
+                    'sortable'  => 'position'
                 ))
-            ->add('telefonos', 'sonata_type_collection', array(), array(
-                'edit' => 'inline',
-                'inline' => 'table',
-                'sortable'  => 'position'
-            ))
+            ->end()
         ;
     }
 

@@ -1,48 +1,69 @@
 <?php
-// src/Admin/AdminBundle/Admin/CitaAdmin.php
 
 namespace Admin\AdminBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
-use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 
 class CitaAdmin extends Admin
 {
-    // Fields to be shown on create/edit forms
-    protected function configureFormFields(FormMapper $formMapper)
-    {         
-            $formMapper
-                ->add('fecha',null, array('label' => 'Fecha de la cita'))
-                ->add('paciente',null, array('label' => 'Paciente'))
-                ->add('realizada',null, array('label' => 'La cita ya fue realizada?'))
-                ->add('medico',null, array('label' => 'Medico'))
-                ->add('nota',null, array('label' => 'Diagnostico de la cita'))
-            ;
-    }
-
-    // Fields to be shown on filter forms
+    /**
+     * @param DatagridMapper $datagridMapper
+     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-                ->add('fecha')
-                ->add('paciente')
-                ->add('realizada')
-                ->add('medico')
-
+            ->add('paciente')
+            ->add('motivo')
+            ->add('fecha')
         ;
     }
 
-    // Fields to be shown on lists
+    /**
+     * @param ListMapper $listMapper
+     */
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('fecha')
             ->add('paciente')
-            ->add('realizada')
-            ->add('medico')
+            ->add('motivo')
+            ->add('fecha')
+            ->add('_action', 'actions', array(
+                'actions' => array(
+                    'show' => array(),
+                    'edit' => array(),
+                    'delete' => array(),
+                )
+            ))
+        ;
+    }
 
+    /**
+     * @param FormMapper $formMapper
+     */
+    protected function configureFormFields(FormMapper $formMapper)
+    {
+        $formMapper
+            ->add('motivo')
+            ->add('paciente', 'sonata_type_model', array('multiple' => false))
+            ->add('fecha')
+        ;
+    }
+
+    /**
+     * @param ShowMapper $showMapper
+     */
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('paciente')
+            ->add('motivo')
+            ->add('fecha')
         ;
     }
 }
+
+

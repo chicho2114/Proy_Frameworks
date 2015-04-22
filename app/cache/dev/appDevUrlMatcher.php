@@ -127,11 +127,6 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
-        // admin_admin_homepage
-        if (0 === strpos($pathinfo, '/hello') && preg_match('#^/hello/(?P<name>[^/]++)$#s', $pathinfo, $matches)) {
-            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_homepage')), array (  '_controller' => 'AdminAdminBundle:Default:index',));
-        }
-
         if (0 === strpos($pathinfo, '/a')) {
             // homepage
             if ($pathinfo === '/app/example') {
@@ -263,40 +258,81 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
                     }
 
-                    if (0 === strpos($pathinfo, '/admin/admin/admin/contemergencia')) {
-                        // admin_admin_admin_contemergencia_list
-                        if ($pathinfo === '/admin/admin/admin/contemergencia/list') {
-                            return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\ContEmergenciaAdminController::listAction',  '_sonata_admin' => 'admin_admin.admin.cont_emergencia',  '_sonata_name' => 'admin_admin_admin_contemergencia_list',  '_route' => 'admin_admin_admin_contemergencia_list',);
+                    if (0 === strpos($pathinfo, '/admin/admin/admin/c')) {
+                        if (0 === strpos($pathinfo, '/admin/admin/admin/contemergencia')) {
+                            // admin_admin_admin_contemergencia_list
+                            if ($pathinfo === '/admin/admin/admin/contemergencia/list') {
+                                return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\ContEmergenciaAdminController::listAction',  '_sonata_admin' => 'admin_admin.admin.cont_emergencia',  '_sonata_name' => 'admin_admin_admin_contemergencia_list',  '_route' => 'admin_admin_admin_contemergencia_list',);
+                            }
+
+                            // admin_admin_admin_contemergencia_create
+                            if ($pathinfo === '/admin/admin/admin/contemergencia/create') {
+                                return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\ContEmergenciaAdminController::createAction',  '_sonata_admin' => 'admin_admin.admin.cont_emergencia',  '_sonata_name' => 'admin_admin_admin_contemergencia_create',  '_route' => 'admin_admin_admin_contemergencia_create',);
+                            }
+
+                            // admin_admin_admin_contemergencia_batch
+                            if ($pathinfo === '/admin/admin/admin/contemergencia/batch') {
+                                return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\ContEmergenciaAdminController::batchAction',  '_sonata_admin' => 'admin_admin.admin.cont_emergencia',  '_sonata_name' => 'admin_admin_admin_contemergencia_batch',  '_route' => 'admin_admin_admin_contemergencia_batch',);
+                            }
+
+                            // admin_admin_admin_contemergencia_edit
+                            if (preg_match('#^/admin/admin/admin/contemergencia/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
+                                return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_contemergencia_edit')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\ContEmergenciaAdminController::editAction',  '_sonata_admin' => 'admin_admin.admin.cont_emergencia',  '_sonata_name' => 'admin_admin_admin_contemergencia_edit',));
+                            }
+
+                            // admin_admin_admin_contemergencia_delete
+                            if (preg_match('#^/admin/admin/admin/contemergencia/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
+                                return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_contemergencia_delete')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\ContEmergenciaAdminController::deleteAction',  '_sonata_admin' => 'admin_admin.admin.cont_emergencia',  '_sonata_name' => 'admin_admin_admin_contemergencia_delete',));
+                            }
+
+                            // admin_admin_admin_contemergencia_show
+                            if (preg_match('#^/admin/admin/admin/contemergencia/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
+                                return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_contemergencia_show')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\ContEmergenciaAdminController::showAction',  '_sonata_admin' => 'admin_admin.admin.cont_emergencia',  '_sonata_name' => 'admin_admin_admin_contemergencia_show',));
+                            }
+
+                            // admin_admin_admin_contemergencia_export
+                            if ($pathinfo === '/admin/admin/admin/contemergencia/export') {
+                                return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\ContEmergenciaAdminController::exportAction',  '_sonata_admin' => 'admin_admin.admin.cont_emergencia',  '_sonata_name' => 'admin_admin_admin_contemergencia_export',  '_route' => 'admin_admin_admin_contemergencia_export',);
+                            }
+
                         }
 
-                        // admin_admin_admin_contemergencia_create
-                        if ($pathinfo === '/admin/admin/admin/contemergencia/create') {
-                            return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\ContEmergenciaAdminController::createAction',  '_sonata_admin' => 'admin_admin.admin.cont_emergencia',  '_sonata_name' => 'admin_admin_admin_contemergencia_create',  '_route' => 'admin_admin_admin_contemergencia_create',);
-                        }
+                        if (0 === strpos($pathinfo, '/admin/admin/admin/cita')) {
+                            // admin_admin_admin_cita_list
+                            if ($pathinfo === '/admin/admin/admin/cita/list') {
+                                return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::listAction',  '_sonata_admin' => 'admin_admin.admin.citas',  '_sonata_name' => 'admin_admin_admin_cita_list',  '_route' => 'admin_admin_admin_cita_list',);
+                            }
 
-                        // admin_admin_admin_contemergencia_batch
-                        if ($pathinfo === '/admin/admin/admin/contemergencia/batch') {
-                            return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\ContEmergenciaAdminController::batchAction',  '_sonata_admin' => 'admin_admin.admin.cont_emergencia',  '_sonata_name' => 'admin_admin_admin_contemergencia_batch',  '_route' => 'admin_admin_admin_contemergencia_batch',);
-                        }
+                            // admin_admin_admin_cita_create
+                            if ($pathinfo === '/admin/admin/admin/cita/create') {
+                                return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::createAction',  '_sonata_admin' => 'admin_admin.admin.citas',  '_sonata_name' => 'admin_admin_admin_cita_create',  '_route' => 'admin_admin_admin_cita_create',);
+                            }
 
-                        // admin_admin_admin_contemergencia_edit
-                        if (preg_match('#^/admin/admin/admin/contemergencia/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
-                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_contemergencia_edit')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\ContEmergenciaAdminController::editAction',  '_sonata_admin' => 'admin_admin.admin.cont_emergencia',  '_sonata_name' => 'admin_admin_admin_contemergencia_edit',));
-                        }
+                            // admin_admin_admin_cita_batch
+                            if ($pathinfo === '/admin/admin/admin/cita/batch') {
+                                return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::batchAction',  '_sonata_admin' => 'admin_admin.admin.citas',  '_sonata_name' => 'admin_admin_admin_cita_batch',  '_route' => 'admin_admin_admin_cita_batch',);
+                            }
 
-                        // admin_admin_admin_contemergencia_delete
-                        if (preg_match('#^/admin/admin/admin/contemergencia/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
-                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_contemergencia_delete')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\ContEmergenciaAdminController::deleteAction',  '_sonata_admin' => 'admin_admin.admin.cont_emergencia',  '_sonata_name' => 'admin_admin_admin_contemergencia_delete',));
-                        }
+                            // admin_admin_admin_cita_edit
+                            if (preg_match('#^/admin/admin/admin/cita/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
+                                return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_cita_edit')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::editAction',  '_sonata_admin' => 'admin_admin.admin.citas',  '_sonata_name' => 'admin_admin_admin_cita_edit',));
+                            }
 
-                        // admin_admin_admin_contemergencia_show
-                        if (preg_match('#^/admin/admin/admin/contemergencia/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
-                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_contemergencia_show')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\ContEmergenciaAdminController::showAction',  '_sonata_admin' => 'admin_admin.admin.cont_emergencia',  '_sonata_name' => 'admin_admin_admin_contemergencia_show',));
-                        }
+                            // admin_admin_admin_cita_delete
+                            if (preg_match('#^/admin/admin/admin/cita/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
+                                return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_cita_delete')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::deleteAction',  '_sonata_admin' => 'admin_admin.admin.citas',  '_sonata_name' => 'admin_admin_admin_cita_delete',));
+                            }
 
-                        // admin_admin_admin_contemergencia_export
-                        if ($pathinfo === '/admin/admin/admin/contemergencia/export') {
-                            return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\ContEmergenciaAdminController::exportAction',  '_sonata_admin' => 'admin_admin.admin.cont_emergencia',  '_sonata_name' => 'admin_admin_admin_contemergencia_export',  '_route' => 'admin_admin_admin_contemergencia_export',);
+                            // admin_admin_admin_cita_show
+                            if (preg_match('#^/admin/admin/admin/cita/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
+                                return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_admin_admin_cita_show')), array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::showAction',  '_sonata_admin' => 'admin_admin.admin.citas',  '_sonata_name' => 'admin_admin_admin_cita_show',));
+                            }
+
+                            // admin_admin_admin_cita_export
+                            if ($pathinfo === '/admin/admin/admin/cita/export') {
+                                return array (  '_controller' => 'Admin\\AdminBundle\\Controller\\CitaAdminController::exportAction',  '_sonata_admin' => 'admin_admin.admin.citas',  '_sonata_name' => 'admin_admin_admin_cita_export',  '_route' => 'admin_admin_admin_cita_export',);
+                            }
+
                         }
 
                     }

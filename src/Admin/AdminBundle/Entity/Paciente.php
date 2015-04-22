@@ -93,6 +93,11 @@ class Paciente
     protected $contactoEmerg;
 
     /**
+     * @ORM\OneToMany(targetEntity="Cita", mappedBy="paciente")
+     */
+    protected $citas;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -100,6 +105,7 @@ class Paciente
         $this->telefonos = new ArrayCollection();
         $this->contactoEmerg = new ArrayCollection();
         $this->medicoPref = new ArrayCollection();
+        $this->citas = new ArrayCollection();
     }
 
     /**
@@ -392,5 +398,38 @@ class Paciente
     public function getMedicoPref()
     {
         return $this->medicoPref;
+    }
+
+    /**
+     * Add citas
+     *
+     * @param \Admin\AdminBundle\Entity\Cita $citas
+     * @return Paciente
+     */
+    public function addCita(\Admin\AdminBundle\Entity\Cita $citas)
+    {
+        $this->citas[] = $citas;
+
+        return $this;
+    }
+
+    /**
+     * Remove citas
+     *
+     * @param \Admin\AdminBundle\Entity\Cita $citas
+     */
+    public function removeCita(\Admin\AdminBundle\Entity\Cita $citas)
+    {
+        $this->citas->removeElement($citas);
+    }
+
+    /**
+     * Get citas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCitas()
+    {
+        return $this->citas;
     }
 }

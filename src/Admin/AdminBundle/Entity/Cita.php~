@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Cita
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Admin\AdminBundle\Entity\CitaRepository")
+ * @ORM\Entity
  */
 class Cita
 {
@@ -22,40 +22,24 @@ class Cita
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="motivo", type="string", length=255)
+     */
+    private $motivo;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="fecha", type="datetime")
      */
     private $fecha;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nota", type="text")
+  /**
+     * @ORM\ManyToOne(targetEntity="Paciente", inversedBy="citas")
+     * @ORM\JoinColumn(name="paciente_id", referencedColumnName="id")
      */
-    private $nota;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="realizada", type="boolean")
-     */
-    private $realizada;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="paciente", type="string", length=255)
-     */
-    private $paciente;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="medico", type="string", length=255)
-     */
-    private $medico;
-
+    protected $paciente;
 
     /**
      * Get id
@@ -65,6 +49,29 @@ class Cita
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set motivo
+     *
+     * @param string $motivo
+     * @return Cita
+     */
+    public function setMotivo($motivo)
+    {
+        $this->motivo = $motivo;
+
+        return $this;
+    }
+
+    /**
+     * Get motivo
+     *
+     * @return string 
+     */
+    public function getMotivo()
+    {
+        return $this->motivo;
     }
 
     /**
@@ -91,58 +98,12 @@ class Cita
     }
 
     /**
-     * Set nota
-     *
-     * @param string $nota
-     * @return Cita
-     */
-    public function setNota($nota)
-    {
-        $this->nota = $nota;
-
-        return $this;
-    }
-
-    /**
-     * Get nota
-     *
-     * @return string 
-     */
-    public function getNota()
-    {
-        return $this->nota;
-    }
-
-    /**
-     * Set realizada
-     *
-     * @param boolean $realizada
-     * @return Cita
-     */
-    public function setRealizada($realizada)
-    {
-        $this->realizada = $realizada;
-
-        return $this;
-    }
-
-    /**
-     * Get realizada
-     *
-     * @return boolean 
-     */
-    public function getRealizada()
-    {
-        return $this->realizada;
-    }
-
-    /**
      * Set paciente
      *
-     * @param string $paciente
+     * @param \Admin\AdminBundle\Entity\Paciente $paciente
      * @return Cita
      */
-    public function setPaciente($paciente)
+    public function setPaciente(\Admin\AdminBundle\Entity\Paciente $paciente = null)
     {
         $this->paciente = $paciente;
 
@@ -152,33 +113,10 @@ class Cita
     /**
      * Get paciente
      *
-     * @return string 
+     * @return \Admin\AdminBundle\Entity\Paciente 
      */
     public function getPaciente()
     {
         return $this->paciente;
-    }
-
-    /**
-     * Set medico
-     *
-     * @param string $medico
-     * @return Cita
-     */
-    public function setMedico($medico)
-    {
-        $this->medico = $medico;
-
-        return $this;
-    }
-
-    /**
-     * Get medico
-     *
-     * @return string 
-     */
-    public function getMedico()
-    {
-        return $this->medico;
     }
 }

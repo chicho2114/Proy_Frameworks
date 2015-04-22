@@ -59,20 +59,32 @@ class PacienteAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-                ->add('nombre')
-                ->add('apellido')
-                ->add('edad')
-                ->add('fechaNac')
-                ->add('telefonos', 'sonata_type_collection', array(), array(
-                    'edit' => 'inline',
-                    'inline' => 'table',
-                    'sortable'  => 'position'
-                ))
-                ->add('direccion')
-                ->add('seguroSocial')
-                ->add('formaActual', null, array('label' => 'Forma actual del paciente', 'help'=>'Introduce una breve descripción del estatus actual del paciente'))
-                ->add('medicoPref', null, array('label' => 'Médico'))
-                ->add('contactoEmerg', 'sonata_type_model', array('multiple' => true, 'label' => 'Contacto de emergencia'))
+            ->tab('Paciente')
+                ->with('Datos del paciente', array(
+                            'class'       => 'col-md-6',
+                            
+                            ))
+                    ->add('nombre')
+                    ->add('apellido')
+                    ->add('edad')
+                    ->add('fechaNac', null, array('label' => 'Fecha de Nacimiento'))
+                    ->add('telefonos', 'sonata_type_collection', array(), array(
+                        'edit' => 'inline',
+                        'inline' => 'table',
+                        'sortable'  => 'position'
+                    ))
+                    ->add('direccion')
+                ->end()
+                ->with('', array(
+                            'class'       => 'col-md-6',
+                            
+                            ))
+                    ->add('seguroSocial')
+                    ->add('formaActual', null, array('label' => 'Forma actual del paciente', 'help'=>'Introduce una breve descripción del estatus actual del paciente'))
+                    ->add('medicoPref', null, array('label' => 'Médico'))
+                    ->add('contactoEmerg', 'sonata_type_model', array('multiple' => true, 'label' => 'Contacto de emergencia'))
+                ->end()
+            ->end()
         ;
     }
 
@@ -86,7 +98,7 @@ class PacienteAdmin extends Admin
                 ->add('nombre')
                 ->add('apellido')
                 ->add('edad')
-                ->add('fechaNac', 'date', array('label' => 'Fecha de nacimiento', 'format'=> 'D/M/Y'))
+                ->add('fechaNac', 'date', array('label' => 'Fecha de nacimiento'))
                 ->add('telefonos')
                 ->add('direccion')
                 ->add('seguroSocial')
